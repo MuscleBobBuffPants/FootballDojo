@@ -1,0 +1,9 @@
+﻿using FootballDojo.Models;
+
+namespace FootballDojo.Services
+{
+    public interface IStatsService
+    {
+        Task<Stats> GetStatsByPlayerIdAndLeagueIdAndSeasonYearAsync(int playerId, int leagueId, int seasonYear);
+    }
+}
