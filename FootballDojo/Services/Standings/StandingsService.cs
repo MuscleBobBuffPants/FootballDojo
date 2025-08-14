@@ -4,11 +4,11 @@ using FootballDojo.Models;
 
 namespace FootballDojo.Services
 {
-    public class StandingService : IStandingsService
+    public class StandingsService : IStandingsService
     {
         private readonly FootballDojoClient _client;
 
-        public StandingService(FootballDojoClient client)
+        public StandingsService(FootballDojoClient client)
         {
             _client = client;
         }
@@ -20,7 +20,7 @@ namespace FootballDojo.Services
             var response = await _client.HttpClient.GetFromJsonAsync<StandingsRoot>(apiUrl);
 
             return (response?.Response?.Count ?? 0) > 0
-                ? response.Response[0].Standings
+                ? response.Response[0].League.Standings
                 : null;
         }
     }

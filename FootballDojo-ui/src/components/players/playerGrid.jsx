@@ -2,23 +2,10 @@ import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PlayerProfile from "../../components/playerProfiles/playerProfile";
-import { isNonEmptyObject, positionOrder, testPlayerData } from "../../global/constants";
+import PlayerProfile from "../../components/players/playerProfiles/playerProfile";
+import { isNonEmptyObject, positionOrder } from "../../global/constants";
 import { fetchPlayerProfileByPlayerId } from "../../redux/players/fetchPlayerProfileByPlayerId";
 import { fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
-
-const columns = [
-    { field: "number", headerName: "", width: 60, sortable: false },
-    { field: "name", headerName: "Name", width: 175, sortable: false },
-    {
-        field: "position", headerName: "Position", width: 150, sortable: false,
-        sortComparator: (v1, v2) => {
-            return (
-                positionOrder.indexOf(v1) - positionOrder.indexOf(v2)
-            );
-        }
-    }
-];
 
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
@@ -38,7 +25,20 @@ function CustomNoRowsOverlay({ selectedTeam }) {
     );
 }
 
-function PlayerGrid({ useApi, selectedTeam }) {
+const columns = [
+    { field: "number", headerName: "", width: 60, sortable: false },
+    { field: "name", headerName: "Name", width: 175, sortable: false },
+    {
+        field: "position", headerName: "Position", width: 150, sortable: false,
+        sortComparator: (v1, v2) => {
+            return (
+                positionOrder.indexOf(v1) - positionOrder.indexOf(v2)
+            );
+        }
+    }
+];
+
+function PlayerGrid({ selectedTeam }) {
     const dispatch = useDispatch();
 
     const [selectedId, setSelectedId] = useState(null);
@@ -58,22 +58,22 @@ function PlayerGrid({ useApi, selectedTeam }) {
     //}
 
     useEffect(() => {
-        if (useApi && isNonEmptyObject(selectedTeam)) {
+        if (isNonEmptyObject(selectedTeam)) {
             dispatch(fetchPlayersByTeam({ teamId: selectedTeam.id }));
         }
-    }, [dispatch, useApi, selectedTeam]);
+    }, [dispatch, selectedTeam]);
 
     useEffect(() => {
-        if (useApi && selectedId) {
+        if (selectedId) {
             dispatch(fetchPlayerProfileByPlayerId({ playerId: selectedId }));
         }
-    }, [dispatch, useApi, selectedId]);
+    }, [dispatch, selectedId]);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedPlayer)) {
             setModalOpen(true);
         }
-    }, [useApi, selectedPlayer]);
+    }, [selectedPlayer]);
 
 
     const handleRowClick = (player) => {
@@ -86,24 +86,13 @@ function PlayerGrid({ useApi, selectedTeam }) {
     };
 
     const filteredPlayers = isNonEmptyObject(selectedTeam)
-        ? (useApi
-            ? playersByTeam.map(player => ({
-                id: player.id,
-                name: player.name,
-                number: `# ${player.number}`,
-                age: player.age,
-                position: player.position
-            }))
-            : testPlayerData
-                .filter(player => player.team === selectedTeam.name)
-                .map(player => ({
-                    id: player.id,
-                    name: player.name,
-                    number: `# ${player.number}`,
-                    age: player.age,
-                    position: player.position
-                }))
-        )
+        ? playersByTeam.map(player => ({
+            id: player.id,
+            name: player.name,
+            number: `# ${player.number}`,
+            age: player.age,
+            position: player.position
+        }))
         : [];
 
     return (
@@ -138,7 +127,6 @@ function PlayerGrid({ useApi, selectedTeam }) {
                         }
                     }}
                 />
-
                 <PlayerProfile
                     modalOpen={modalOpen}
                     handleClose={handleClose}

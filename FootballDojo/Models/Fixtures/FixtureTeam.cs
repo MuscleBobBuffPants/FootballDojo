@@ -1,0 +1,9 @@
+﻿namespace FootballDojo.Models
+{
+    public class FixtureTeam
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Logo { get; set; }
+    }
+}

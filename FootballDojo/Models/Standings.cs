@@ -2,11 +2,16 @@
 {
     public class Standings
     {
+        public int Rank { get; set; }
+        public Team Team { get; set; }
+        public int Points { get; set; }
+        public int GoalsDiff { get; set; }
+        public string Description { get; set; }
     }
 
     public class StandingsResponse
     {
-        public Standings Standings { get; set; }
+        public League League { get; set; }
     }
 
     public class StandingsRoot

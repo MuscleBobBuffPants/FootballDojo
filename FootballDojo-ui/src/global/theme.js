@@ -11,11 +11,11 @@ export const getTheme = (mode) =>
                     background: {
                         default: "#121212",
                         paper: "#1e1e1e",
-                    },
+                    }
                 }
                 : {
                     primary: { main: "#1976d2" },
-                    secondary: { main: "#9c27b0" },
+                    secondary: { main: "#9c27b0" }
                 }),
         },
     });

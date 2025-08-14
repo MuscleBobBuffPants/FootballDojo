@@ -4,6 +4,6 @@ namespace FootballDojo.Services
 {
     public interface IFixturesService
     {
-        Task<List<Fixtures>> GetFixturesByLeagueIdAndSeasonYearAndTeamIdAsync(int leagueId, int seasonYear, int teamId);
+        Task<List<FixturesResponse>> GetFixturesByLeagueIdAndSeasonYearAndTeamIdAsync(int leagueId, int seasonYear, int teamId);
     }
 }

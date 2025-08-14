@@ -17,6 +17,9 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<FootballDojoClient>();
 builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddScoped<ITeamsService, TeamsService>();
+builder.Services.AddScoped<IFixturesService, FixturesService>();
+builder.Services.AddScoped<IStatsService, StatsService>();
+builder.Services.AddScoped<IStandingsService, StandingsService>();
 
 // Enable CORS
 var corsPolicy = "AllowReactDev";

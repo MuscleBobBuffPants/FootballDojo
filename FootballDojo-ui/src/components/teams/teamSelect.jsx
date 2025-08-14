@@ -1,25 +1,24 @@
 import {
     Box,
     Button,
-    Checkbox,
     FormControl,
-    FormControlLabel,
     InputLabel,
     MenuItem,
     Select
 } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isNonEmptyObject, testTeamData } from "../../global/constants";
+import { isNonEmptyObject } from "../../global/constants";
 import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
+import FixturesGrid from "../fixtures/fixtureGrid";
 import PlayerGrid from '../players/playerGrid';
 
 function TeamSelect() {
     const dispatch = useDispatch();
 
-    const [useApi, setUseApi] = useState(true);
-    const [selectedTeam, setSelectedTeam] = useState({});
+    const [selectedTeam, setSelectedTeam] = useState("");
+    const [selectedSeason, setSelectedSeason] = useState(2025);
     const [teamLogo, setTeamLogo] = useState(null);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
@@ -35,47 +34,31 @@ function TeamSelect() {
     //}
 
     useEffect(() => {
-        if (useApi) {
-            dispatch(fetchTeamsByLeagueId({ leagueId: 39, seasonYear: 2025 }));
-        }
-    }, [dispatch, useApi]);
+        dispatch(fetchTeamsByLeagueId({ leagueId: 39, seasonYear: 2025 }));
+    }, [dispatch]);
 
     useEffect(() => {
-        if (useApi && isNonEmptyObject(selectedTeam)) {
+        if (isNonEmptyObject(selectedTeam)) {
             dispatch(fetchTeamByName({ country: "England", teamName: selectedTeam.name }));
         }
-    }, [dispatch, useApi, selectedTeam]);
+    }, [dispatch, selectedTeam]);
 
     useEffect(() => {
-        setTeamLogo(selectedTeam.logo);
+        if (isNonEmptyObject(selectedTeam)) {
+            setTeamLogo(selectedTeam.logo);
+        }
     }, [selectedTeam]);
-
-    //const handleCheckboxChange = (event) => {
-    //    handleReset();
-    //    setUseApi(event.target.checked);
-    //};
 
     const handleChange = (event) => {
         setSelectedTeam(event.target.value);
     };
 
     const handleReset = () => {
-        setSelectedTeam({});
+        setSelectedTeam(null);
     };
 
     return (
         <div>
-            {/*<FormControlLabel*/}
-            {/*    control={*/}
-            {/*        <Checkbox*/}
-            {/*            checked={useApi}*/}
-            {/*            onChange={handleCheckboxChange}*/}
-            {/*            color="secondary"*/}
-            {/*        />*/}
-            {/*    }*/}
-            {/*    label="Use API"*/}
-            {/*    sx={{ display: "flex" }}*/}
-            {/*/>*/}
             <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, mb: 2 }} >
                 <Box
                     sx={(theme) => ({
@@ -103,7 +86,7 @@ function TeamSelect() {
                     <Select
                         labelId="team-select-label"
                         id="team-select"
-                        value={selectedTeam}
+                        value={isNonEmptyObject(selectedTeam) ? selectedTeam : ""}
                         label="Team"
                         onChange={handleChange}
                         MenuProps={{
@@ -118,7 +101,7 @@ function TeamSelect() {
                             borderRadius: 1,
                         })}
                     >
-                        {(useApi ? [...teamsByLeagueId] : [...testTeamData])
+                        {[...teamsByLeagueId]
                             .sort((a, b) => a.team.name.localeCompare(b.team.name))
                             .map(({ team }) => (
                                 <MenuItem key={team.id} value={team}>
@@ -135,8 +118,36 @@ function TeamSelect() {
                 >
                     Reset
                 </Button>
+                <FormControl sx={{ ml: 4, minWidth: 200 }} size="small">
+                    <InputLabel id="season-select-label">Season</InputLabel>
+                    <Select
+                        labelId="season-select-label"
+                        id="season-select"
+                        value={isNonEmptyObject(selectedTeam) ? selectedSeason : ""}
+                        label="Season"
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 48 * 5 + 8, // 5 items at 48px height + padding
+                                },
+                            },
+                        }}
+                        sx={(theme) => ({
+                            backgroundColor: theme.palette.background.paper,
+                            color: "text.primary",
+                            borderRadius: 1,
+                            pointerEvents: "none"
+
+                        })}
+                    >
+                        <MenuItem value={2025}>2025</MenuItem>
+                    </Select>
+                </FormControl>
             </Box>
-            <PlayerGrid useApi={useApi} selectedTeam={selectedTeam} />
+            <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
+                <PlayerGrid selectedTeam={selectedTeam} />
+                <FixturesGrid selectedTeam={selectedTeam} />
+            </div>
         </div>
     );
 }
