@@ -77,7 +77,11 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                                 >
                                     {field.label}:
                                 </Typography>
-                                <Typography variant="body2" sx={(theme) => ({ color: theme.palette.text.primary })}>
+                                <Typography variant="body2" sx={(theme) => ({
+                                    color: theme.palette.text.primary,
+                                    fontSize: field.fullWidth ? 16 : 14, // bigger font for Full Name
+                                    marginTop: field.fullWidth ? 1 : 0,   // add spacing from label
+                                })}>
                                     {field.value}
                                 </Typography>
                             </Box>
