@@ -41,7 +41,7 @@ const formatUtcDate = (utcDate) => {
 function FixturesGrid({ selectedTeam }) {
     const dispatch = useDispatch();
 
-    const [selectedId, setSelectedId] = useState(null);
+    const [selectedFixture, setSelectedFixture] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
     const fixturesByLeagueId = useSelector((state) => state.fixturesByLeagueId.list);
@@ -63,19 +63,17 @@ function FixturesGrid({ selectedTeam }) {
     }, [dispatch, selectedTeam]);
 
     useEffect(() => {
-        if (selectedId !== null) {
-            setModalOpen(true);
-        }
-    }, [selectedId]);
+        setModalOpen(true);
+    }, [selectedFixture]);
 
 
     const handleRowClick = (fixture) => {
-        setSelectedId(fixture.id);
+        setSelectedFixture(fixture.row);
     };
 
     const handleClose = () => {
         setModalOpen(false);
-        setSelectedId(null);
+        setSelectedFixture(null);
     };
 
     const filteredFixtures = isNonEmptyObject(selectedTeam)
@@ -86,7 +84,11 @@ function FixturesGrid({ selectedTeam }) {
                 matchdayNumber: index + 1,
                 date: formattedDate,
                 matchup: response.teams.away.name + ' @ ' + response.teams.home.name,
-                venue: response.fixture.venue.name + ', ' + response.fixture.venue.city
+                venue: response.fixture.venue.name + ', ' + response.fixture.venue.city,
+                homeTeam: response.teams.home.name,
+                homeTeamLogo: response.teams.home.logo,
+                awayTeam: response.teams.away.name,
+                awayTeamLogo: response.teams.away.logo
             }
         })
         : [];
@@ -123,9 +125,13 @@ function FixturesGrid({ selectedTeam }) {
                         }
                     }}
                 />
-                <FixtureProfile
-                    modalOpen={modalOpen}
-                    handleClose={handleClose} />
+                {selectedFixture && (
+                    <FixtureProfile
+                        modalOpen={modalOpen}
+                        handleClose={handleClose}
+                        selectedFixture={selectedFixture} />
+                )}
+
             </div>
         </div>
     );
