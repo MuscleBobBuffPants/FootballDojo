@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyObject } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
+import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixtureProfile"
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
         <Box
@@ -29,6 +30,14 @@ const columns = [
     { field: "venue", headerName: "Venue", width: 375, sortable: false }
 ];
 
+const formatUtcDate = (utcDate) => {
+    const date = new Date(utcDate);
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const year = date.getUTCFullYear();
+    return `${month} - ${day} - ${year}`;
+}
+
 function FixturesGrid({ selectedTeam }) {
     const dispatch = useDispatch();
 
@@ -53,29 +62,21 @@ function FixturesGrid({ selectedTeam }) {
         }
     }, [dispatch, selectedTeam]);
 
-    //useEffect(() => {
-    //    if (!selectedId) {
-    //        setModalOpen(true);
-    //    }
-    //}, [useApi, selectedId]);
+    useEffect(() => {
+        if (selectedId !== null) {
+            setModalOpen(true);
+        }
+    }, [selectedId]);
 
 
-    //const handleRowClick = (fixture) => {
-    //    setSelectedId(fixture.id);
-    //};
+    const handleRowClick = (fixture) => {
+        setSelectedId(fixture.id);
+    };
 
-    //const handleClose = () => {
-    //    setModalOpen(false);
-    //    setSelectedId(null);
-    //};
-
-    const formatUtcDate = (utcDate) => {
-        const date = new Date(utcDate);
-        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(date.getUTCDate()).padStart(2, '0');
-        const year = date.getUTCFullYear();
-        return `${month} - ${day} - ${year}`;
-    }
+    const handleClose = () => {
+        setModalOpen(false);
+        setSelectedId(null);
+    };
 
     const filteredFixtures = isNonEmptyObject(selectedTeam)
         ? fixturesByLeagueId.map((response, index) => {
@@ -102,7 +103,7 @@ function FixturesGrid({ selectedTeam }) {
                     hideFooter={true}
                     hideFooterSelectedRowCount
                     disableColumnMenu
-                    //onRowClick={handleRowClick}
+                    onRowClick={handleRowClick}
                     slots={{
                         noRowsOverlay: () => (
                             <CustomNoRowsOverlay selectedTeam={selectedTeam} />
@@ -122,6 +123,9 @@ function FixturesGrid({ selectedTeam }) {
                         }
                     }}
                 />
+                <FixtureProfile
+                    modalOpen={modalOpen}
+                    handleClose={handleClose} />
             </div>
         </div>
     );
