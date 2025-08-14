@@ -4,14 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyObject } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
-
-const columns = [
-    { field: "matchdayNumber", headerName: "MD #", width: 69, sortable: false },
-    { field: "date", headerName: "Date", width: 125, sortable: false },
-    { field: "matchup", headerName: "Matchup", width: 300, sortable: false },
-    { field: "venue", headerName: "Venue", width: 375, sortable: false }
-];
-
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
         <Box
@@ -29,6 +21,13 @@ function CustomNoRowsOverlay({ selectedTeam }) {
         </Box>
     );
 }
+
+const columns = [
+    { field: "matchdayNumber", headerName: "MD #", width: 69, sortable: false },
+    { field: "date", headerName: "Date", width: 125, sortable: false },
+    { field: "matchup", headerName: "Matchup", width: 300, sortable: false },
+    { field: "venue", headerName: "Venue", width: 375, sortable: false }
+];
 
 function FixturesGrid({ selectedTeam }) {
     const dispatch = useDispatch();
