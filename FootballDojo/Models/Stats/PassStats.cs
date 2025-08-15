@@ -2,7 +2,7 @@
 {
     public class PassStats
     {
-        public int Total { get; set; }
-        public int Key { get; set; }
+        public int? Total { get; set; }
+        public int? Key { get; set; }
     }
 }

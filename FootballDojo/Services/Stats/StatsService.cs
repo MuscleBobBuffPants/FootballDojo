@@ -13,7 +13,7 @@ namespace FootballDojo.Services
             _client = client;
         }
 
-        public async Task<Stats> GetStatsByPlayerIdAndLeagueIdAndSeasonYearAsync(int playerId, int leagueId, int seasonYear)
+        public async Task<List<Stats>> GetStatsByPlayerIdAndLeagueIdAndSeasonYearAsync(int playerId, int leagueId, int seasonYear)
         {
             var apiUrl = $"{Constants.BASE_URL}players?id={playerId}&league={leagueId}&season={seasonYear}";
 

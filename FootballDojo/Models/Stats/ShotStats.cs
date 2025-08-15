@@ -2,7 +2,7 @@
 {
     public class ShotStats
     {
-        public int Total { get; set; }
-        public int On {  get; set; }
+        public int? Total { get; set; }
+        public int? On {  get; set; }
     }
 }

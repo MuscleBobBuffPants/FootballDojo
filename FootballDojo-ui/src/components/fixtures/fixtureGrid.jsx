@@ -2,9 +2,9 @@ import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixtureProfile";
 import { isNonEmptyObject } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
-import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixtureProfile"
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
         <Box

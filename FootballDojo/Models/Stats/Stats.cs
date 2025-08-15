@@ -17,7 +17,7 @@
 
     public class StatsResponse
     {
-        public Stats Statistics { get; set; }
+        public List<Stats> Statistics { get; set; }
     }
 
     public class StatsRoot

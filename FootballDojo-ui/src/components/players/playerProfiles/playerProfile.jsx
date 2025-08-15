@@ -5,8 +5,23 @@ import {
     Modal,
     Typography
 } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import StatsGrid from '../../../components/stats/statsGrid';
+import { isNonEmptyObject } from "../../../global/constants";
+import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
 
 function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
+    const dispatch = useDispatch();
+
+    const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
+
+    useEffect(() => {
+        if (isNonEmptyObject(selectedPlayer)) {
+            dispatch(fetchPlayerStatsBySeason({ playerId: selectedPlayer.id, leagueId: 39, seasonYear: 2024 }));
+        }
+    }, [dispatch, selectedPlayer]);
+
     return (
         <Modal
             open={modalOpen}
@@ -36,13 +51,19 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                         src={selectedPlayer.photo}
                         alt={`${selectedPlayer.firstName} ${selectedPlayer.lastName}`}
                         sx={(theme) => ({
-                            width: 140,
-                            height: 140,
+                            width: 100,
+                            height: 100,
                             border: `3px solid ${theme.palette.divider}`,
                             boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
                         })}
                     />
-                    <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 1,
+                        minWidth: 220,
+                        flexShrink: 0,
+                    }}>
                         {[
                             { label: 'Full Name', value: `${selectedPlayer.firstName} ${selectedPlayer.lastName}`, fullWidth: true },
                             { label: 'Number', value: `#${selectedPlayer.number}` },
@@ -65,7 +86,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                                     display: 'inline-flex',
                                     flexDirection: field.fullWidth ? 'column' : 'row',
                                     justifyContent: 'space-between',
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     boxShadow: theme.palette.mode === 'light'
                                         ? 'inset 0 1px 2px rgba(0,0,0,0.05)'
                                         : 'none',
@@ -73,20 +94,23 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                             >
                                 <Typography
                                     variant="body2"
-                                    sx={(theme) => ({ fontWeight: 'bold', color: theme.palette.text.secondary })}
+                                    sx={(theme) => ({ fontWeight: 'bold', color: theme.palette.text.secondary, fontSize: 12 })}
                                 >
                                     {field.label}:
                                 </Typography>
                                 <Typography variant="body2" sx={(theme) => ({
                                     color: theme.palette.text.primary,
-                                    fontSize: field.fullWidth ? 16 : 14, // bigger font for Full Name
-                                    marginTop: field.fullWidth ? 1 : 0,   // add spacing from label
+                                    fontSize: field.fullWidth ? 14 : 12,
+                                    marginTop: field.fullWidth ? 1 : 0,
                                 })}>
                                     {field.value}
                                 </Typography>
                             </Box>
                         ))}
                     </Box>
+                    {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
+                        (<StatsGrid selectedPlayer={selectedPlayer} playerStatsBySeason={playerStatsBySeason} />)
+                    }
                 </Box>
                 <Box
                     sx={{
