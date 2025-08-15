@@ -7,7 +7,6 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useMemo, useState } from 'react';
 
-
 function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
     const categories = useMemo(() => Object.entries(playerStatsBySeason[0]), [playerStatsBySeason]);
 
@@ -80,7 +79,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                     hideFooterSelectedRowCount
                     sortingMode="none"
                     sx={{
-                        fontSize: 12,
+                        fontSize: 13,
                         pointerEvents: 'none',
                         '& .MuiDataGrid-cell': {
                             '&:hover': {
@@ -114,10 +113,10 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
             width: '100%',
             positon: 'relative'
         }}>
-            <Box sx={{ pl: 1, pt: .5, alignSelf: 'flex-start', minWidth: 200 }}>
-                <FormControl size="small">
-                    <InputLabel>Category</InputLabel>
-                    <Select value={selectedCategory} onChange={handleChange} label="Category">
+            <Box sx={{ pl: 1, pt: .25, alignSelf: 'flex-start', minWidth: 200 }}>
+                <FormControl size="small" sx={{minWidth: 125} }>
+                    <InputLabel>Stat Category</InputLabel>
+                    <Select value={selectedCategory} onChange={handleChange} label="Stat Category">
                         {categories.map(([categoryName]) => (
                             <MenuItem key={categoryName} value={categoryName}>
                                 {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
@@ -126,7 +125,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                     </Select>
                 </FormControl>
             </Box>
-            <Box sx={{ width: 300 }}>
+            <Box sx={{ width: 250 }}>
                 {dataGrids[selectedCategory]}
             </Box>
         </Box>

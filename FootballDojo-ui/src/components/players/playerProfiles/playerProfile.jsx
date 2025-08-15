@@ -41,7 +41,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                     overflow: 'hidden',
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     minWidth: 500,
-                    maxWidth: '90vw',
+                    maxWidth: '95vw',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif",
                 })}

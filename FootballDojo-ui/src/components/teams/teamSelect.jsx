@@ -118,7 +118,7 @@ function TeamSelect() {
                 >
                     Reset
                 </Button>
-                <FormControl sx={{ ml: 8.5, minWidth: 200 }} size="small">
+                <FormControl sx={{ minWidth: 200 }} size="small">
                     <InputLabel id="season-select-label">Season</InputLabel>
                     <Select
                         labelId="season-select-label"
