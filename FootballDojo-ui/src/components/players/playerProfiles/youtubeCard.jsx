@@ -1,8 +1,8 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
-function YouTubeCard({selectedPlayer }) {
+function YouTubeCard({ selectedPlayer }) {
     return (
-        <Card sx={{ maxWidth: 600, borderRadius: 3, boxShadow: 4, transform: "scale(0.95)"}}>
+        <Card sx={{ maxWidth: 600, borderRadius: 3, boxShadow: 4, transform: "scale(0.95)" }}>
             <div style={{ position: "relative", paddingTop: "56.25%" }}>
                 <iframe
                     src="https://www.youtube.com/embed/QKaRQ1fse8I?si=jFWLxbDXF_FwCTY3"
