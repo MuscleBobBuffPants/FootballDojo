@@ -12,6 +12,7 @@
     {
         public Fixtures Fixture { get; set; }
         public FixtureTeams Teams { get; set; }
+        public FixtureGoals Goals { get; set; }
     }
 
     public class FixturesRoot

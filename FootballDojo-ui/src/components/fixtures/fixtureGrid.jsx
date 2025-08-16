@@ -84,10 +84,17 @@ function FixturesGrid({ selectedTeam }) {
                 date: formattedDate,
                 matchup: response.teams.away.name + ' @ ' + response.teams.home.name,
                 venue: response.fixture.venue.name + ' - ' + response.fixture.venue.city,
-                homeTeam: response.teams.home.name,
-                homeTeamLogo: response.teams.home.logo,
-                awayTeam: response.teams.away.name,
-                awayTeamLogo: response.teams.away.logo
+                homeTeam: {
+                    id: response.teams.home.id,
+                    name: response.teams.home.name,
+                    logo: response.teams.home.logo
+                },
+                awayTeam:
+                {
+                    id: response.teams.away.id,
+                    name: response.teams.away.name,
+                    logo: response.teams.away.logo
+                }
             }
         })
         : [];

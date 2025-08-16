@@ -23,5 +23,27 @@ namespace FootballDojo.Services
                 ? response.Response
                 : null;
         }
+
+        public async Task<List<FixturesResponse>> GetHeadToHeadFixturesByTeamIdsAsync(int homeTeamId, int awayTeamId)
+        {
+            var apiUrl = $"{Constants.BASE_URL}fixtures/headtohead?h2h={homeTeamId}-{awayTeamId}";
+
+            var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
+
+            return (response?.Response?.Count ?? 0) > 0
+                ? response.Response
+                : null;
+        }
+
+        public async Task<List<FixturesResponse>> GetRecentFormByLeagueIdAndTeamIdAsync(int leagueId, int teamId)
+        {
+            var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&team={teamId}&last=5"; // Default = last 5 games
+
+            var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
+
+            return (response?.Response?.Count ?? 0) > 0
+                ? response.Response
+                : null;
+        }
     }
 }

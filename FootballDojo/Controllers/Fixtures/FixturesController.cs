@@ -34,5 +34,43 @@ namespace FootballDojo.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("homeTeamId={homeTeamId}/awayTeamId={awayTeamId}")]
+        public async Task<IActionResult> GetHeadToHeadFixturesByTeamIds(int homeTeamId, int awayTeamId)
+        {
+            try
+            {
+                var fixtures = await _fixturesService.GetHeadToHeadFixturesByTeamIdsAsync(homeTeamId, awayTeamId);
+
+                if (fixtures is null) return NotFound();
+
+                return Ok(fixtures);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching head-to-head fixtures for homeTeamId: {homeTeamId}, awayTeamId: {awayTeamId}");
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("leagueId={leagueId}/teamId={teamId}")]
+        public async Task<IActionResult> GetRecentFormByLeagueIdAndTeamId(int leagueId, int teamId)
+        {
+            try
+            {
+                var fixtures = await _fixturesService.GetRecentFormByLeagueIdAndTeamIdAsync(leagueId, teamId);
+
+                if (fixtures is null) return NotFound();
+
+                return Ok(fixtures);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching recent fixtures for leagueId: {leagueId}, teamId: {teamId}");
+                return BadRequest();
+            }
+        }
     }
 }

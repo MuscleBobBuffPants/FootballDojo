@@ -4,6 +4,7 @@ import {
     Modal,
     Typography
 } from '@mui/material';
+import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
 function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
     return (
@@ -64,8 +65,8 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                         <Box
                             component="img"
-                            src={selectedFixture.awayTeamLogo}
-                            alt={selectedFixture.awayTeam}
+                            src={selectedFixture.awayTeam.logo}
+                            alt={selectedFixture.awayTeam.name}
                             sx={(theme) => ({
                                 width: 96,
                                 height: 96,
@@ -77,8 +78,9 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                             })}
                         />
                         <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
-                            {selectedFixture.awayTeam}
+                            {selectedFixture.awayTeam.name}
                         </Typography>
+                        <RecentFormBubbles selectedTeamId={selectedFixture.awayTeam.id} />
                     </Box>
 
                     <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
@@ -88,8 +90,8 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                         <Box
                             component="img"
-                            src={selectedFixture.homeTeamLogo}
-                            alt={selectedFixture.homeTeam}
+                            src={selectedFixture.homeTeam.logo}
+                            alt={selectedFixture.homeTeam.name}
                             sx={(theme) => ({
                                 width: 96,
                                 height: 96,
@@ -101,8 +103,9 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                             })}
                         />
                         <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
-                            {selectedFixture.homeTeam}
+                            {selectedFixture.homeTeam.name}
                         </Typography>
+                        <RecentFormBubbles selectedTeamId={selectedFixture.homeTeam.id} />
                     </Box>
                 </Box>
                 <Box
