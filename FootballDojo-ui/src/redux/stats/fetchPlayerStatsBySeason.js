@@ -27,6 +27,7 @@ const playerStatsBySeason = createSlice({
             .addCase(fetchPlayerStatsBySeason.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
+                state.list = [];
             })
             .addCase(fetchPlayerStatsBySeason.fulfilled, (state, action) => {
                 state.status = 'succeeded';

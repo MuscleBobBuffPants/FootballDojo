@@ -6,6 +6,20 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useMemo, useState } from 'react';
+import YouTubeCard from '../players/playerProfiles/youtubeCard';
+
+const STAT_LABELS = {
+    appearences: "Apps",
+    minutes: "Mins.",
+    on: "On Target",
+    lineups: "Starts",
+    interceptions: "Steals",
+    in: "Came On",
+    out: "Left"
+};
+
+const formatHeaderName = (propName) =>
+    STAT_LABELS[propName] || propName.charAt(0).toUpperCase() + propName.slice(1);
 
 function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
     const categories = useMemo(() => Object.entries(playerStatsBySeason[0]), [playerStatsBySeason]);
@@ -19,8 +33,8 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
         const excludedPropsByCategory = {
             goals: selectedPlayer.position === "Goalkeeper"
                 ? ['total', 'assists']
-                : ['conceded', 'saves']
-            // Add other categories here if needed
+                : ['conceded', 'saves'],
+            cards: ['yellowRed']
         };
 
         const validProps = Object.entries(properties).filter(([propName, value]) =>
@@ -30,11 +44,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
 
         const columns = validProps.map(([propName]) => ({
             field: propName,
-            headerName: propName === "appearences" ? "Apps" :
-                propName === "minutes" ? "Mins." :
-                    propName === "on" ? "On Target" :
-                        propName === "lineups" ? "Starts" :
-                            propName.charAt(0).toUpperCase() + propName.slice(1),
+            headerName: formatHeaderName(propName),
             width: 70,
             flex: 1,
             align: 'center',
@@ -60,10 +70,10 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                 sx={{
                     width: '100%',
                     maxWidth: 300,
-                    height: 150,
+                    maxHeight: 300,
                     overflowY: 'auto',
                     borderRadius: 1,
-                    p: 1,
+                    p: 1
                 }}
             >
                 <DataGrid
@@ -114,9 +124,19 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
             positon: 'relative'
         }}>
             <Box sx={{ pl: 1, pt: .25, alignSelf: 'flex-start', minWidth: 200 }}>
-                <FormControl size="small" sx={{minWidth: 125} }>
+                <FormControl size="small" sx={{ minWidth: 125 }}>
                     <InputLabel>Stat Category</InputLabel>
-                    <Select value={selectedCategory} onChange={handleChange} label="Stat Category">
+                    <Select
+                        value={selectedCategory}
+                        onChange={handleChange}
+                        label="Stat Category"
+                        MenuProps={{
+                            PaperProps: {
+                                style: {
+                                    maxHeight: 38 * 5 + 8, // 5 items at 48px height + padding
+                                },
+                            },
+                        }}                    >
                         {categories.map(([categoryName]) => (
                             <MenuItem key={categoryName} value={categoryName}>
                                 {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
@@ -127,6 +147,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
             </Box>
             <Box sx={{ width: 250 }}>
                 {dataGrids[selectedCategory]}
+                <YouTubeCard selectedPlayer={selectedPlayer} />
             </Box>
         </Box>
     );
