@@ -10,7 +10,7 @@ import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
 import FixturesGrid from "../fixtures/fixtureGrid";
 import FixtureSeasonDropdown from '../fixtures/fixtureSeasonDropdown';
-import LineupBuilder from '../lineupCreator/lineupCreator';
+import LineupBuilder from '../lineupBuilder/lineupBuilder';
 import PlayerGrid from '../players/playerGrid';
 import TeamLogoIcon from '../teams/teamLogoIcon';
 import TeamSelectDropdown from '../teams/teamSelectDropdown';

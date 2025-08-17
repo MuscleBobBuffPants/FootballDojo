@@ -81,7 +81,7 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
             sx={{
                 position: "relative",
                 width: 970,
-                height: 800,
+                height: 550,
                 bgcolor: "green",
                 border: "4px solid #ccc",
                 borderRadius: 2,
@@ -152,43 +152,43 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
         () => ({
             "4-3-3": [
                 // Attackers
-                { id: 2, label: "ST", role: "Attacker", top: "10%", left: "50%" },
-                { id: 3, label: "LW", role: "Attacker", top: "15%", left: "25%" },
-                { id: 4, label: "RW", role: "Attacker", top: "15%", left: "75%" },
+                { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+                { id: 3, label: "LW", role: "Attacker", top: "10%", left: "25%" },
+                { id: 4, label: "RW", role: "Attacker", top: "10%", left: "75%" },
 
                 // Midfielders
-                { id: 5, label: "CM", role: "Midfielder", top: "40%", left: "30%" },
-                { id: 6, label: "CM", role: "Midfielder", top: "40%", left: "70%" },
-                { id: 7, label: "CDM", role: "Midfielder", top: "55%", left: "50%" },
+                { id: 5, label: "CM", role: "Midfielder", top: "35%", left: "30%" },
+                { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "70%" },
+                { id: 7, label: "CDM", role: "Midfielder", top: "40%", left: "50%" },
 
                 // Defenders
-                { id: 8, label: "LB", role: "Defender", top: "75%", left: "15%" },
-                { id: 9, label: "RB", role: "Defender", top: "75%", left: "85%" },
-                { id: 10, label: "CB", role: "Defender", top: "75%", left: "40%" },
-                { id: 11, label: "CB", role: "Defender", top: "75%", left: "60%" },
+                { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+                { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+                { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+                { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
 
                 // Goalkeeper
-                { id: 1, label: "GK", role: "Goalkeeper", top: "90%", left: "50%" }
+                { id: 1, label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
             ],
             "4-4-2": [
                 // Attackers
-                { id: 2, label: "ST", role: "Attacker", top: "15%", left: "40%" },
-                { id: 3, label: "ST", role: "Attacker", top: "15%", left: "60%" },
+                { id: 2, label: "ST", role: "Attacker", top: "7%", left: "40%" },
+                { id: 3, label: "ST", role: "Attacker", top: "7%", left: "60%" },
 
                 // Midfielders
-                { id: 4, label: "LM", role: "Midfielder", top: "40%", left: "25%" },
-                { id: 5, label: "RM", role: "Midfielder", top: "40%", left: "75%" },
-                { id: 6, label: "CM", role: "Midfielder", top: "50%", left: "40%" },
-                { id: 7, label: "CM", role: "Midfielder", top: "50%", left: "60%" },
+                { id: 4, label: "LM", role: "Midfielder", top: "32%", left: "25%" },
+                { id: 5, label: "RM", role: "Midfielder", top: "32%", left: "75%" },
+                { id: 6, label: "CM", role: "Midfielder", top: "42%", left: "40%" },
+                { id: 7, label: "CM", role: "Midfielder", top: "42%", left: "60%" },
 
                 // Defenders
-                { id: 8, label: "LB", role: "Defender", top: "75%", left: "15%" },
-                { id: 9, label: "RB", role: "Defender", top: "75%", left: "85%" },
-                { id: 10, label: "CB", role: "Defender", top: "75%", left: "40%" },
-                { id: 11, label: "CB", role: "Defender", top: "75%", left: "60%" },
+                { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+                { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+                { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+                { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
 
                 // Goalkeeper
-                { id: 1, label: "GK", role: "Goalkeeper", top: "90%", left: "50%" }
+                { id: 1, label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
             ]
         }),
         []
@@ -227,7 +227,7 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                     <MenuItem value="4-4-2">4-4-2</MenuItem>
                 </Select>
             </Box>
-            <Box sx={{ width: 970, position: "relative", mt: "-1%" }}>
+            <Box sx={{ width: 970, position: "relative" }}>
                 <Typography
                     variant="h5"
                     component="h2"
@@ -236,10 +236,7 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                 >
                     Lineup Builder
                 </Typography>
-                <Box sx={{
-                    transform: "scale(0.7)",   // 70% of original size
-                    transformOrigin: "top center", // anchor at top center
-                }}>
+                <Box>
                 <SoccerField
                     positions={formations[formation]}
                     lineup={lineup}
