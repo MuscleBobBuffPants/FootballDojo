@@ -1,0 +1,170 @@
+import { Box, Typography, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { formatUtcDate, isNonEmptyObject } from "../../../global/constants";
+import { fetchHeadToHeadFixtures } from "../../../redux/fixtures/fetchHeadToHeadFixtures";
+
+function FixtureHeadToHeadGrid({ selectedFixture }) {
+    const dispatch = useDispatch();
+    const theme = useTheme();
+
+    const headToHeadFixtures = useSelector((state) => state.headToHeadFixtures.list);
+    //const status = useSelector((state) => state.playersByTeam.status);
+    //const error = useSelector((state) => state.playersByTeam.error);
+
+    //if (status === 'loading') {
+    //    return <p>Loading players...</p>;
+    //}
+
+    //if (status === 'failed') {
+    //    return <p>Error: {error}</p>;
+    //}
+
+    const getGoalColor = (teamGoals, otherGoals) => {
+        if (teamGoals > otherGoals) return { bg: theme.palette.success.main, fg: theme.palette.getContrastText(theme.palette.success.main) };
+        if (teamGoals < otherGoals) return { bg: theme.palette.error.main, fg: theme.palette.getContrastText(theme.palette.error.main) };
+        return { bg: theme.palette.grey[500], fg: theme.palette.getContrastText(theme.palette.grey[500]) };
+    };
+
+    const GoalBubble = ({ teamGoals, otherGoals }) => {
+        const { bg, fg } = getGoalColor(teamGoals, otherGoals);
+        return (
+            <Box
+                sx={{
+                    display: 'inline-flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 18,
+                    height: 18,
+                    borderRadius: '50%',
+                    bgcolor: bg,
+                    color: fg,
+                    fontWeight: 'bold',
+                }}
+            >
+                {teamGoals}
+            </Box>
+        );
+    };
+
+    const columns = [
+        {
+            field: 'awayTeamGoals',
+            headerName: '',
+            align: 'center',
+            width: 80,
+            sortable: false,
+            renderCell: (params) => (
+                <GoalBubble
+                    teamGoals={params.row.awayTeamGoals}
+                    otherGoals={params.row.homeTeamGoals}
+                />
+            ),
+        },
+        {
+            field: "matchup",
+            headerName: `Previous Matchups (${headToHeadFixtures.length})`,
+            headerAlign: 'center',
+            align: 'center',
+            width: 300,
+            sortable: false,
+            renderCell: (params) => (
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        pt: .75
+                    }}>
+                    <Typography variant="body2" sx={{ pb: .2 }}>{params.row.matchup}</Typography>
+                    <Typography variant="caption" color="textSecondary">
+                        {params.row.date}
+                    </Typography>
+                </Box>
+            ),
+        },
+
+        {
+            field: 'homeTeamGoals',
+            headerName: '',
+            align: 'center',
+            width: 80,
+            sortable: false,
+            renderCell: (params) => (
+                <GoalBubble
+                    teamGoals={params.row.homeTeamGoals}
+                    otherGoals={params.row.awayTeamGoals}
+                />
+            ),
+        },
+    ];
+
+    useEffect(() => {
+        if (isNonEmptyObject(selectedFixture)) {
+            dispatch(fetchHeadToHeadFixtures({ homeTeamId: selectedFixture.homeTeam.id, awayTeamId: selectedFixture.awayTeam.id }));
+        }
+    }, [dispatch, selectedFixture]);
+
+    const filteredFixtures = isNonEmptyObject(selectedFixture)
+        ? headToHeadFixtures
+            .filter(fixture => fixture.goals.home !== null && fixture.goals.away !== null)
+            .map((response, index) => {
+                const formattedDate = formatUtcDate(new Date(response.fixture.date));
+                return {
+                    id: index,
+                    homeTeamGoals: response.goals.home,
+                    date: formattedDate,
+                    rawDate: new Date(response.fixture.date),
+                    matchup: response.teams.away.name + ' @ ' + response.teams.home.name,
+                    awayTeamGoals: response.goals.away
+                }
+            })
+            .sort((a, b) => b.rawDate - a.rawDate) // descending
+        : [];
+
+    return (
+        <div style={{ textAlign: "left" }}>
+            <div style={{ display: "inline-block", border: "3px solid #ccc", borderRadius: 8 }}>
+                <DataGrid
+                    rows={filteredFixtures}
+                    columns={columns}
+                    sortModel={[{ field: "date", sort: "desc" }]}
+                    disableColumnResize={true}
+                    disablePagination={true}
+                    disableRowSelectionOnClick
+                    hideFooter={true}
+                    hideFooterSelectedRowCount
+                    disableColumnMenu
+                    sx={{
+                        maxWidth: 550,
+                        height: 52 * 3 + 56, // 3 items at 52px height + padding
+                        '& .MuiDataGrid-cell': {
+                            '&:hover': {
+                                backgroundColor: 'transparent',
+                            },
+                        },
+                        '& .MuiDataGrid-columnHeader': {
+                            fontSize: 12,
+                            '&:hover': {
+                                backgroundColor: 'transparent',
+                            },
+                        },
+                        '& .MuiDataGrid-row:hover': {
+                            backgroundColor: 'transparent !important',
+                        },
+                        '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
+                            outline: 'none',
+                        },
+                        '& .MuiDataGrid-columnSeparator': {
+                            display: 'none',
+                        },
+                    }}
+                />
+            </div>
+        </div>
+    );
+}
+
+export default FixtureHeadToHeadGrid;

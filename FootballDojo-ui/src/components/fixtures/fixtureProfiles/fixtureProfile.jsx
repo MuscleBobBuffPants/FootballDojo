@@ -4,6 +4,8 @@ import {
     Modal,
     Typography
 } from '@mui/material';
+import { isNonEmptyObject } from "../../../global/constants";
+import FixtureHeadToHeadGrid from "../fixtureProfiles/fixtureHeadToHeadGrid";
 import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
 function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
@@ -108,6 +110,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                         <RecentFormBubbles selectedTeamId={selectedFixture.homeTeam.id} />
                     </Box>
                 </Box>
+                {isNonEmptyObject(selectedFixture) && <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />}
                 <Box
                     sx={{
                         mt: 4,

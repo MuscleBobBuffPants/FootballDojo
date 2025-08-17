@@ -1,5 +1,13 @@
 export const isNonEmptyObject = obj => obj && Object.keys(obj).length > 0;
 
+export const formatUtcDate = (utcDate) => {
+    const date = new Date(utcDate);
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const year = date.getUTCFullYear();
+    return `${month} - ${day} - ${year}`;
+}
+
 export const positionOrder = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
 // Test Data

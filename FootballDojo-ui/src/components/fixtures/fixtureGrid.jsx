@@ -3,8 +3,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixtureProfile";
-import { isNonEmptyObject } from "../../global/constants";
+import { formatUtcDate, isNonEmptyObject } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
+
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
         <Box
@@ -28,14 +29,6 @@ const columns = [
     { field: "date", headerName: "Date", headerAlign: 'center', align: 'center', width: 125, sortable: false },
     { field: "matchup", headerName: "Matchup", headerAlign: 'center', align: 'center', width: 300, sortable: false }
 ];
-
-const formatUtcDate = (utcDate) => {
-    const date = new Date(utcDate);
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const year = date.getUTCFullYear();
-    return `${month} - ${day} - ${year}`;
-}
 
 function FixturesGrid({ selectedTeam }) {
     const dispatch = useDispatch();
