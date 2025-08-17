@@ -70,7 +70,8 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
     const filteredPlayersBySlot = useMemo(() => {
         const map = {};
         positions.forEach((pos) => {
-            map[pos.id] = players.filter((p) => p.position === pos.role);
+            const allowedRoles = Array.isArray(pos.role) ? pos.role : [pos.role];
+            map[pos.id] = players.filter((p) => allowedRoles.includes(p.position));
         });
         return map;
     }, [positions, players]);
@@ -156,35 +157,35 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                 { id: 4, label: "RW", role: "Attacker", top: "15%", left: "75%" },
 
                 // Midfielders
-                { id: 5, label: "CM1", role: "Midfielder", top: "40%", left: "30%" },
-                { id: 6, label: "CM2", role: "Midfielder", top: "40%", left: "70%" },
+                { id: 5, label: "CM", role: "Midfielder", top: "40%", left: "30%" },
+                { id: 6, label: "CM", role: "Midfielder", top: "40%", left: "70%" },
                 { id: 7, label: "CDM", role: "Midfielder", top: "55%", left: "50%" },
 
                 // Defenders
                 { id: 8, label: "LB", role: "Defender", top: "75%", left: "15%" },
                 { id: 9, label: "RB", role: "Defender", top: "75%", left: "85%" },
-                { id: 10, label: "CB1", role: "Defender", top: "75%", left: "40%" },
-                { id: 11, label: "CB2", role: "Defender", top: "75%", left: "60%" },
+                { id: 10, label: "CB", role: "Defender", top: "75%", left: "40%" },
+                { id: 11, label: "CB", role: "Defender", top: "75%", left: "60%" },
 
                 // Goalkeeper
                 { id: 1, label: "GK", role: "Goalkeeper", top: "90%", left: "50%" }
             ],
             "4-4-2": [
                 // Attackers
-                { id: 2, label: "ST1", role: "Attacker", top: "15%", left: "40%" },
-                { id: 3, label: "ST2", role: "Attacker", top: "15%", left: "60%" },
+                { id: 2, label: "ST", role: "Attacker", top: "15%", left: "40%" },
+                { id: 3, label: "ST", role: "Attacker", top: "15%", left: "60%" },
 
                 // Midfielders
-                { id: 4, label: "LM", role: "Midfielder", top: "35%", left: "25%" },
-                { id: 5, label: "RM", role: "Midfielder", top: "35%", left: "75%" },
-                { id: 6, label: "CM1", role: "Midfielder", top: "35%", left: "45%" },
-                { id: 7, label: "CM2", role: "Midfielder", top: "35%", left: "55%" },
+                { id: 4, label: "LM", role: "Midfielder", top: "40%", left: "25%" },
+                { id: 5, label: "RM", role: "Midfielder", top: "40%", left: "75%" },
+                { id: 6, label: "CM", role: "Midfielder", top: "50%", left: "40%" },
+                { id: 7, label: "CM", role: "Midfielder", top: "50%", left: "60%" },
 
                 // Defenders
                 { id: 8, label: "LB", role: "Defender", top: "75%", left: "15%" },
                 { id: 9, label: "RB", role: "Defender", top: "75%", left: "85%" },
-                { id: 10, label: "CB1", role: "Defender", top: "75%", left: "40%" },
-                { id: 11, label: "CB2", role: "Defender", top: "75%", left: "60%" },
+                { id: 10, label: "CB", role: "Defender", top: "75%", left: "40%" },
+                { id: 11, label: "CB", role: "Defender", top: "75%", left: "60%" },
 
                 // Goalkeeper
                 { id: 1, label: "GK", role: "Goalkeeper", top: "90%", left: "50%" }
@@ -235,13 +236,17 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                 >
                     Lineup Builder
                 </Typography>
-
+                <Box sx={{
+                    transform: "scale(0.7)",   // 70% of original size
+                    transformOrigin: "top center", // anchor at top center
+                }}>
                 <SoccerField
                     positions={formations[formation]}
                     lineup={lineup}
                     players={playersByTeam}
                     onAssign={handleAssign}
-                />
+                    />
+                </Box>
             </Box>
         </Box>
     );
