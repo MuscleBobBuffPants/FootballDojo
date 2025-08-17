@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PlayerProfile from "../../components/players/playerProfiles/playerProfile";
 import { isNonEmptyObject, positionOrder } from "../../global/constants";
 import { fetchPlayerProfileByPlayerId } from "../../redux/players/fetchPlayerProfileByPlayerId";
-import { fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
 
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
@@ -38,13 +37,12 @@ const columns = [
     }
 ];
 
-function PlayerGrid({ selectedTeam }) {
+function PlayerGrid({ selectedTeam, playersByTeam }) {
     const dispatch = useDispatch();
 
     const [selectedId, setSelectedId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
-    const playersByTeam = useSelector((state) => state.playersByTeam.list);
     const selectedPlayer = useSelector((state) => state.playerProfileByPlayerId.list);
     //const status = useSelector((state) => state.playersByTeam.status);
     //const error = useSelector((state) => state.playersByTeam.error);
@@ -56,12 +54,6 @@ function PlayerGrid({ selectedTeam }) {
     //if (status === 'failed') {
     //    return <p>Error: {error}</p>;
     //}
-
-    useEffect(() => {
-        if (isNonEmptyObject(selectedTeam)) {
-            dispatch(fetchPlayersByTeam({ teamId: selectedTeam.id }));
-        }
-    }, [dispatch, selectedTeam]);
 
     useEffect(() => {
         if (selectedId) {

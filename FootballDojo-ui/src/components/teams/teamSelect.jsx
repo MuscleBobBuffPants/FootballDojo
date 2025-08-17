@@ -5,22 +5,27 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyObject } from "../../global/constants";
+import { clearPlayers, fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
 import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
 import FixturesGrid from "../fixtures/fixtureGrid";
 import FixtureSeasonDropdown from '../fixtures/fixtureSeasonDropdown';
+import LineupBuilder from '../lineupCreator/lineupCreator';
 import PlayerGrid from '../players/playerGrid';
 import TeamLogoIcon from '../teams/teamLogoIcon';
 import TeamSelectDropdown from '../teams/teamSelectDropdown';
 
+
 function TeamSelect() {
     const dispatch = useDispatch();
 
+    const [resetFlag, setResetFlag] = useState(false);
     const [selectedTeam, setSelectedTeam] = useState("");
-    const [selectedSeason, setSelectedSeason] = useState(2025);
     const [teamLogo, setTeamLogo] = useState(null);
+    const [selectedSeason, setSelectedSeason] = useState(2025);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
+    const playersByTeam = useSelector((state) => state.playersByTeam.list);
     //const status = useSelector((state) => state.teamsByLeagueId.status);
     //const error = useSelector((state) => state.teamsByLeagueId.error);
 
@@ -48,12 +53,21 @@ function TeamSelect() {
         }
     }, [selectedTeam]);
 
+    useEffect(() => {
+        if (isNonEmptyObject(selectedTeam)) {
+            dispatch(fetchPlayersByTeam({ teamId: selectedTeam.id }));
+        }
+    }, [dispatch, selectedTeam]);
+
     const handleChange = (event) => {
+        setResetFlag(prev => !prev);
         setSelectedTeam(event.target.value);
     };
 
     const handleReset = () => {
+        setResetFlag(prev => !prev);
         setSelectedTeam(null);
+        dispatch(clearPlayers());
     };
 
     return (
@@ -79,9 +93,10 @@ function TeamSelect() {
                     selectedSeason={selectedSeason} />
             </Box>
             <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-                <PlayerGrid selectedTeam={selectedTeam} />
+                <PlayerGrid selectedTeam={selectedTeam} playersByTeam={playersByTeam} />
                 <FixturesGrid selectedTeam={selectedTeam} />
             </div>
+            <LineupBuilder playersByTeam={playersByTeam} resetFlag={resetFlag} />
         </div>
     );
 }
