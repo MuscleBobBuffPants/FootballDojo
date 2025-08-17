@@ -141,11 +141,13 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                         maxWidth: 550,
                         height: 52 * 3 + 56, // 3 items at 52px height + padding
                         '& .MuiDataGrid-cell': {
+                            cursor: 'default',
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },
                         },
                         '& .MuiDataGrid-columnHeader': {
+                            cursor: 'default',
                             fontSize: 15,
                             '&:hover': {
                                 backgroundColor: 'transparent',
