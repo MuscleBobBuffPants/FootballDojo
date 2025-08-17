@@ -146,7 +146,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                             },
                         },
                         '& .MuiDataGrid-columnHeader': {
-                            fontSize: 12,
+                            fontSize: 15,
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },

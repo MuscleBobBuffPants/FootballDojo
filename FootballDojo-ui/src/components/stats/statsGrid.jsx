@@ -123,22 +123,23 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
             width: '100%',
             positon: 'relative'
         }}>
-            <Box sx={{ pl: 1, pt: .25, alignSelf: 'flex-start', minWidth: 200 }}>
-                <FormControl size="small" sx={{ minWidth: 125 }}>
-                    <InputLabel>Stat Category</InputLabel>
+            <Box sx={{ pl: 1, pt: .25, alignSelf: 'flex-start' }}>
+                <FormControl size="small" sx={{ minWidth: 115 }}>
+                    <InputLabel sx={{ fontSize: 13 }}>Stat Category</InputLabel>
                     <Select
                         value={selectedCategory}
                         onChange={handleChange}
                         label="Stat Category"
+                        sx={{ fontSize: 13 }}
                         MenuProps={{
                             PaperProps: {
                                 style: {
-                                    maxHeight: 38 * 5 + 8, // 5 items at 48px height + padding
+                                    maxHeight: 38 * 4 + 8, // 5 items at 48px height + padding
                                 },
                             },
                         }}                    >
                         {categories.map(([categoryName]) => (
-                            <MenuItem key={categoryName} value={categoryName}>
+                            <MenuItem key={categoryName} value={categoryName} sx={{ fontSize: 13 }}>
                                 {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
                             </MenuItem>
                         ))}
