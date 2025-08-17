@@ -138,7 +138,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                     hideFooterSelectedRowCount
                     disableColumnMenu
                     sx={{
-                        maxWidth: 550,
+                        maxWidth: 480,
                         height: 52 * 3 + 56, // 3 items at 52px height + padding
                         '& .MuiDataGrid-cell': {
                             cursor: 'default',
