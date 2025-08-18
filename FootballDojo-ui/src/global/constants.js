@@ -73,7 +73,7 @@ export const FORMATIONS = {
 
         { id: 5, label: "CM", role: "Midfielder", top: "35%", left: "30%" },
         { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "70%" },
-        { id: 7, label: "CDM", role: "Midfielder", top: "40%", left: "50%" },
+        { id: 7, label: "CDM", role: "Midfielder", top: "45%", left: "50%" },
 
         { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
         { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
@@ -107,8 +107,8 @@ export const FORMATIONS = {
         { id: 4, label: "CAM", role: "Midfielder", top: "25%", left: "50%" },
         { id: 5, label: "RW", role: "Attacker", top: "15%", left: "80%" },
 
-        { id: 6, label: "CDM", role: "Midfielder", top: "42%", left: "35%" },
-        { id: 7, label: "CDM", role: "Midfielder", top: "42%", left: "65%" },
+        { id: 6, label: "CDM", role: "Midfielder", top: "45%", left: "35%" },
+        { id: 7, label: "CDM", role: "Midfielder", top: "45%", left: "65%" },
 
         { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
         { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
