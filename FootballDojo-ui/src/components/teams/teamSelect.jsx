@@ -93,10 +93,16 @@ function TeamSelect() {
                     selectedSeason={selectedSeason} />
             </Box>
             <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-                <PlayerGrid selectedTeam={selectedTeam} playersByTeam={playersByTeam} />
-                <FixturesGrid selectedTeam={selectedTeam} />
+                <PlayerGrid
+                    selectedTeam={selectedTeam}
+                    playersByTeam={playersByTeam} />
+                <FixturesGrid
+                    selectedTeam={selectedTeam} />
             </div>
-            <LineupBuilder playersByTeam={playersByTeam} resetFlag={resetFlag} />
+            <LineupBuilder
+                selectedTeam={selectedTeam.name ? selectedTeam.name : ""}
+                playersByTeam={playersByTeam}
+                resetFlag={resetFlag} />
         </div>
     );
 }
