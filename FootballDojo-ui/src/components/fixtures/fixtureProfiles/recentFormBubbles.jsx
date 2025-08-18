@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecentFormByTeamId } from "../../../redux/fixtures/fetchRecentFormByTeamId";
+import { isNonEmptyListObject } from "../../../global/constants";
 
 function getRecentFormForTeam(fixtures, selectedTeamId) {
     if (!fixtures) return [];
@@ -55,7 +56,7 @@ function RecentFormBubbles({ size = 23, selectedTeamId }) {
 
     return (
         <Stack direction="row" alignItems="center" spacing={1}>
-            {recentFormByTeamId && recentFormByTeamId.length > 0 && recentFormByTeamId.map((r, i) => {
+            {isNonEmptyListObject(recentFormByTeamId) && recentFormByTeamId.map((r, i) => {
                 const { bg, fg, label } = paletteFor(r);
                 return (
                     <Tooltip key={`${r}-${i}`} title={label} arrow>

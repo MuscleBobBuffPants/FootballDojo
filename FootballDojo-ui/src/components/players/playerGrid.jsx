@@ -89,7 +89,7 @@ function PlayerGrid({ selectedTeam, playersByTeam }) {
 
     return (
         <div style={{ textAlign: "left" }}>
-            <div style={{ display: "inline-block", marginLeft: 0, border: "3px solid #ccc", borderRadius: 8 }}>
+            <div style={{ display: "inline-block", border: "3px solid #ccc", borderRadius: 8 }}>
                 <DataGrid
                     rows={filteredPlayers}
                     columns={columns}

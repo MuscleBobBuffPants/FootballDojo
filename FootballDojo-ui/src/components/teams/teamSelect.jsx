@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isNonEmptyObject } from "../../global/constants";
+import { isNonEmptyListObject, isNonEmptyObject } from "../../global/constants";
 import { clearPlayers, fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
 import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
@@ -70,6 +70,10 @@ function TeamSelect() {
         dispatch(clearPlayers());
     };
 
+    const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
+        a.name.localeCompare(b.name)
+    ) : [];
+
     return (
         <div>
             <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, mb: 2 }} >
@@ -95,13 +99,13 @@ function TeamSelect() {
             <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
                 <PlayerGrid
                     selectedTeam={selectedTeam}
-                    playersByTeam={playersByTeam} />
+                    playersByTeam={sortedPlayers} />
                 <FixturesGrid
                     selectedTeam={selectedTeam} />
             </div>
             <LineupBuilder
-                selectedTeam={selectedTeam.name ? selectedTeam.name : ""}
-                playersByTeam={playersByTeam}
+                selectedTeam={selectedTeam ? selectedTeam.name : ""}
+                playersByTeam={sortedPlayers}
                 resetFlag={resetFlag} />
         </div>
     );

@@ -1,9 +1,9 @@
-﻿import { Box, MenuItem, Select, Typography, Button } from "@mui/material";
+﻿import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
+import { toPng } from "html-to-image";
+import { QRCodeCanvas as QRCode } from "qrcode.react";
 import React, { useEffect, useRef, useState } from "react";
 import { FORMATIONS } from "../../global/constants";
 import SoccerField from "../lineupBuilder/soccerField";
-import { toPng } from "html-to-image";
-import { QRCodeCanvas as QRCode } from "qrcode.react";
 
 export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }) {
     const [lineup, setLineup] = useState({});
@@ -76,13 +76,11 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                 </Select>
             </Box>
 
-            <Box sx={{ width: 970, display: "flex", gap: 4 }}>
-                {/* Lineup Builder (left) */}
+            <Box sx={{ width: 970, display: "flex", gap: 2 }}>
                 <Box flex={1}>
-                    <Typography variant="h5" component="h2" align="center" sx={{ mb: 2 }}>
+                    <Typography variant="h5" align="center" sx={{ mb: 2 }}>
                         Lineup Builder
                     </Typography>
-                    {/* Attach ref to container */}
                     <Box ref={fieldRef}>
                         <SoccerField
                             positions={FORMATIONS[formation]}
@@ -93,7 +91,6 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                     </Box>
                 </Box>
 
-                {/* Controls (right) */}
                 {isLineupComplete() &&
                     <Box display="flex" flexDirection="column" alignItems="center" mt="+7%">
                         <Button
@@ -105,8 +102,6 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                         >
                             Generate PNG & QR Code
                         </Button>
-
-                        {/* Fixed-size container for QR code */}
                         <Box sx={{ width: 100, height: 100 }}>
                             {pngBlobUrl && (
                                 <a href={pngBlobUrl} download={fileName}>

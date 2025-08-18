@@ -1,5 +1,6 @@
 // Helper Functions
 export const isNonEmptyObject = obj => obj && Object.keys(obj).length > 0;
+export const isNonEmptyListObject = obj => obj && obj.length > 0;
 
 export const formatUtcDate = (utcDate) => {
     const date = new Date(utcDate);
