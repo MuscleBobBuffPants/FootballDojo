@@ -61,9 +61,9 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
             <Box display="flex" pt={2} mb={2}>
                 <Typography sx={{ pr: 1, pl: 0.5 }}>Formation:</Typography>
                 <Select
+                    size="small"
                     value={formation}
                     onChange={(e) => setFormation(e.target.value)}
-                    size="small"
                     MenuProps={{
                         PaperProps: { style: { maxHeight: 48 * 4 + 8 } },
                     }}
