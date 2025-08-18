@@ -109,7 +109,11 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                         ))}
                     </Box>
                     {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
-                        (<StatsGrid selectedPlayer={selectedPlayer} playerStatsBySeason={playerStatsBySeason} />)
+                        (
+                            <StatsGrid
+                                selectedPlayer={selectedPlayer}
+                                playerStatsBySeason={playerStatsBySeason} />
+                        )
                     }
                 </Box>
                 <Box

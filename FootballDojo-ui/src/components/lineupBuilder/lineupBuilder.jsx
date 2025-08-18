@@ -7,7 +7,7 @@ import SoccerField from "../lineupBuilder/soccerField";
 export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }) {
     const [lineup, setLineup] = useState({});
     const [formation, setFormation] = useState("4-3-3");
-    const [pngBlobUrl, setPngBlobUrl] = useState(""); // Blob URL for QR
+    const [pngBlobUrl, setPngBlobUrl] = useState("");
     const fieldRef = useRef(null);
 
     useEffect(() => {
@@ -26,6 +26,11 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
             newLineup[slotId] = playerId ?? null;
             return newLineup;
         });
+    };
+
+    const isLineupComplete = () => {
+        const positions = FORMATIONS[formation];
+        return positions.every((slot) => lineup[slot.id]);
     };
 
     const handleGeneratePNG = async () => {
@@ -58,11 +63,6 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
         }
     };
 
-    const isLineupComplete = () => {
-        const positions = FORMATIONS[formation];
-        return positions.every((slot) => lineup[slot.id]); // slot.id must have a playerId
-    };
-
     const fileName = selectedTeam ? `${selectedTeam}_${formation}.png` : "";
 
     return (
@@ -84,7 +84,6 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                     ))}
                 </Select>
             </Box>
-
             <Box sx={{ width: 970, display: "flex", gap: 2 }}>
                 <Box flex={1}>
                     <Typography variant="h5" align="center" sx={{ mb: 2 }}>
@@ -120,7 +119,8 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                                 download
                             </a>
                         )}
-                    </Box>}
+                    </Box>
+                }
             </Box>
         </Box>
     );
