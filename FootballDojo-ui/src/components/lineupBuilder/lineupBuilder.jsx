@@ -1,6 +1,5 @@
 ﻿import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
 import { toPng } from "html-to-image";
-import { QRCodeCanvas as QRCode } from "qrcode.react";
 import React, { useEffect, useRef, useState } from "react";
 import { FORMATIONS } from "../../global/constants";
 import SoccerField from "../lineupBuilder/soccerField";
@@ -29,24 +28,34 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
         });
     };
 
-    const handleGeneratePNG = () => {
-        if (!fieldRef.current) return;
+    const handleGeneratePNG = async () => {
+        try {
+            const dataUrl = await toPng(fieldRef.current);
 
-        toPng(fieldRef.current)
-            .then((dataUrl) => {
-                // Convert dataUrl to Blob
-                const byteString = atob(dataUrl.split(",")[1]);
-                const mimeString = dataUrl.split(",")[0].split(":")[1].split(";")[0];
-                const ab = new ArrayBuffer(byteString.length);
-                const ia = new Uint8Array(ab);
-                for (let i = 0; i < byteString.length; i++) {
-                    ia[i] = byteString.charCodeAt(i);
-                }
-                const blob = new Blob([ab], { type: mimeString });
-                const blobUrl = URL.createObjectURL(blob);
-                setPngBlobUrl(blobUrl);
-            })
-            .catch((err) => console.error("Failed to generate PNG:", err));
+            // Create a Blob
+            const byteString = atob(dataUrl.split(",")[1]);
+            const mimeString = dataUrl.split(",")[0].split(":")[1].split(";")[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            const blob = new Blob([ab], { type: mimeString });
+            const blobUrl = URL.createObjectURL(blob);
+
+            // download immediately
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = fileName || "lineup.png";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // optional: keep state if you want preview later
+            setPngBlobUrl(blobUrl);
+        } catch (err) {
+            console.error("Failed to generate PNG:", err);
+        }
     };
 
     const isLineupComplete = () => {
@@ -90,9 +99,8 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                         />
                     </Box>
                 </Box>
-
                 {isLineupComplete() &&
-                    <Box display="flex" flexDirection="column" alignItems="center" mt="+7%">
+                    < Box display="flex" flexDirection="column" alignItems="center" mt="+7%">
                         <Button
                             color="primary"
                             variant="contained"
@@ -100,17 +108,19 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                             sx={{ borderRadius: 2, mb: 2 }}
                             hidden={!isLineupComplete()}
                         >
-                            Generate PNG & QR Code
+                            Download Lineup & Share
                         </Button>
-                        <Box sx={{ width: 100, height: 100 }}>
-                            {pngBlobUrl && (
-                                <a href={pngBlobUrl} download={fileName}>
-                                    <QRCode value={pngBlobUrl} size={90} includeMargin />
-                                </a>
-                            )}
-                        </Box>
+                        {pngBlobUrl && (
+                            <a
+                                href={pngBlobUrl}
+                                download={fileName}
+                                style={{ display: "none" }}
+                                id="download-link"
+                            >
+                                download
+                            </a>
+                        )}
                     </Box>}
-
             </Box>
         </Box>
     );
