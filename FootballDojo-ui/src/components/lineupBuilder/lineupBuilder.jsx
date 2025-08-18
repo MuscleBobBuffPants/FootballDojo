@@ -177,13 +177,15 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                     value={formation}
                     onChange={(e) => setFormation(e.target.value)}
                     size="small"
+                    MenuProps={{
+                        PaperProps: {
+                            style: {
+                                maxHeight: 48 * 4 + 8, // 4 items at 48px height + padding
+                            },
+                        },
+                    }}
                 >
                     {Object.keys(FORMATIONS)
-                        .sort((a, b) => {
-                            const defendersA = parseInt(a.split("-")[0], 10);
-                            const defendersB = parseInt(b.split("-")[0], 10);
-                            return defendersA - defendersB;
-                        })
                         .map((formationKey) => (
                             <MenuItem key={formationKey} value={formationKey}>
                                 {formationKey}
