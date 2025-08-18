@@ -1,3 +1,4 @@
+// Helper Functions
 export const isNonEmptyObject = obj => obj && Object.keys(obj).length > 0;
 
 export const formatUtcDate = (utcDate) => {
@@ -8,25 +9,224 @@ export const formatUtcDate = (utcDate) => {
     return `${month} - ${day} - ${year}`;
 }
 
+// Sort by Position
 export const positionOrder = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
-// Test Data
-export const testTeamData = [
-    { team: { id: 1, name: "Arsenal" } },
-    { team: { id: 2, name: "Liverpool" } },
-    { team: { id: 3, name: "Manchester City" } }];
+// Formations
+export const FORMATIONS = {
+    "4-3-3": [
+        // Attackers
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+        { id: 3, label: "LW", role: "Attacker", top: "10%", left: "25%" },
+        { id: 4, label: "RW", role: "Attacker", top: "10%", left: "75%" },
 
-export const testPlayerData = [
-    { id: 1, number: 22, name: "David Raya", age: 29, position: "Goalkeeper", team: "Arsenal" },
-    { id: 2, number: 2, name: "William Saliba", age: 24, position: "Defender", team: "Arsenal" },
-    { id: 3, number: 7, name: "Bukayo Saka", age: 23, position: "Forward", team: "Arsenal" },
-    { id: 4, number: 14, name: "Viktor Gyokeres", age: 27, position: "Forward", team: "Arsenal" },
-    { id: 5, number: 1, name: "James Trafford", age: 22, position: "Goalkeeper", team: "Manchester City" },
-    { id: 6, number: 24, name: "Josko Gvardiol", age: 23, position: "Defender", team: "Manchester City" },
-    { id: 7, number: 16, name: "Rodri", age: 29, position: "Midfield", team: "Manchester City" },
-    { id: 8, number: 9, name: "Erling Haaland", age: 25, position: "Forward", team: "Manchester City" },
-    { id: 9, number: 1, name: "Alisson Becker", age: 32, position: "GoalKeeper", team: "Liverpool" },
-    { id: 10, number: 4, name: "Virgil van Dijk", age: 34, position: "Defender", team: "Liverpool" },
-    { id: 11, number: 17, name: "Florian Wirtz", age: 22, position: "Midfield", team: "Liverpool" },
-    { id: 12, number: 11, name: "Mohamed Salah", age: 33, position: "Forward", team: "Liverpool" }
-];
+        // Midfielders
+        { id: 5, label: "CM", role: "Midfielder", top: "35%", left: "30%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "70%" },
+        { id: 7, label: "CDM", role: "Midfielder", top: "40%", left: "50%" },
+
+        // Defenders
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        // Goalkeeper
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "4-4-2": [
+        // Attackers
+        { id: 2, label: "ST", role: "Attacker", top: "7%", left: "40%" },
+        { id: 3, label: "ST", role: "Attacker", top: "7%", left: "60%" },
+
+        // Midfielders
+        { id: 4, label: "LM", role: "Midfielder", top: "32%", left: "25%" },
+        { id: 5, label: "RM", role: "Midfielder", top: "32%", left: "75%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "42%", left: "40%" },
+        { id: 7, label: "CM", role: "Midfielder", top: "42%", left: "60%" },
+
+        // Defenders
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        // Goalkeeper
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+    "4-2-3-1": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+
+        { id: 3, label: "LW", role: "Attacker", top: "15%", left: "20%" },
+        { id: 4, label: "CAM", role: "Midfielder", top: "25%", left: "50%" },
+        { id: 5, label: "RW", role: "Attacker", top: "15%", left: "80%" },
+
+        { id: 6, label: "CDM", role: "Midfielder", top: "42%", left: "35%" },
+        { id: 7, label: "CDM", role: "Midfielder", top: "42%", left: "65%" },
+
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "3-4-3": [
+        { id: 2, label: "LW", role: "Attacker", top: "10%", left: "20%" },
+        { id: 3, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+        { id: 4, label: "RW", role: "Attacker", top: "10%", left: "80%" },
+
+        { id: 5, label: "LM", role: "Midfielder", top: "35%", left: "20%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "28%", left: "50%" },
+        { id: 7, label: "RM", role: "Midfielder", top: "35%", left: "80%" },
+        { id: 8, label: "CDM", role: "Midfielder", top: "48%", left: "50%" },
+
+        { id: 9, label: "CB", role: "Defender", top: "65%", left: "20%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "50%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "80%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "3-5-2": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "40%" },
+        { id: 3, label: "ST", role: "Attacker", top: "5%", left: "60%" },
+
+        { id: 4, label: "LM", role: "Midfielder", top: "25%", left: "15%" },
+        { id: 5, label: "RM", role: "Midfielder", top: "25%", left: "85%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "30%" },
+        { id: 7, label: "CM", role: "Midfielder", top: "35%", left: "70%" },
+        { id: 8, label: "CAM", role: "Midfielder", top: "25%", left: "50%" },
+
+        { id: 9, label: "CB", role: "Defender", top: "65%", left: "20%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "50%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "80%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "5-3-2": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "40%" },
+        { id: 3, label: "ST", role: "Attacker", top: "5%", left: "60%" },
+
+        { id: 4, label: "CM", role: "Midfielder", top: "35%", left: "25%" },
+        { id: 5, label: "CM", role: "Midfielder", top: "35%", left: "50%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "75%" },
+
+        { id: 7, label: "LWB", role: "Defender", top: "55%", left: "15%" },
+        { id: 8, label: "RWB", role: "Defender", top: "55%", left: "85%" },
+        { id: 9, label: "CB", role: "Defender", top: "70%", left: "25%" },
+        { id: 10, label: "CB", role: "Defender", top: "70%", left: "50%" },
+        { id: 11, label: "CB", role: "Defender", top: "70%", left: "75%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "5-4-1": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+
+        { id: 3, label: "LM", role: "Midfielder", top: "25%", left: "20%" },
+        { id: 4, label: "CM", role: "Midfielder", top: "30%", left: "40%" },
+        { id: 5, label: "CM", role: "Midfielder", top: "30%", left: "60%" },
+        { id: 6, label: "RM", role: "Midfielder", top: "25%", left: "80%" },
+
+        { id: 7, label: "LWB", role: "Defender", top: "55%", left: "15%" },
+        { id: 8, label: "RWB", role: "Defender", top: "55%", left: "85%" },
+        { id: 9, label: "CB", role: "Defender", top: "70%", left: "25%" },
+        { id: 10, label: "CB", role: "Defender", top: "70%", left: "50%" },
+        { id: 11, label: "CB", role: "Defender", top: "70%", left: "75%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "4-5-1": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+
+        { id: 3, label: "LM", role: "Midfielder", top: "20%", left: "20%" },
+        { id: 4, label: "CM", role: "Midfielder", top: "40%", left: "35%" },
+        { id: 5, label: "CM", role: "Midfielder", top: "40%", left: "65%" },
+        { id: 6, label: "RM", role: "Midfielder", top: "20%", left: "80%" },
+        { id: 7, label: "CAM", role: "Midfielder", top: "25%", left: "50%" },
+
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "4-1-4-1": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+
+        { id: 3, label: "LM", role: "Midfielder", top: "25%", left: "20%" },
+        { id: 4, label: "CM", role: "Midfielder", top: "25%", left: "40%" },
+        { id: 5, label: "CM", role: "Midfielder", top: "25%", left: "60%" },
+        { id: 6, label: "RM", role: "Midfielder", top: "25%", left: "80%" },
+
+        { id: 7, label: "CDM", role: "Midfielder", top: "45%", left: "50%" },
+
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "4-3-1-2": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "40%" },
+        { id: 3, label: "ST", role: "Attacker", top: "5%", left: "60%" },
+
+        { id: 4, label: "CAM", role: "Midfielder", top: "15%", left: "50%" },
+
+        { id: 5, label: "CM", role: "Midfielder", top: "35%", left: "30%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "50%" },
+        { id: 7, label: "CM", role: "Midfielder", top: "35%", left: "70%" },
+
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "4-2-2-2": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "40%" },
+        { id: 3, label: "ST", role: "Attacker", top: "5%", left: "60%" },
+
+        { id: 4, label: "CAM", role: "Midfielder", top: "25%", left: "35%" },
+        { id: 5, label: "CAM", role: "Midfielder", top: "25%", left: "65%" },
+
+        { id: 6, label: "CDM", role: "Midfielder", top: "45%", left: "40%" },
+        { id: 7, label: "CDM", role: "Midfielder", top: "45%", left: "60%" },
+
+        { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
+        { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ],
+
+    "3-4-2-1": [
+        { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
+
+        { id: 3, label: "LAM", role: "Midfielder", top: "15%", left: "35%" },
+        { id: 4, label: "RAM", role: "Midfielder", top: "15%", left: "65%" },
+
+        { id: 5, label: "LM", role: "Midfielder", top: "35%", left: "20%" },
+        { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "45%" },
+        { id: 7, label: "CM", role: "Midfielder", top: "35%", left: "55%" },
+        { id: 8, label: "RM", role: "Midfielder", top: "35%", left: "80%" },
+
+        { id: 9, label: "CB", role: "Defender", top: "65%", left: "20%" },
+        { id: 10, label: "CB", role: "Defender", top: "65%", left: "50%" },
+        { id: 11, label: "CB", role: "Defender", top: "65%", left: "80%" },
+
+        { id: 1, label: "GK", role: "Goalkeeper", top: "85%", left: "50%" }
+    ]
+};

@@ -1,5 +1,6 @@
 ﻿import { Box, MenuItem, Select, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
+import { FORMATIONS } from "../../global/constants";
 
 const SoccerSlot = React.memo(
     ({ slot, players, value, onChange }) => {
@@ -148,52 +149,6 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
         setLineup({});
     }, [playersByTeam, resetFlag, formation]);
 
-    const formations = useMemo(
-        () => ({
-            "4-3-3": [
-                // Attackers
-                { id: 2, label: "ST", role: "Attacker", top: "5%", left: "50%" },
-                { id: 3, label: "LW", role: "Attacker", top: "10%", left: "25%" },
-                { id: 4, label: "RW", role: "Attacker", top: "10%", left: "75%" },
-
-                // Midfielders
-                { id: 5, label: "CM", role: "Midfielder", top: "35%", left: "30%" },
-                { id: 6, label: "CM", role: "Midfielder", top: "35%", left: "70%" },
-                { id: 7, label: "CDM", role: "Midfielder", top: "40%", left: "50%" },
-
-                // Defenders
-                { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
-                { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
-                { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
-                { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
-
-                // Goalkeeper
-                { id: 1, label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
-            ],
-            "4-4-2": [
-                // Attackers
-                { id: 2, label: "ST", role: "Attacker", top: "7%", left: "40%" },
-                { id: 3, label: "ST", role: "Attacker", top: "7%", left: "60%" },
-
-                // Midfielders
-                { id: 4, label: "LM", role: "Midfielder", top: "32%", left: "25%" },
-                { id: 5, label: "RM", role: "Midfielder", top: "32%", left: "75%" },
-                { id: 6, label: "CM", role: "Midfielder", top: "42%", left: "40%" },
-                { id: 7, label: "CM", role: "Midfielder", top: "42%", left: "60%" },
-
-                // Defenders
-                { id: 8, label: "LB", role: "Defender", top: "65%", left: "12%" },
-                { id: 9, label: "RB", role: "Defender", top: "65%", left: "88%" },
-                { id: 10, label: "CB", role: "Defender", top: "65%", left: "37%" },
-                { id: 11, label: "CB", role: "Defender", top: "65%", left: "63%" },
-
-                // Goalkeeper
-                { id: 1, label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
-            ]
-        }),
-        []
-    );
-
     const handleAssign = (slotId, playerId) => {
         setLineup((prev) => {
             const newLineup = { ...prev };
@@ -223,8 +178,17 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                     onChange={(e) => setFormation(e.target.value)}
                     size="small"
                 >
-                    <MenuItem value="4-3-3">4-3-3</MenuItem>
-                    <MenuItem value="4-4-2">4-4-2</MenuItem>
+                    {Object.keys(FORMATIONS)
+                        .sort((a, b) => {
+                            const defendersA = parseInt(a.split("-")[0], 10);
+                            const defendersB = parseInt(b.split("-")[0], 10);
+                            return defendersA - defendersB;
+                        })
+                        .map((formationKey) => (
+                            <MenuItem key={formationKey} value={formationKey}>
+                                {formationKey}
+                            </MenuItem>
+                        ))}
                 </Select>
             </Box>
             <Box sx={{ width: 970, position: "relative" }}>
@@ -237,11 +201,11 @@ export default function LineupBuilder({ playersByTeam, resetFlag }) {
                     Lineup Builder
                 </Typography>
                 <Box>
-                <SoccerField
-                    positions={formations[formation]}
-                    lineup={lineup}
-                    players={playersByTeam}
-                    onAssign={handleAssign}
+                    <SoccerField
+                        positions={FORMATIONS[formation]}
+                        lineup={lineup}
+                        players={playersByTeam}
+                        onAssign={handleAssign}
                     />
                 </Box>
             </Box>
