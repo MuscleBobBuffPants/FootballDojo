@@ -30,6 +30,16 @@ function RecentFormBubbles({ size = 23, selectedTeamId }) {
     const theme = useTheme();
 
     const recentFormByTeamIdAPI = useSelector((state) => state.recentFormByTeamId.byTeamId[selectedTeamId]);
+    //const status = useSelector((state) => state.recentFormByTeamId.status);
+    //const error = useSelector((state) => state.recentFormByTeamId.error);
+
+    //if (status === 'loading') {
+    //    return <p>Loading players...</p>;
+    //}
+
+    //if (status === 'failed') {
+    //    return <p>Error: {error}</p>;
+    //}
 
     useEffect(() => {
         if (selectedTeamId) {

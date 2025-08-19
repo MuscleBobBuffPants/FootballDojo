@@ -5,10 +5,10 @@ import { FORMATIONS } from "../../global/constants";
 import SoccerField from "../lineupBuilder/soccerField";
 
 export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }) {
+    const fieldRef = useRef(null);
     const [lineup, setLineup] = useState({});
     const [formation, setFormation] = useState("4-3-3");
     const [pngBlobUrl, setPngBlobUrl] = useState("");
-    const fieldRef = useRef(null);
 
     useEffect(() => {
         setLineup({});
@@ -98,29 +98,29 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                         />
                     </Box>
                 </Box>
-                {isLineupComplete() &&
-                    < Box display="flex" flexDirection="column" alignItems="center" mt="+7%">
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={handleGeneratePNG}
-                            sx={{ borderRadius: 2, mb: 2 }}
-                            hidden={!isLineupComplete()}
+                {/*{isLineupComplete() &&*/}
+                <Box display="flex" flexDirection="column" alignItems="center" mt="+6%">
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleGeneratePNG}
+                        sx={{ borderRadius: 2, mb: 2 }}
+                        hidden={!isLineupComplete()}
+                    >
+                        Download Lineup & Share
+                    </Button>
+                    {pngBlobUrl && (
+                        <a
+                            href={pngBlobUrl}
+                            download={fileName}
+                            style={{ display: "none" }}
+                            id="download-link"
                         >
-                            Download Lineup & Share
-                        </Button>
-                        {pngBlobUrl && (
-                            <a
-                                href={pngBlobUrl}
-                                download={fileName}
-                                style={{ display: "none" }}
-                                id="download-link"
-                            >
-                                download
-                            </a>
-                        )}
-                    </Box>
-                }
+                            download
+                        </a>
+                    )}
+                </Box>
+                {/*}*/}
             </Box>
         </Box>
     );

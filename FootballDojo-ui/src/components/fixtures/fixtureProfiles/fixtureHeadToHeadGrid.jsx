@@ -10,8 +10,8 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
     const theme = useTheme();
 
     const headToHeadFixtures = useSelector((state) => state.headToHeadFixtures.list);
-    //const status = useSelector((state) => state.playersByTeam.status);
-    //const error = useSelector((state) => state.playersByTeam.error);
+    //const status = useSelector((state) => state.headToHeadFixtures.status);
+    //const error = useSelector((state) => state.headToHeadFixtures.error);
 
     //if (status === 'loading') {
     //    return <p>Loading players...</p>;

@@ -4,6 +4,6 @@ namespace FootballDojo.Services
 {
     public interface IStandingsService
     {
-        Task<Standings> GetStandingsByLeagueIdAndSeasonYearAsync(int leagueId, int seasonYear);
+        Task<List<Standings>> GetStandingsByLeagueIdAndSeasonYearAsync(int leagueId, int seasonYear);
     }
 }

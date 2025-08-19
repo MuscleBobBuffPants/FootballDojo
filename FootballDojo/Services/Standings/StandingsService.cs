@@ -13,14 +13,14 @@ namespace FootballDojo.Services
             _client = client;
         }
 
-        public async Task<Standings> GetStandingsByLeagueIdAndSeasonYearAsync(int leagueId, int seasonYear)
+        public async Task<List<Standings>> GetStandingsByLeagueIdAndSeasonYearAsync(int leagueId, int seasonYear)
         {
             var apiUrl = $"{Constants.BASE_URL}standings?league={leagueId}&season={seasonYear}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<StandingsRoot>(apiUrl);
 
             return (response?.Response?.Count ?? 0) > 0
-                ? response.Response[0].League.Standings
+                ? response.Response[0].League.Standings[0]
                 : null;
         }
     }

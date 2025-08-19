@@ -4,6 +4,7 @@ import headToHeadFixturesReducer from '../redux/fixtures/fetchHeadToHeadFixtures
 import recentFormByTeamIdReducer from '../redux/fixtures/fetchRecentFormByTeamId';
 import playerProfileByPlayerIdReducer from '../redux/players/fetchPlayerProfileByPlayerId';
 import playersByTeamReducer from '../redux/players/fetchPlayersByTeam';
+import standingsByLeagueIdReducer from '../redux/standings/fetchStandingsByLeagueId';
 import playerStatsBySeasonReducer from '../redux/stats/fetchPlayerStatsBySeason';
 import teamsByLeagueIdReducer from '../redux/teams/fetchTeamsByLeagueId';
 
@@ -15,6 +16,7 @@ export const store = configureStore({
         fixturesByLeagueId: fixturesByLeagueIdReducer,
         playerStatsBySeason: playerStatsBySeasonReducer,
         headToHeadFixtures: headToHeadFixturesReducer,
-        recentFormByTeamId: recentFormByTeamIdReducer
+        recentFormByTeamId: recentFormByTeamIdReducer,
+        standingsByLeagueId: standingsByLeagueIdReducer
     },
 });

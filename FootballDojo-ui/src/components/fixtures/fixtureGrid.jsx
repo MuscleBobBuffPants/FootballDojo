@@ -37,8 +37,8 @@ function FixturesGrid({ selectedTeam }) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const fixturesByLeagueId = useSelector((state) => state.fixturesByLeagueId.list);
-    //const status = useSelector((state) => state.playersByTeam.status);
-    //const error = useSelector((state) => state.playersByTeam.error);
+    //const status = useSelector((state) => state.fixturesByLeagueId.status);
+    //const error = useSelector((state) => state.fixturesByLeagueId.error);
 
     //if (status === 'loading') {
     //    return <p>Loading players...</p>;

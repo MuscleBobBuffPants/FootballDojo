@@ -44,8 +44,8 @@ function PlayerGrid({ selectedTeam, playersByTeam }) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const selectedPlayer = useSelector((state) => state.playerProfileByPlayerId.list);
-    //const status = useSelector((state) => state.playersByTeam.status);
-    //const error = useSelector((state) => state.playersByTeam.error);
+    //const status = useSelector((state) => state.playerProfileByPlayerId.status);
+    //const error = useSelector((state) => state.playerProfileByPlayerId.error);
 
     //if (status === 'loading') {
     //    return <p>Loading players...</p>;

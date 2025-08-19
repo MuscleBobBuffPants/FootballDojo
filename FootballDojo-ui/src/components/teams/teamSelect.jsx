@@ -12,6 +12,7 @@ import FixturesGrid from "../fixtures/fixtureGrid";
 import FixtureSeasonDropdown from '../fixtures/fixtureSeasonDropdown';
 import LineupBuilder from '../lineupBuilder/lineupBuilder';
 import PlayerGrid from '../players/playerGrid';
+import StandingsGrid from '../standings/standingsGrid';
 import TeamLogoIcon from '../teams/teamLogoIcon';
 import TeamSelectDropdown from '../teams/teamSelectDropdown';
 
@@ -25,9 +26,11 @@ function TeamSelect() {
     const [selectedSeason, setSelectedSeason] = useState(2025);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
-    const playersByTeam = useSelector((state) => state.playersByTeam.list);
     //const status = useSelector((state) => state.teamsByLeagueId.status);
     //const error = useSelector((state) => state.teamsByLeagueId.error);
+    const playersByTeam = useSelector((state) => state.playersByTeam.list);
+    //const status = useSelector((state) => state.playersByTeam.status);
+    //const error = useSelector((state) => state.playersByTeam.error);
 
     //if (status === 'loading') {
     //    return <p>Loading team...</p>;
@@ -102,6 +105,7 @@ function TeamSelect() {
                     playersByTeam={sortedPlayers} />
                 <FixturesGrid
                     selectedTeam={selectedTeam} />
+                <StandingsGrid />
             </div>
             <LineupBuilder
                 selectedTeam={selectedTeam ? selectedTeam.name : ""}

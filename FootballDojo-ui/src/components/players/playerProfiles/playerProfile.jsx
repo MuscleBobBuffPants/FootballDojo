@@ -15,6 +15,16 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
     const dispatch = useDispatch();
 
     const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
+    //const status = useSelector((state) => state.playerStatsBySeason.status);
+    //const error = useSelector((state) => state.playerStatsBySeason.error);
+
+    //if (status === 'loading') {
+    //    return <p>Loading players...</p>;
+    //}
+
+    //if (status === 'failed') {
+    //    return <p>Error: {error}</p>;
+    //}
 
     useEffect(() => {
         if (isNonEmptyObject(selectedPlayer)) {
@@ -79,7 +89,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                                     border: `3px solid ${theme.palette.divider}`,
                                     borderRadius: 1,
                                     px: 1.5,
-                                    py: 0.5,
+                                    py: 1,
                                     bgcolor: theme.palette.mode === 'dark'
                                         ? theme.palette.background.default
                                         : theme.palette.background.paper,
@@ -94,13 +104,13 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                             >
                                 <Typography
                                     variant="body2"
-                                    sx={(theme) => ({ fontWeight: 'bold', color: theme.palette.text.secondary, fontSize: 12 })}
+                                    sx={(theme) => ({ fontWeight: 'bold', color: theme.palette.text.secondary, fontSize: 14 })}
                                 >
                                     {field.label}:
                                 </Typography>
                                 <Typography variant="body2" sx={(theme) => ({
                                     color: theme.palette.text.primary,
-                                    fontSize: field.fullWidth ? 14 : 12,
+                                    fontSize: field.fullWidth ? 15 : 14,
                                     marginTop: field.fullWidth ? 1 : 0,
                                 })}>
                                     {field.value}
@@ -119,7 +129,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
                 <Box
                     sx={{
                         px: 3,
-                        py: 1,
+                        py: 2,
                         display: 'flex',
                         justifyContent: 'flex-end',
                     }}
