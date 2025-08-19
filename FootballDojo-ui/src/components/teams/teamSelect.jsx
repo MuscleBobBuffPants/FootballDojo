@@ -6,10 +6,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyListObject, isNonEmptyObject } from "../../global/constants";
 import { clearPlayers, fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
+import { clearStandings } from '../../redux/standings/fetchStandingsByLeagueId';
 import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
 import FixturesGrid from "../fixtures/fixtureGrid";
 import FixtureSeasonDropdown from '../fixtures/fixtureSeasonDropdown';
+import LeagueSelectDropdown from '../leagues/leagueSelectDropdown';
 import LineupBuilder from '../lineupBuilder/lineupBuilder';
 import PlayerGrid from '../players/playerGrid';
 import StandingsGrid from '../standings/standingsGrid';
@@ -21,6 +23,7 @@ function TeamSelect() {
     const dispatch = useDispatch();
 
     const [resetFlag, setResetFlag] = useState(false);
+    const [selectedLeague, setSelectedLeague] = useState("");
     const [selectedTeam, setSelectedTeam] = useState("");
     const [teamLogo, setTeamLogo] = useState(null);
     const [selectedSeason, setSelectedSeason] = useState(2025);
@@ -41,14 +44,16 @@ function TeamSelect() {
     //}
 
     useEffect(() => {
-        dispatch(fetchTeamsByLeagueId({ leagueId: 39, seasonYear: 2025 }));
-    }, [dispatch]);
+        if (isNonEmptyObject(selectedLeague)) {
+            dispatch(fetchTeamsByLeagueId({ leagueId: selectedLeague.id, seasonYear: 2025 }));
+        }
+    }, [dispatch, selectedLeague]);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
-            dispatch(fetchTeamByName({ country: "England", teamName: selectedTeam.name }));
+            dispatch(fetchTeamByName({ country: selectedLeague.country, teamName: selectedTeam.name }));
         }
-    }, [dispatch, selectedTeam]);
+    }, [dispatch, selectedLeague, selectedTeam]);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
@@ -62,16 +67,28 @@ function TeamSelect() {
         }
     }, [dispatch, selectedTeam]);
 
-    const handleChange = (event) => {
+    const handleLeagueChange = (event) => {
+        setResetFlag(prev => !prev);
+        setSelectedLeague(event.target.value);
+        setSelectedTeam(null);
+    };
+
+    const handleTeamChange = (event) => {
         setResetFlag(prev => !prev);
         setSelectedTeam(event.target.value);
     };
 
     const handleReset = () => {
         setResetFlag(prev => !prev);
+        clearAllData();
+    };
+
+    const clearAllData = () => {
+        setSelectedLeague(null)
         setSelectedTeam(null);
         dispatch(clearPlayers());
-    };
+        dispatch(clearStandings());
+    }
 
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
         a.name.localeCompare(b.name)
@@ -80,6 +97,10 @@ function TeamSelect() {
     return (
         <div>
             <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, mb: 2 }} >
+                <LeagueSelectDropdown
+                    selectedLeague={selectedLeague}
+                    handleLeagueChange={handleLeagueChange} />
+
                 <TeamLogoIcon
                     selectedTeam={selectedTeam}
                     teamLogo={teamLogo} />
@@ -87,25 +108,27 @@ function TeamSelect() {
                 <TeamSelectDropdown
                     teamsByLeagueId={teamsByLeagueId}
                     selectedTeam={selectedTeam}
-                    handleChange={handleChange} />
+                    handleTeamChange={handleTeamChange} />
+
+                <FixtureSeasonDropdown
+                    selectedTeam={selectedTeam}
+                    selectedSeason={selectedSeason} />
 
                 <Button
                     variant="contained"
                     color="error"
                     onClick={handleReset}
-                    disabled={!selectedTeam}> Reset </Button>
-
-                <FixtureSeasonDropdown
-                    selectedTeam={selectedTeam}
-                    selectedSeason={selectedSeason} />
+                    disabled={!selectedLeague}> Reset </Button>
             </Box>
             <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
                 <PlayerGrid
+                    selectedLeague={selectedLeague}
                     selectedTeam={selectedTeam}
                     playersByTeam={sortedPlayers} />
                 <FixturesGrid
+                    selectedLeague={selectedLeague}
                     selectedTeam={selectedTeam} />
-                <StandingsGrid />
+                <StandingsGrid selectedLeague={selectedLeague} />
             </div>
             <LineupBuilder
                 selectedTeam={selectedTeam ? selectedTeam.name : ""}

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PlayerProfile from "../../components/players/playerProfiles/playerProfile";
 import { isNonEmptyObject, positionOrder } from "../../global/constants";
-import { fetchPlayerProfileByPlayerId } from "../../redux/players/fetchPlayerProfileByPlayerId";
+import { clearPlayer, fetchPlayerProfileByPlayerId } from "../../redux/players/fetchPlayerProfileByPlayerId";
 
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
@@ -37,7 +37,7 @@ const columns = [
     }
 ];
 
-function PlayerGrid({ selectedTeam, playersByTeam }) {
+function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
     const dispatch = useDispatch();
 
     const [selectedId, setSelectedId] = useState(null);
@@ -75,6 +75,7 @@ function PlayerGrid({ selectedTeam, playersByTeam }) {
     const handleClose = () => {
         setModalOpen(false);
         setSelectedId(null);
+        dispatch(clearPlayer());
     };
 
     const filteredPlayers = isNonEmptyObject(selectedTeam)
@@ -122,6 +123,7 @@ function PlayerGrid({ selectedTeam, playersByTeam }) {
                 <PlayerProfile
                     modalOpen={modalOpen}
                     handleClose={handleClose}
+                    selectedLeague={selectedLeague }
                     selectedPlayer={selectedPlayer} />
             </div>
         </div>

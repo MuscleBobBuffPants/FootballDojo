@@ -21,7 +21,13 @@ const initialState = {
 const standingsByLeagueId = createSlice({
     name: 'standingsByLeagueId',
     initialState,
-    reducers: {},
+    reducers: {
+        clearStandings: (state) => {
+            state.list = [];
+            state.status = 'idle';
+            state.error = null;
+        }
+},
     extraReducers: (builder) => {
         builder
             .addCase(fetchStandingsByLeagueId.pending, (state) => {
@@ -38,5 +44,8 @@ const standingsByLeagueId = createSlice({
             });
     },
 });
+
+
+export const { clearStandings } = standingsByLeagueId.actions;
 
 export default standingsByLeagueId.reducer;

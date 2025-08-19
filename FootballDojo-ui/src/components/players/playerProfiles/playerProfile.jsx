@@ -11,7 +11,7 @@ import StatsGrid from '../../../components/stats/statsGrid';
 import { isNonEmptyObject } from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
 
-function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
+function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
 
     const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
@@ -27,10 +27,10 @@ function PlayerProfile({ modalOpen, handleClose, selectedPlayer }) {
     //}
 
     useEffect(() => {
-        if (isNonEmptyObject(selectedPlayer)) {
-            dispatch(fetchPlayerStatsBySeason({ playerId: selectedPlayer.id, leagueId: 39, seasonYear: 2024 }));
+        if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
+            dispatch(fetchPlayerStatsBySeason({ playerId: selectedPlayer.id, leagueId: selectedLeague.id, seasonYear: 2024 }));
         }
-    }, [dispatch, selectedPlayer]);
+    }, [dispatch, selectedLeague, selectedPlayer]);
 
     return (
         <Modal

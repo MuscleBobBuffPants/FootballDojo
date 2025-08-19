@@ -1,8 +1,27 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { isNonEmptyObject } from "../../global/constants";
 import { fetchStandingsByLeagueId } from "../../redux/standings/fetchStandingsByLeagueId";
+
+function CustomNoRowsOverlay({ selectedLeague }) {
+    return (
+        <Box
+            sx={{
+                p: 2,
+                textAlign: "center",
+                width: "100%",
+                color: "#777",
+            }}
+        >
+            <Typography variant="body1">
+                {!selectedLeague
+                    ? "Please select a league..." : null}
+            </Typography>
+        </Box>
+    );
+}
 
 const columns = [
     { field: "rank", headerName: "", width: 1, sortable: false },
@@ -34,7 +53,7 @@ const columns = [
     { field: "points", headerName: "PTS", headerAlign: 'center', align: 'center', width: 5, sortable: false }
 ];
 
-function StandingsGrid() {
+function StandingsGrid({ selectedLeague }) {
     const dispatch = useDispatch();
 
     const standingsByLeagueId = useSelector((state) => state.standingsByLeagueId.list);
@@ -50,21 +69,24 @@ function StandingsGrid() {
     //}
 
     useEffect(() => {
-        dispatch(fetchStandingsByLeagueId({ leagueId: 39, seasonYear: 2025 }));
-    }, [dispatch]);
-
-
-    const standings = standingsByLeagueId.map((response, index) => {
-        return {
-            id: index,
-            rank: response.rank,
-            teamName: response.team.name,
-            teamLogo: response.team.logo,
-            gamesPlayed: response.all.played,
-            goalDifference: response.goalsDiff,
-            points: response.points
+        if (selectedLeague) {
+            dispatch(fetchStandingsByLeagueId({ leagueId: selectedLeague.id, seasonYear: 2025 }));
         }
-    })
+    }, [dispatch, selectedLeague]);
+
+
+    const standings = isNonEmptyObject(selectedLeague)
+        ? standingsByLeagueId.map((response, index) => {
+            return {
+                id: index,
+                rank: response.rank,
+                teamName: response.team.name,
+                teamLogo: response.team.logo,
+                gamesPlayed: response.all.played,
+                goalDifference: response.goalsDiff,
+                points: response.points
+            }
+        }) : [];
 
     return (
         <div style={{ textAlign: "left" }}>
@@ -73,7 +95,7 @@ function StandingsGrid() {
                     variant="h6"
                     sx={{ textAlign: "center", p: 1 }}
                 >
-                    Premier League Table
+                    {selectedLeague ? `${selectedLeague.name} Table` : "Standings"}
                 </Typography>
                 <DataGrid
                     rows={standings}
@@ -84,6 +106,11 @@ function StandingsGrid() {
                     hideFooterSelectedRowCount
                     disableRowSelectionOnClick
                     disableColumnMenu
+                    slots={{
+                        noRowsOverlay: () => (
+                            <CustomNoRowsOverlay selectedLeague={selectedLeague} />
+                        ),
+                    }}
                     sx={{
                         maxWidth: 480,
                         height: 52 * 4 + 56, // 3 items at 52px height + padding

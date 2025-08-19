@@ -8,7 +8,7 @@ import { isNonEmptyObject } from "../../../global/constants";
 import FixtureHeadToHeadGrid from "../fixtureProfiles/fixtureHeadToHeadGrid";
 import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
-function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
+function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixture }) {
     return (
         <Modal
             open={modalOpen}
@@ -82,7 +82,9 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                         <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
                             {selectedFixture.awayTeam.name}
                         </Typography>
-                        <RecentFormBubbles selectedTeamId={selectedFixture.awayTeam.id} />
+                        <RecentFormBubbles
+                            selectedLeague={selectedLeague}
+                            selectedTeamId={selectedFixture.awayTeam.id} />
                     </Box>
 
                     <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
@@ -107,7 +109,9 @@ function FixtureProfile({ modalOpen, handleClose, selectedFixture }) {
                         <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
                             {selectedFixture.homeTeam.name}
                         </Typography>
-                        <RecentFormBubbles selectedTeamId={selectedFixture.homeTeam.id} />
+                        <RecentFormBubbles
+                            selectedLeague={selectedLeague}
+                            selectedTeamId={selectedFixture.awayTeam.id} />
                     </Box>
                 </Box>
                 {isNonEmptyObject(selectedFixture) && <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />}

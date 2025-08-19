@@ -5,19 +5,19 @@ import {
     MenuItem,
     Select
 } from "@mui/material";
-import { isNonEmptyObject } from "../../global/constants";
+import { isNonEmptyObject, TOP5LEAGUES } from "../../global/constants";
 
-function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange }) {
+function LeagueSelectDropdown({ selectedLeague, handleLeagueChange }) {
     return (
         <Box>
             <FormControl sx={{ minWidth: 200 }} size="small">
-                <InputLabel id="team-select-label">Team</InputLabel>
+                <InputLabel id="league-select-label">League</InputLabel>
                 <Select
-                    labelId="team-select-label"
-                    id="team-select"
-                    value={isNonEmptyObject(selectedTeam) ? selectedTeam : ""}
-                    label="Team"
-                    onChange={handleTeamChange}
+                    labelId="league-select-label"
+                    id="league-select"
+                    value={isNonEmptyObject(selectedLeague) ? selectedLeague : ""}
+                    label="League"
+                    onChange={handleLeagueChange}
                     MenuProps={{
                         PaperProps: {
                             style: {
@@ -30,11 +30,11 @@ function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange })
                         borderRadius: 1,
                     })}
                 >
-                    {[...teamsByLeagueId]
-                        .sort((a, b) => a.team.name.localeCompare(b.team.name))
-                        .map(({ team }) => (
-                            <MenuItem key={team.id} value={team}>
-                                {team.name}
+                    {[...TOP5LEAGUES]
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map(( league ) => (
+                            <MenuItem key={league.id} value={league}>
+                                {league.name}
                             </MenuItem>
                         ))}
                 </Select>
@@ -43,4 +43,4 @@ function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange })
     )
 }
 
-export default TeamSelectDropdown;
+export default LeagueSelectDropdown;

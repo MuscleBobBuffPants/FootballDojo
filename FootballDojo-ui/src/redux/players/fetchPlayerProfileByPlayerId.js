@@ -21,7 +21,13 @@ const initialState = {
 const playerProfileByPlayerId = createSlice({
     name: 'playerProfileByPlayerId',
     initialState,
-    reducers: {},
+    reducers: {
+        clearPlayer: (state) => {
+            state.list = [];
+            state.status = 'idle';
+            state.error = null;
+        }
+},
     extraReducers: (builder) => {
         builder
             .addCase(fetchPlayerProfileByPlayerId.pending, (state) => {
@@ -38,5 +44,7 @@ const playerProfileByPlayerId = createSlice({
             });
     },
 });
+
+export const { clearPlayer } = playerProfileByPlayerId.actions;
 
 export default playerProfileByPlayerId.reducer;
