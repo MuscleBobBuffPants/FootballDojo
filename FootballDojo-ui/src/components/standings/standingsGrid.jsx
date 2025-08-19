@@ -20,7 +20,17 @@ const columns = [
         ),
     },
     { field: "gamesPlayed", headerName: "GP", headerAlign: 'center', align: 'center', width: 5, sortable: false },
-    { field: "goalDifference", headerName: "+/-", headerAlign: 'center', align: 'center', width: 5, sortable: false },
+    {
+        field: "goalDifference", headerName: "+/-", headerAlign: 'center', align: 'center', width: 5, sortable: false,
+        renderCell: (params) => {
+            const value = params.value;
+            return (
+                <span>
+                    {value > 0 ? `+${value}` : value}
+                </span>
+            );
+        },
+    },
     { field: "points", headerName: "PTS", headerAlign: 'center', align: 'center', width: 5, sortable: false }
 ];
 
