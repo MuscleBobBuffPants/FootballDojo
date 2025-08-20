@@ -107,7 +107,9 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
                         ),
                     }}
                     sx={{
+                        width: 500,
                         height: 52 * 5 + 56, // 5 items at 52px height + padding
+                        fontSize: 15,
                         '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
                             outline: 'none',
                             userSelect: 'none'

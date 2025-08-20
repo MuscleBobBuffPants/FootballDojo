@@ -66,27 +66,9 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
     const fileName = selectedTeam ? `${selectedTeam}_${formation}.png` : "";
 
     return (
-        <Box>
-            <Box display="flex" pt={2} mb={2}>
-                <Typography sx={{ pr: 1, pl: 0.5 }}>Formation:</Typography>
-                <Select
-                    size="small"
-                    value={formation}
-                    onChange={(e) => setFormation(e.target.value)}
-                    MenuProps={{
-                        PaperProps: { style: { maxHeight: 48 * 4 + 8 } },
-                    }}
-                >
-                    {Object.keys(FORMATIONS).map((formationKey) => (
-                        <MenuItem key={formationKey} value={formationKey}>
-                            {formationKey}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </Box>
-            <Box sx={{ width: 970, display: "flex", gap: 2 }}>
+            <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
                 <Box flex={1}>
-                    <Typography variant="h5" align="center" sx={{ mb: 2 }}>
+                    <Typography variant="h5" align="center" sx={{ mt: 1, mb: 2 }}>
                         Lineup Builder
                     </Typography>
                     <Box ref={fieldRef}>
@@ -99,29 +81,45 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
                     </Box>
                 </Box>
                 {/*{isLineupComplete() &&*/}
-                <Box display="flex" flexDirection="column" alignItems="center" mt="+6%">
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={handleGeneratePNG}
-                        sx={{ borderRadius: 2, mb: 2 }}
-                        hidden={!isLineupComplete()}
+                <Box mt="+5%">
+                    <Typography sx={{ pr: 1, pl: 0.5, pb: .5 }}>Formation:</Typography>
+                    <Select
+                        size="small"
+                        value={formation}
+                        onChange={(e) => setFormation(e.target.value)}
+                        MenuProps={{
+                            PaperProps: { style: { maxHeight: 48 * 4 + 8 } },
+                        }}
                     >
-                        Download Lineup & Share
-                    </Button>
-                    {pngBlobUrl && (
-                        <a
-                            href={pngBlobUrl}
-                            download={fileName}
-                            style={{ display: "none" }}
-                            id="download-link"
+                        {Object.keys(FORMATIONS).map((formationKey) => (
+                            <MenuItem key={formationKey} value={formationKey}>
+                                {formationKey}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                    <Box mt="+20%">
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={handleGeneratePNG}
+                            sx={{ borderRadius: 2 }}
+                            hidden={!isLineupComplete()}
                         >
-                            download
-                        </a>
-                    )}
+                            Download Lineup & Share
+                        </Button>
+                        {pngBlobUrl && (
+                            <a
+                                href={pngBlobUrl}
+                                download={fileName}
+                                style={{ display: "none" }}
+                                id="download-link"
+                            >
+                                download
+                            </a>
+                        )}
+                    </Box>
                 </Box>
                 {/*}*/}
             </Box>
-        </Box>
     );
 }

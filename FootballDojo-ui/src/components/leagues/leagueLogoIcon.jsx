@@ -1,33 +1,39 @@
 import { Box, useTheme } from "@mui/material";
-import { isNonEmptyObject } from "../../global/constants";
+import { TOP5LEAGUES, isNonEmptyObject } from "../../global/constants";
 
-function TeamLogoIcon({ selectedTeam, teamLogo }) {
+function LeagueLogoIcon({ selectedLeague }) {
     const theme = useTheme();
 
-    const teamLogoBackground =
-        isNonEmptyObject(selectedTeam)
+    const getLeagueLogo = (id) => {
+        const league = TOP5LEAGUES.find((l) => l.id === id);
+        return league ? league.logo : "";
+    };
+
+    const leagueLogoBackground =
+        isNonEmptyObject(selectedLeague)
             ? theme.palette.mode === "dark" ? "#ccc"
                 : theme.palette.background.paper
             : "transparent";
+
     return (
         <Box>
             <Box
                 sx={{
                     width: 69,
                     height: 69,
-                    bgcolor: teamLogoBackground,
+                    bgcolor: leagueLogoBackground,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 2,
                     overflow: "hidden",
                     border: "1px solid ",
-                    borderColor: isNonEmptyObject(selectedTeam) ? "#ccc" : "transparent"
+                    borderColor: isNonEmptyObject(selectedLeague) ? "#ccc" : "transparent"
                 }}
             >
-                {isNonEmptyObject(selectedTeam) ? (
+                {isNonEmptyObject(selectedLeague) ? (
                     <img
-                        src={teamLogo}
+                        src={getLeagueLogo(selectedLeague.id)}
                         style={{ width: "95%", height: "95%", objectFit: "contain" }}
                     />
                 ) : null}
@@ -37,4 +43,4 @@ function TeamLogoIcon({ selectedTeam, teamLogo }) {
 }
 
 
-export default TeamLogoIcon;
+export default LeagueLogoIcon;

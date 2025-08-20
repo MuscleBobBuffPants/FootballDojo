@@ -26,7 +26,7 @@ function CustomNoRowsOverlay({ selectedLeague }) {
 const columns = [
     { field: "rank", headerName: "", width: 1, sortable: false },
     {
-        field: "teamName", headerName: "", headerAlign: 'center', align: 'left', width: 150, fontSize: 10, sortable: false,
+        field: "teamName", headerName: "", headerAlign: 'center', align: 'left', width: 250, sortable: false,
         renderCell: (params) => (
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <img
@@ -34,7 +34,7 @@ const columns = [
                     alt={params.value}
                     style={{ width: 20, height: 20 }}
                 />
-                <span style={{ fontSize: "13px" }}>{params.value}</span>
+                <span>{params.value}</span>
             </div>
         ),
     },
@@ -90,7 +90,7 @@ function StandingsGrid({ selectedLeague }) {
 
     return (
         <div style={{ textAlign: "left" }}>
-            <div style={{ maxWidth: 400, border: "3px solid #ccc", borderRadius: 8 }}>
+            <div style={{ width: 505, border: "3px solid #ccc", borderRadius: 8 }}>
                 <Typography
                     variant="h6"
                     sx={{ textAlign: "center", p: 1 }}
@@ -112,8 +112,9 @@ function StandingsGrid({ selectedLeague }) {
                         ),
                     }}
                     sx={{
-                        maxWidth: 480,
+                        width: 500,
                         height: 52 * 4 + 56, // 3 items at 52px height + padding
+                        fontSize: 15,
                         '& .MuiDataGrid-cell': {
                             cursor: 'default',
                             '&:hover': {
@@ -122,7 +123,6 @@ function StandingsGrid({ selectedLeague }) {
                         },
                         '& .MuiDataGrid-columnHeader': {
                             cursor: 'default',
-                            fontSize: 15,
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },

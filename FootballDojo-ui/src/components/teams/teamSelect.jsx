@@ -17,6 +17,7 @@ import PlayerGrid from '../players/playerGrid';
 import StandingsGrid from '../standings/standingsGrid';
 import TeamLogoIcon from '../teams/teamLogoIcon';
 import TeamSelectDropdown from '../teams/teamSelectDropdown';
+import LeagueLogoIcon from '../leagues/leagueLogoIcon';
 
 
 function TeamSelect() {
@@ -97,6 +98,9 @@ function TeamSelect() {
     return (
         <div>
             <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, mb: 2 }} >
+                <LeagueLogoIcon
+                    selectedLeague={selectedLeague} />
+
                 <LeagueSelectDropdown
                     selectedLeague={selectedLeague}
                     handleLeagueChange={handleLeagueChange} />
@@ -120,20 +124,27 @@ function TeamSelect() {
                     onClick={handleReset}
                     disabled={!selectedLeague}> Reset </Button>
             </Box>
-            <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-                <PlayerGrid
-                    selectedLeague={selectedLeague}
-                    selectedTeam={selectedTeam}
-                    playersByTeam={sortedPlayers} />
-                <FixturesGrid
-                    selectedLeague={selectedLeague}
-                    selectedTeam={selectedTeam} />
-                <StandingsGrid selectedLeague={selectedLeague} />
+            <div style={{ display: "flex", gap: "20px" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                    <PlayerGrid
+                        selectedLeague={selectedLeague}
+                        selectedTeam={selectedTeam}
+                        playersByTeam={sortedPlayers} />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                        <FixturesGrid
+                            selectedLeague={selectedLeague}
+                            selectedTeam={selectedTeam} />
+                        <Box sx={{ display: "flex", flexDirection: "column",  gap: "20px"  }}>
+                            <StandingsGrid selectedLeague={selectedLeague} />
+                        </Box>
+                    </Box>
+
+                </Box>
+                <LineupBuilder
+                    selectedTeam={selectedTeam ? selectedTeam.name : ""}
+                    playersByTeam={sortedPlayers}
+                    resetFlag={resetFlag} />
             </div>
-            <LineupBuilder
-                selectedTeam={selectedTeam ? selectedTeam.name : ""}
-                playersByTeam={sortedPlayers}
-                resetFlag={resetFlag} />
         </div>
     );
 }

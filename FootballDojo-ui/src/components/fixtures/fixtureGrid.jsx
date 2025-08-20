@@ -25,8 +25,8 @@ function CustomNoRowsOverlay({ selectedTeam }) {
 }
 
 const columns = [
-    { field: "matchdayNumber", headerName: "MD #", headerAlign: 'center', align: 'center', width: 69, sortable: false },
-    { field: "date", headerName: "Date", headerAlign: 'center', align: 'center', width: 125, sortable: false },
+    { field: "matchdayNumber", headerName: "MD #", headerAlign: 'center', align: 'center', width: 65, sortable: false },
+    { field: "date", headerName: "Date", headerAlign: 'center', align: 'center', width: 118, sortable: false },
     { field: "matchup", headerName: "Matchup", headerAlign: 'center', align: 'center', width: 300, sortable: false }
 ];
 
@@ -111,8 +111,9 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                         ),
                     }}
                     sx={{
-                        maxWidth: 550,
+                        width: 500,
                         height: 52 * 5 + 56, // 5 items at 52px height + padding
+                        fontSize: 15,
                         '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
                             outline: 'none',
                             userSelect: 'none'

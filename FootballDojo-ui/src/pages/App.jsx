@@ -19,13 +19,13 @@ function App() {
                     <IconButton onClick={toggleMode} color="inherit">
                         {mode === "light" ? <LightMode /> : <DarkMode />}
                     </IconButton>
-                    <Typography variant="h5" component="h2" sx={{ pl: 5 }}>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                    <Typography variant="h4" component="h2" sx={{ pb: 3 }}>
                         Football Dojo
                     </Typography>
                 </div>
-                <div className="card">
-                    <TeamSelect />
-                </div>
+                <TeamSelect />
                 <Typography component="h2" sx={{ pt: 12 }}>
                     2025 Football Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants.
                 </Typography>
