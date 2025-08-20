@@ -17,7 +17,7 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
             sx={{
                 position: "relative",
                 width: 1000,
-                height: 615,
+                height: 604,
                 bgcolor: "#003300",
                 border: "4px solid #ccc",
                 borderRadius: 2,
