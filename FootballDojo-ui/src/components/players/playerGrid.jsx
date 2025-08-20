@@ -82,12 +82,12 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
         ? playersByTeam
             .filter(player => player.number !== null)
             .map(player => ({
-            id: player.id,
-            name: player.name,
-            number: `# ${player.number}`,
-            age: player.age,
-            position: player.position
-        }))
+                id: player.id,
+                name: player.name,
+                number: `# ${player.number}`,
+                age: player.age,
+                position: player.position
+            }))
         : [];
 
     return (
@@ -127,7 +127,7 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
                 <PlayerProfile
                     modalOpen={modalOpen}
                     handleClose={handleClose}
-                    selectedLeague={selectedLeague }
+                    selectedLeague={selectedLeague}
                     selectedPlayer={selectedPlayer} />
             </div>
         </div>

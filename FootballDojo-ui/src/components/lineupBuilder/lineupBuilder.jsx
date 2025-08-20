@@ -66,60 +66,60 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
     const fileName = selectedTeam ? `${selectedTeam}_${formation}.png` : "";
 
     return (
-            <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
-                <Box flex={1}>
-                    <Typography variant="h5" align="center" sx={{ mt: 1, mb: 2 }}>
-                        Lineup Builder
-                    </Typography>
-                    <Box ref={fieldRef}>
-                        <SoccerField
-                            positions={FORMATIONS[formation]}
-                            lineup={lineup}
-                            players={playersByTeam}
-                            onAssign={handleAssign}
-                        />
-                    </Box>
+        <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
+            <Box flex={1}>
+                <Typography variant="h5" align="center" sx={{ mt: 1, mb: 2 }}>
+                    Lineup Builder
+                </Typography>
+                <Box ref={fieldRef}>
+                    <SoccerField
+                        positions={FORMATIONS[formation]}
+                        lineup={lineup}
+                        players={playersByTeam}
+                        onAssign={handleAssign}
+                    />
                 </Box>
-                {/*{isLineupComplete() &&*/}
-                <Box mt="+5%">
-                    <Typography sx={{ pr: 1, pl: 0.5, pb: .5 }}>Formation:</Typography>
-                    <Select
-                        size="small"
-                        value={formation}
-                        onChange={(e) => setFormation(e.target.value)}
-                        MenuProps={{
-                            PaperProps: { style: { maxHeight: 48 * 4 + 8 } },
-                        }}
-                    >
-                        {Object.keys(FORMATIONS).map((formationKey) => (
-                            <MenuItem key={formationKey} value={formationKey}>
-                                {formationKey}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                    <Box mt="+20%">
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick={handleGeneratePNG}
-                            sx={{ borderRadius: 2 }}
-                            hidden={!isLineupComplete()}
-                        >
-                            Download Lineup & Share
-                        </Button>
-                        {pngBlobUrl && (
-                            <a
-                                href={pngBlobUrl}
-                                download={fileName}
-                                style={{ display: "none" }}
-                                id="download-link"
-                            >
-                                download
-                            </a>
-                        )}
-                    </Box>
-                </Box>
-                {/*}*/}
             </Box>
+            {/*{isLineupComplete() &&*/}
+            <Box mt="+5%">
+                <Typography sx={{ pr: 1, pl: 0.5, pb: .5 }}>Formation:</Typography>
+                <Select
+                    size="small"
+                    value={formation}
+                    onChange={(e) => setFormation(e.target.value)}
+                    MenuProps={{
+                        PaperProps: { style: { maxHeight: 48 * 4 + 8 } },
+                    }}
+                >
+                    {Object.keys(FORMATIONS).map((formationKey) => (
+                        <MenuItem key={formationKey} value={formationKey}>
+                            {formationKey}
+                        </MenuItem>
+                    ))}
+                </Select>
+                <Box mt="+20%">
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        onClick={handleGeneratePNG}
+                        sx={{ borderRadius: 2 }}
+                        hidden={!isLineupComplete()}
+                    >
+                        Download Lineup & Share
+                    </Button>
+                    {pngBlobUrl && (
+                        <a
+                            href={pngBlobUrl}
+                            download={fileName}
+                            style={{ display: "none" }}
+                            id="download-link"
+                        >
+                            download
+                        </a>
+                    )}
+                </Box>
+            </Box>
+            {/*}*/}
+        </Box>
     );
 }

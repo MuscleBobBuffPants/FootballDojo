@@ -11,13 +11,13 @@ import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
 import FixturesGrid from "../fixtures/fixtureGrid";
 import FixtureSeasonDropdown from '../fixtures/fixtureSeasonDropdown';
+import LeagueLogoIcon from '../leagues/leagueLogoIcon';
 import LeagueSelectDropdown from '../leagues/leagueSelectDropdown';
 import LineupBuilder from '../lineupBuilder/lineupBuilder';
 import PlayerGrid from '../players/playerGrid';
 import StandingsGrid from '../standings/standingsGrid';
 import TeamLogoIcon from '../teams/teamLogoIcon';
 import TeamSelectDropdown from '../teams/teamSelectDropdown';
-import LeagueLogoIcon from '../leagues/leagueLogoIcon';
 
 
 function TeamSelect() {
