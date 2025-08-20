@@ -79,7 +79,9 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
     };
 
     const filteredPlayers = isNonEmptyObject(selectedTeam)
-        ? playersByTeam.map(player => ({
+        ? playersByTeam
+            .filter(player => player.number !== null)
+            .map(player => ({
             id: player.id,
             name: player.name,
             number: `# ${player.number}`,

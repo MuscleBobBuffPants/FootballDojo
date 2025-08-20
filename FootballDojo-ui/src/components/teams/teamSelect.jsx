@@ -126,19 +126,19 @@ function TeamSelect() {
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                    <PlayerGrid
-                        selectedLeague={selectedLeague}
-                        selectedTeam={selectedTeam}
-                        playersByTeam={sortedPlayers} />
+                    <StandingsGrid selectedLeague={selectedLeague} />
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                        <FixturesGrid
+                        <PlayerGrid
                             selectedLeague={selectedLeague}
-                            selectedTeam={selectedTeam} />
-                        <Box sx={{ display: "flex", flexDirection: "column",  gap: "20px"  }}>
-                            <StandingsGrid selectedLeague={selectedLeague} />
+                            selectedTeam={selectedTeam}
+                            playersByTeam={sortedPlayers} />
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                            <FixturesGrid
+                                selectedLeague={selectedLeague}
+                                selectedTeam={selectedTeam} />
+
                         </Box>
                     </Box>
-
                 </Box>
                 <LineupBuilder
                     selectedTeam={selectedTeam ? selectedTeam.name : ""}
