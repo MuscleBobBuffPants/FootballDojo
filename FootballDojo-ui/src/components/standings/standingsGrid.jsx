@@ -95,7 +95,7 @@ function StandingsGrid({ selectedLeague }) {
                     variant="h6"
                     sx={{ textAlign: "center", p: 1 }}
                 >
-                    {selectedLeague ? `${selectedLeague.name} Table` : "Standings"}
+                    {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
                 </Typography>
                 <DataGrid
                     rows={standings}
