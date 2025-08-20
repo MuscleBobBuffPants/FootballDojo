@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PlayerProfile from "../../components/players/playerProfiles/playerProfile";
-import { isNonEmptyObject, positionOrder } from "../../global/constants";
+import { POSITION_ORDER, isNonEmptyObject } from "../../global/constants";
 import { clearPlayer, fetchPlayerProfileByPlayerId } from "../../redux/players/fetchPlayerProfileByPlayerId";
 
 function CustomNoRowsOverlay({ selectedTeam }) {
@@ -31,7 +31,7 @@ const columns = [
         field: "position", headerName: "Position", width: 150, sortable: false,
         sortComparator: (v1, v2) => {
             return (
-                positionOrder.indexOf(v1) - positionOrder.indexOf(v2)
+                POSITION_ORDER.indexOf(v1) - POSITION_ORDER.indexOf(v2)
             );
         }
     }

@@ -10,6 +10,7 @@ export const formatUtcDate = (utcDate) => {
     return `${month} - ${day} - ${year}`;
 }
 
+// Europe's Top 5 Leagues
 export const TOP5LEAGUES = [
     { id: 39, name: "Premier League", country: "England", logo: "https://media.api-sports.io/football/leagues/39.png" },
     { id: 140, name: "La Liga", country: "Spain", logo: "https://media.api-sports.io/football/leagues/140.png" },
@@ -18,8 +19,11 @@ export const TOP5LEAGUES = [
     { id: 61, name: "Ligue 1", country: "France", logo: "https://media.api-sports.io/football/leagues/61.png" }
 ];
 
-// Sort by Position
-export const positionOrder = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
+// Position Sort Order
+export const POSITION_ORDER = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
+
+// Allow Attackers for Certain Positions
+export const POSSIBLE_ATTACKER_POSITIONS = ["ST", "LW", "RW", "CF", "LM", "RM"];
 
 // Formations
 export const FORMATIONS = {
