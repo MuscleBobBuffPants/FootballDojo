@@ -13,7 +13,7 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag }
     useEffect(() => {
         setLineup({});
         setPngBlobUrl("");
-    }, [playersByTeam, resetFlag, formation]);
+    }, [resetFlag, formation]);
 
     const handleAssign = (slotId, playerId) => {
         setLineup((prev) => {

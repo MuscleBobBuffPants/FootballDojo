@@ -72,6 +72,7 @@ function TeamSelect() {
         setResetFlag(prev => !prev);
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
+        dispatch(clearPlayers());
     };
 
     const handleTeamChange = (event) => {
@@ -81,15 +82,11 @@ function TeamSelect() {
 
     const handleReset = () => {
         setResetFlag(prev => !prev);
-        clearAllData();
-    };
-
-    const clearAllData = () => {
         setSelectedLeague(null)
         setSelectedTeam(null);
         dispatch(clearPlayers());
         dispatch(clearStandings());
-    }
+    };
 
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
         a.name.localeCompare(b.name)
