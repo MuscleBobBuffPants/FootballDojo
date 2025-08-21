@@ -55,7 +55,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     <Typography variant="h6" fontWeight="bold" color="text.primary">
                         {selectedFixture.date}
                     </Typography>
-                    <Typography variant="subtitle1" color="text.secondary">
+                    <Typography variant="subtitle1" fontWeight="bold"  color="text.secondary">
                         {selectedFixture.venue}
                     </Typography>
                 </Box>
@@ -85,7 +85,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                                 backgroundColor: theme.palette.background.default,
                             })}
                         />
-                        <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
+                        <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
                             {selectedFixture.awayTeam.name}
                         </Typography>
                         <RecentFormBubbles
@@ -112,7 +112,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                                 backgroundColor: theme.palette.background.default,
                             })}
                         />
-                        <Typography variant="subtitle2" fontWeight="bold" textAlign="center">
+                        <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
                             {selectedFixture.homeTeam.name}
                         </Typography>
                         <RecentFormBubbles
