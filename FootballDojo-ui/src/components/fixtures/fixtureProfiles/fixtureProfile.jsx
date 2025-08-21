@@ -111,7 +111,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                         </Typography>
                         <RecentFormBubbles
                             selectedLeague={selectedLeague}
-                            selectedTeamId={selectedFixture.awayTeam.id} />
+                            selectedTeamId={selectedFixture.homeTeam.id} />
                     </Box>
                 </Box>
                 {isNonEmptyObject(selectedFixture) && <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />}
