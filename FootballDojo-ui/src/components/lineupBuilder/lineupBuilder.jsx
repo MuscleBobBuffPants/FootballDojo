@@ -3,7 +3,13 @@ import { toPng } from "html-to-image";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import PerformancePredictor from '../../components/lineupBuilder/performancePredictor';
-import { FORMATIONS } from "../../global/constants";
+import {
+    DARKMODE_PURPLE,
+    DARKMODE_TEXT,
+    FORMATIONS,
+    LIGHTMODE_PURPLE,
+    LIGHTMODE_TEXT
+} from "../../global/constants";
 import { assignPlayer } from "../../redux/statTracking/selectedPlayers";
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
@@ -103,8 +109,8 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                         sx={(theme) =>
                         ({
                             borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? "#4b0052" : "#d9b3ff",
-                            color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
+                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                         })}
                     //disabled={!isLineupComplete()}
                     >

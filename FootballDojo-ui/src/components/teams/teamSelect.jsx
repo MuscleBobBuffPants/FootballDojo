@@ -1,7 +1,14 @@
 import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isNonEmptyListObject, isNonEmptyObject } from "../../global/constants";
+import {
+    DARKMODE_RED,
+    DARKMODE_TEXT,
+    LIGHTMODE_RED,
+    LIGHTMODE_TEXT,
+    isNonEmptyListObject,
+    isNonEmptyObject,
+} from "../../global/constants";
 import { clearPlayers, fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
 import { clearStandings } from '../../redux/standings/fetchStandingsByLeagueId';
 import { clearPerformancePredictionData } from '../../redux/statTracking/selectedPlayers';
@@ -120,8 +127,8 @@ function TeamSelect() {
                     onClick={handleReset}
                     disabled={!selectedLeague}
                     sx={(theme) => ({
-                        backgroundColor: theme.palette.mode === "dark" ? "#8b0000" : "#ff7f7f",
-                        color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                        backgroundColor: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
+                        color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                     })}
                 >
                     Reset

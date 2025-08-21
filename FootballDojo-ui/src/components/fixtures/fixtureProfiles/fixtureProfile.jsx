@@ -4,7 +4,13 @@ import {
     Modal,
     Typography
 } from '@mui/material';
-import { isNonEmptyObject } from "../../../global/constants";
+import {
+    DARKMODE_PURPLE,
+    DARKMODE_TEXT,
+    LIGHTMODE_PURPLE,
+    LIGHTMODE_TEXT,
+    isNonEmptyObject
+} from "../../../global/constants";
 import FixtureHeadToHeadGrid from "../fixtureProfiles/fixtureHeadToHeadGrid";
 import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
@@ -129,8 +135,8 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                         sx={(theme) =>
                         ({
                             borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? "#4b0052" : "#d9b3ff",
-                            color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
+                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                         })}
                     >
                         Close

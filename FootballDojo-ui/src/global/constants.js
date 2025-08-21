@@ -10,6 +10,16 @@ export const formatUtcDate = (utcDate) => {
     return `${month} - ${day} - ${year}`;
 }
 
+// Button and Bubble color combos
+export const DARKMODE_GREEN = "#006400";
+export const LIGHTMODE_GREEN = "#90ee90";
+export const DARKMODE_PURPLE = "#4b0052";
+export const LIGHTMODE_PURPLE = "#d9b3ff";
+export const DARKMODE_RED = "#8b0000";
+export const LIGHTMODE_RED = "#ff7f7f";
+export const DARKMODE_TEXT = "#ffffff";
+export const LIGHTMODE_TEXT = "#000000";
+
 // Europe's Top 5 Leagues
 export const TOP5LEAGUES = [
     { id: 39, name: "Premier League", country: "England", logo: "https://media.api-sports.io/football/leagues/39.png" },

@@ -1,8 +1,16 @@
 ﻿import { Box, Stack, Tooltip, useTheme } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import {
+    DARKMODE_GREEN,
+    DARKMODE_RED,
+    DARKMODE_TEXT,
+    LIGHTMODE_GREEN,
+    LIGHTMODE_RED,
+    LIGHTMODE_TEXT,
+    isNonEmptyListObject
+} from "../../../global/constants";
 import { fetchRecentFormByTeamId } from "../../../redux/fixtures/fetchRecentFormByTeamId";
-import { isNonEmptyListObject } from "../../../global/constants";
 
 function getRecentFormForTeam(fixtures, selectedTeamId) {
     if (!fixtures) return [];
@@ -54,12 +62,12 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
         (r) => {
             switch (r) {
                 case 'W':
-                    return { bg: theme.palette.success.main, fg: theme.palette.getContrastText(theme.palette.success.main), label: 'Win' };
+                    return { bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN, fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT, label: 'Win' };
                 case 'D':
                     return { bg: theme.palette.grey[500], fg: theme.palette.getContrastText(theme.palette.grey[500]), label: 'Draw' };
                 case 'L':
                 default:
-                    return { bg: theme.palette.error.main, fg: theme.palette.getContrastText(theme.palette.error.main), label: 'Loss' };
+                    return { bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED, fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT, label: 'Loss' };
             }
         },
         [theme]

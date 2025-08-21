@@ -2,7 +2,16 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatUtcDate, isNonEmptyObject } from "../../../global/constants";
+import {
+    DARKMODE_GREEN,
+    DARKMODE_RED,
+    DARKMODE_TEXT,
+    LIGHTMODE_GREEN,
+    LIGHTMODE_RED,
+    LIGHTMODE_TEXT,
+    formatUtcDate,
+    isNonEmptyObject
+} from "../../../global/constants";
 import { fetchHeadToHeadFixtures } from "../../../redux/fixtures/fetchHeadToHeadFixtures";
 
 function FixtureHeadToHeadGrid({ selectedFixture }) {
@@ -22,8 +31,16 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
     //}
 
     const getGoalColor = (teamGoals, otherGoals) => {
-        if (teamGoals > otherGoals) return { bg: theme.palette.success.main, fg: theme.palette.getContrastText(theme.palette.success.main) };
-        if (teamGoals < otherGoals) return { bg: theme.palette.error.main, fg: theme.palette.getContrastText(theme.palette.error.main) };
+        if (teamGoals > otherGoals)
+            return {
+                bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN,
+                fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
+            };
+        if (teamGoals < otherGoals)
+            return {
+                bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
+                fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
+            };
         return { bg: theme.palette.grey[500], fg: theme.palette.getContrastText(theme.palette.grey[500]) };
     };
 

@@ -2,7 +2,13 @@ import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isNonEmptyObject } from "../../global/constants";
+import {
+    DARKMODE_PURPLE,
+    DARKMODE_TEXT,
+    LIGHTMODE_PURPLE,
+    LIGHTMODE_TEXT,
+    isNonEmptyObject
+} from "../../global/constants";
 import { fetchStandingsByLeagueId } from "../../redux/standings/fetchStandingsByLeagueId";
 
 function CustomNoRowsOverlay({ selectedLeague }) {
@@ -143,13 +149,13 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                         },
                         "& .highlighted-row": {
                             backgroundColor: (theme) =>
-                                theme.palette.mode === "dark" ? "#4b0052" : "#d9b3ff",
+                                theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
                             color: (theme) =>
-                                theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                                theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                         },
                         "& .highlighted-row:hover": {
                             backgroundColor: (theme) =>
-                                theme.palette.mode === "dark" ? "#4b0052 !important" : "#d9b3ff !important"
+                                theme.palette.mode === "dark" ? `${DARKMODE_PURPLE} !important` : `${LIGHTMODE_PURPLE} !important`
                         }
                     }}
                 />

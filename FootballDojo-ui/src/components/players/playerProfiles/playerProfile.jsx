@@ -8,7 +8,13 @@ import {
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StatsGrid from '../../../components/stats/statsGrid';
-import { isNonEmptyObject } from "../../../global/constants";
+import {
+    DARKMODE_PURPLE,
+    DARKMODE_TEXT,
+    LIGHTMODE_PURPLE,
+    LIGHTMODE_TEXT,
+    isNonEmptyObject
+} from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
 
 function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
@@ -140,8 +146,8 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                         sx={(theme) =>
                         ({
                             borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? "#4b0052" : "#d9b3ff",
-                            color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
+                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                         })}
                     >
                         Close
