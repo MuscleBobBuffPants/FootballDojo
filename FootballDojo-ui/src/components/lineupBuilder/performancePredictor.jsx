@@ -76,7 +76,10 @@ export default function PerformancePredictor() {
     return (
         <Box sx={{ maxWidth: 1000, mx: "auto", ml: 4 }}>
             <Typography variant="h5" align="center" sx={{ mb: 4 }}>
-                Potential Lineup Performance (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>per 90 mins</Box>)
+                Potential Lineup Performance
+                (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>
+                    per 90 mins
+                </Box>)
             </Typography>
             <Grid container spacing={3} wrap="wrap">
                 {fields.map((field, i) => (

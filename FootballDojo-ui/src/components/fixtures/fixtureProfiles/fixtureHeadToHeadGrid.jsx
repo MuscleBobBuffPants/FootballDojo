@@ -41,7 +41,10 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                 bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
                 fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
             };
-        return { bg: theme.palette.grey[500], fg: theme.palette.getContrastText(theme.palette.grey[500]) };
+        return {
+            bg: theme.palette.grey[500],
+            fg: theme.palette.getContrastText(theme.palette.grey[500])
+        };
     };
 
     const GoalBubble = ({ teamGoals, otherGoals }) => {

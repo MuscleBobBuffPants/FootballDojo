@@ -125,7 +125,9 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
         }}>
             <Box sx={{ pl: 1, pt: .25, alignSelf: 'flex-start' }}>
                 <FormControl size="small" sx={{ minWidth: 115 }}>
-                    <InputLabel sx={{ fontSize: 13 }}>Stat Category</InputLabel>
+                    <InputLabel sx={{ fontSize: 13 }}>
+                        Stat Category
+                    </InputLabel>
                     <Select
                         value={selectedCategory}
                         onChange={handleChange}

@@ -78,7 +78,9 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
     return (
         <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
             <Box flex={1}>
-                <Typography variant="h5" align="center" sx={{ mt: "+1%", mb: "+2%" }}>Lineup Builder</Typography>
+                <Typography variant="h5" align="center" sx={{ mt: "+1%", mb: "+2%" }}>
+                    Lineup Builder
+                </Typography>
                 <Box ref={fieldRef}>
                     <SoccerField
                         positions={FORMATIONS[formation]}
@@ -92,7 +94,9 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                 </Box>
             </Box>
             <Box mt={"+7%"}>
-                <Typography sx={{ mb: "+5%" }}>Formation:</Typography>
+                <Typography sx={{ mb: "+5%" }}>
+                    Formation:
+                </Typography>
                 <Select
                     size="small"
                     value={formation}

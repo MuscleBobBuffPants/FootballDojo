@@ -62,12 +62,21 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
         (r) => {
             switch (r) {
                 case 'W':
-                    return { bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN, fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT, label: 'Win' };
+                    return {
+                        bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN,
+                        fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT, label: 'Win'
+                    };
                 case 'D':
-                    return { bg: theme.palette.grey[500], fg: theme.palette.getContrastText(theme.palette.grey[500]), label: 'Draw' };
+                    return {
+                        bg: theme.palette.grey[500],
+                        fg: theme.palette.getContrastText(theme.palette.grey[500]), label: 'Draw'
+                    };
                 case 'L':
                 default:
-                    return { bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED, fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT, label: 'Loss' };
+                    return {
+                        bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
+                        fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT, label: 'Loss'
+                    };
             }
         },
         [theme]
