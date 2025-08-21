@@ -53,7 +53,7 @@ const columns = [
     { field: "points", headerName: "PTS", headerAlign: 'center', align: 'center', width: 5, sortable: false }
 ];
 
-function StandingsGrid({ selectedLeague }) {
+function StandingsGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
 
     const standingsByLeagueId = useSelector((state) => state.standingsByLeagueId.list);
@@ -111,6 +111,11 @@ function StandingsGrid({ selectedLeague }) {
                             <CustomNoRowsOverlay selectedLeague={selectedLeague} />
                         ),
                     }}
+                    getRowClassName={(params) =>
+                        selectedTeam && params.row.teamName === selectedTeam.name
+                            ? "highlighted-row"
+                            : ""
+                    }
                     sx={{
                         width: 500,
                         height: 52 * 4 + 56, // 3 items at 52px height + padding
@@ -135,6 +140,16 @@ function StandingsGrid({ selectedLeague }) {
                         },
                         '& .MuiDataGrid-columnSeparator': {
                             display: 'none',
+                        },
+                        "& .highlighted-row": {
+                            backgroundColor: (theme) =>
+                                theme.palette.mode === "dark" ? "#38003c" : "#d9b3ff",
+                            color: (theme) =>
+                                theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                        },
+                        "& .highlighted-row:hover": {
+                            backgroundColor: (theme) =>
+                                theme.palette.mode === "dark" ? "#38003c" : "#d9b3ff !important"
                         }
                     }}
                 />

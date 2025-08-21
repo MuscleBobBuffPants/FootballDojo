@@ -123,7 +123,9 @@ function TeamSelect() {
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                    <StandingsGrid selectedLeague={selectedLeague} />
+                    <StandingsGrid
+                        selectedLeague={selectedLeague}
+                        selectedTeam={selectedTeam} />
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                         <PlayerGrid
                             selectedLeague={selectedLeague}
