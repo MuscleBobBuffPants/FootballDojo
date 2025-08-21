@@ -22,12 +22,12 @@ function App() {
                 </div>
                 <div style={{ textAlign: "center" }}>
                     <Typography variant="h4" component="h2" sx={{ pb: 3 }}>
-                        Football Dojo
+                        {"F\u00fatbol"} Dojo
                     </Typography>
                 </div>
                 <TeamSelect />
                 <Typography component="h2" sx={{ pt: 12 }}>
-                    2025 Football Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants.
+                    2025 {"F\u00fatbol"} Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants.
                 </Typography>
             </ThemeProvider>
         </>
