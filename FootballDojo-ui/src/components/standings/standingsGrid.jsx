@@ -149,7 +149,7 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                         },
                         "& .highlighted-row:hover": {
                             backgroundColor: (theme) =>
-                                theme.palette.mode === "dark" ? "#38003c" : "#d9b3ff !important"
+                                theme.palette.mode === "dark" ? "#38003c !important" : "#d9b3ff !important"
                         }
                     }}
                 />
