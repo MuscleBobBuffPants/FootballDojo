@@ -1,36 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { isNonEmptyObject } from "../../global/constants";
 
 const initialState = {
-    selectedPlayerIds: {}, // { slotId: playerId }
-    playerStats: [],       // [{ playerId, stats }]
+    playerStats: {}, // [{ playerId, stats }]
 };
 
-const selectedPlayersSlice = createSlice({
+const selectedPlayers = createSlice({
     name: "selectedPlayers",
     initialState,
     reducers: {
-        assignPlayer(state, action) {
-            const { slotId, player } = action.payload; // player = { id, name, stats }
+        setPlayerStatsForLineup(state, action) {
+            const { slotId, player } = action.payload;
+            const existingIndex = state.playerStats.findIndex(p => p.slotId === slotId);
 
-            const oldPlayerId = state.selectedPlayerIds[slotId];
-            state.selectedPlayerIds[slotId] = player?.id ?? null;
+            const entry = { slotId, id: player.id, ...player };
 
-            // Remove old player stats if replaced
-            state.playerStats = state.playerStats.filter(p => p.playerId !== oldPlayerId);
-
-            // Remove duplicate if player is already in another slot
-            state.playerStats = state.playerStats.filter(p => p.playerId !== player?.id);
-
-            // Add new player stats
-            if (isNonEmptyObject(player.stats)) state.playerStats.push({ playerId: player.id, ...player.stats.payload[0] });
+            if (existingIndex !== -1) {
+                state.playerStats[existingIndex] = entry;
+            } else {
+                state.playerStats.push(entry);
+            }
         },
         clearPerformancePredictionData(state) {
-            state.selectedPlayerIds = {};
             state.playerStats = [];
         }
     }
 });
 
-export const { assignPlayer, clearPerformancePredictionData } = selectedPlayersSlice.actions;
-export default selectedPlayersSlice.reducer;
+export const { setPlayerStatsForLineup, clearPerformancePredictionData } = selectedPlayers.actions;
+export default selectedPlayers.reducer;

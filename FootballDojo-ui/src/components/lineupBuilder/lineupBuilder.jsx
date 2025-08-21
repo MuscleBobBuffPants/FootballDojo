@@ -10,7 +10,7 @@ import {
     LIGHTMODE_PURPLE,
     LIGHTMODE_TEXT
 } from "../../global/constants";
-import { assignPlayer } from "../../redux/statTracking/selectedPlayers";
+import { setPlayerStatsForLineup } from "../../redux/statTracking/selectedPlayers";
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
 
@@ -27,17 +27,17 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
     const handleAssign = (slotId, playerId) => {
         const player = playersByTeam.find(p => p.id === playerId);
 
-        // Store player id
-        dispatch(assignPlayer({ slotId, player: player ? { id: player.id, stats: {} } : null }));
-
         // Fetch stats per player
         if (player) {
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
                 seasonYear
-            })).then((stats) => {
-                dispatch(assignPlayer({ slotId, player: { id: player.id, stats } }));
+            })).then((action) => {
+                dispatch(setPlayerStatsForLineup({
+                    slotId,
+                    player: { id: player.id, ...action.payload[0] } // action.payload[0] = stats
+                }));
             });
         }
 

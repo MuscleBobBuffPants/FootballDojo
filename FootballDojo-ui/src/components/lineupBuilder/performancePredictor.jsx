@@ -3,46 +3,63 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export default function PerformancePredictor() {
-    const { selectedPlayerIds, playerStats } = useSelector(state => state.selectedPlayers);
+    const playerStats = useSelector(state => state.selectedPlayers.playerStats);
 
     let fieldValues = {
-        Shots: 0,
+        TotalShots: 0,
+        ShotsOnTarget: 0,
         Goals: 0,
-        Passes: 0,
+        TotalPasses: 0,
+        KeyPasses: 0,
         Assists: 0,
-        Dribbles: 0,
+        DribblesAttempted: 0,
+        DribblesWon: 0,
+        DuelsAttempted: 0,
+        DuelsWon: 0,
+        FoulsCommitted: 0,
+        FoulsDrawn: 0,
         Tackles: 0,
-        Fouls: 0,
+        Blocks: 0,
+        Interceptions: 0,
         Rating: 0,
     };
 
     if (playerStats.length > 0) {
-        const numPlayers = Object.values(selectedPlayerIds).filter(Boolean).length || 1;
+        // Only count players with minutes for sums/averages
+        const playersWithMinutes = playerStats.filter(p => (p.games?.minutes ?? 0) > 0);
+        const numPlayersWithMinutes = playersWithMinutes.length || 1;
 
+        // Sum per-90 stats across players with minutes
         const per90 = (stat, minutes) => (minutes > 0 ? (stat / minutes) * 90 : 0);
-
-        // Helper: sum a per-90 stat across all players
         const sumPer90 = (getValue) =>
-            playerStats.reduce(
-                (sum, p) => sum + per90(getValue(p) ?? 0, p.games?.minutes ?? 0),
+            playersWithMinutes.reduce(
+                (sum, p) => sum + per90(getValue(p) ?? 0, p.games.minutes),
                 0
             );
 
         fieldValues = {
-            Shots: sumPer90(p => p.shots?.total),
+            TotalShots: sumPer90(p => p.shots?.total),
+            ShotsOnTarget: sumPer90(p => p.shots?.on),
             Goals: sumPer90(p => p.goals?.total),
-            Passes: sumPer90(p => p.passes?.total),
             Assists: sumPer90(p => p.goals?.assists),
-            Dribbles: sumPer90(p => p.dribbles?.success),
+            TotalPasses: sumPer90(p => p.passes?.total),
+            KeyPasses: sumPer90(p => p.passes?.key),
+            DribblesAttempted: sumPer90(p => p.dribbles?.attempts),
+            DribblesWon: sumPer90(p => p.dribbles?.success),
+            DuelsAttempted: sumPer90(p => p.duels?.total),
+            DuelsWon: sumPer90(p => p.duels?.won),
+            FoulsCommitted: sumPer90(p => p.fouls?.committed),
+            FoulsDrawn: sumPer90(p => p.fouls?.drawn),
             Tackles: sumPer90(p => p.tackles?.total),
-            Fouls: sumPer90(p => p.fouls?.committed),
+            Blocks: sumPer90(p => p.tackles?.blocks),
+            Interceptions: sumPer90(p => p.tackles?.interceptions),
 
-            // Rating = average instead of sum
+            // Rating = average across players with minutes
             Rating:
-                playerStats.reduce(
+                playersWithMinutes.reduce(
                     (sum, p) => sum + (parseFloat(p.games?.rating) || 0),
                     0
-                ) / numPlayers,
+                ) / numPlayersWithMinutes,
         };
 
         // Round all stats to 2 decimals
@@ -52,13 +69,13 @@ export default function PerformancePredictor() {
     }
 
     const fields = Object.keys(fieldValues).map(key => ({
-        label: key,
+        label: key.replace(/([a-z])([A-Z])/g, '$1 $2'),
         value: fieldValues[key],
     }));
 
     return (
-        <Box sx={{ maxWidth: 800, mx: "auto" }}>
-            <Typography variant="h5" align="center" sx={{ mb: 5 }}>
+        <Box sx={{ maxWidth: 1000, mx: "auto", ml: 4 }}>
+            <Typography variant="h5" align="center" sx={{ mb: 4 }}>
                 Potential Lineup Performance (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>per 90 mins</Box>)
             </Typography>
             <Grid container spacing={3} wrap="wrap">
@@ -66,7 +83,7 @@ export default function PerformancePredictor() {
                     <Grid key={i}>
                         <Box
                             sx={{
-                                width: 180,
+                                width: 220,
                                 border: "1px solid gray",
                                 borderRadius: 1,
                                 px: 1.5,
@@ -77,10 +94,10 @@ export default function PerformancePredictor() {
                                 bgcolor: "background.paper",
                             }}
                         >
-                            <Typography variant="body2" sx={{ fontSize: 18 }}>
+                            <Typography variant="body2" sx={{ fontSize: 16 }}>
                                 {field.label}:
                             </Typography>
-                            <Typography variant="body2" sx={{ fontSize: 17 }}>
+                            <Typography variant="body2" sx={{ fontSize: 15 }}>
                                 {field.value}
                             </Typography>
                         </Box>
