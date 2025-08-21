@@ -124,10 +124,14 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     }}
                 >
                     <Button
-                        onClick={handleClose}
-                        color="primary"
                         variant="contained"
-                        sx={{ borderRadius: 2 }}
+                        onClick={handleClose}
+                        sx={(theme) =>
+                        ({
+                            borderRadius: 2,
+                            backgroundColor: theme.palette.mode === "dark" ? "#4b0052" : "#d9b3ff",
+                            color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                        })}
                     >
                         Close
                     </Button>

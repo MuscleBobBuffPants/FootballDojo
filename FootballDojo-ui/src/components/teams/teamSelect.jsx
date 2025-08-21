@@ -117,9 +117,15 @@ function TeamSelect() {
 
                 <Button
                     variant="contained"
-                    color="error"
                     onClick={handleReset}
-                    disabled={!selectedLeague}> Reset </Button>
+                    disabled={!selectedLeague}
+                    sx={(theme) => ({
+                        backgroundColor: theme.palette.mode === "dark" ? "#8b0000" : "#ff7f7f",
+                        color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                    })}
+                >
+                    Reset
+                </Button>
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>

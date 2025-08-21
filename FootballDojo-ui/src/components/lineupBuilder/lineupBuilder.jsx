@@ -98,10 +98,14 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                 </Select>
                 <Box mt={2}>
                     <Button
-                        color="primary"
                         variant="contained"
                         onClick={handleGeneratePNG}
-                        sx={{ borderRadius: 2 }}
+                        sx={(theme) =>
+                        ({
+                            borderRadius: 2,
+                            backgroundColor: theme.palette.mode === "dark" ? "#4b0052" : "#d9b3ff",
+                            color: theme.palette.mode === "dark" ? "#ffffff" : "#000000"
+                        })}
                     //disabled={!isLineupComplete()}
                     >
                         Download Lineup & Share
