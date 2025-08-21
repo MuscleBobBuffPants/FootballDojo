@@ -19,39 +19,25 @@ export default function PerformancePredictor() {
     if (playerStats.length > 0) {
         const numPlayers = Object.values(selectedPlayerIds).filter(Boolean).length || 1;
 
-        // Helper to calculate per 90 minutes
         const per90 = (stat, minutes) => (minutes > 0 ? (stat / minutes) * 90 : 0);
 
+        // Helper: sum a per-90 stat across all players
+        const sumPer90 = (getValue) =>
+            playerStats.reduce(
+                (sum, p) => sum + per90(getValue(p) ?? 0, p.games?.minutes ?? 0),
+                0
+            );
+
         fieldValues = {
-            Shots: playerStats.reduce(
-                (sum, p) => sum + per90(p.shots?.total || 0, p.games?.minutes || 1),
-                0
-            ),
-            Goals: playerStats.reduce(
-                (sum, p) => sum + per90(p.goals?.total || 0, p.games?.minutes || 1),
-                0
-            ),
-            Passes: playerStats.reduce(
-                (sum, p) => sum + per90(p.passes?.total || 0, p.games?.minutes || 1),
-                0
-            ),
-            Assists: playerStats.reduce(
-                (sum, p) => sum + per90(p.goals?.assists || 0, p.games?.minutes || 1),
-                0
-            ),
-            Dribbles: playerStats.reduce(
-                (sum, p) => sum + per90(p.dribbles?.success || 0, p.games?.minutes || 1),
-                0
-            ),
-            Tackles: playerStats.reduce(
-                (sum, p) => sum + per90(p.tackles?.total || 0, p.games?.minutes || 1),
-                0
-            ),
-            Fouls: playerStats.reduce(
-                (sum, p) => sum + per90(p.fouls?.committed || 0, p.games?.minutes || 1),
-                0
-            ),
-            // Rating is per-player average
+            Shots: sumPer90(p => p.shots?.total),
+            Goals: sumPer90(p => p.goals?.total),
+            Passes: sumPer90(p => p.passes?.total),
+            Assists: sumPer90(p => p.goals?.assists),
+            Dribbles: sumPer90(p => p.dribbles?.success),
+            Tackles: sumPer90(p => p.tackles?.total),
+            Fouls: sumPer90(p => p.fouls?.committed),
+
+            // Rating = average instead of sum
             Rating:
                 playerStats.reduce(
                     (sum, p) => sum + (parseFloat(p.games?.rating) || 0),
