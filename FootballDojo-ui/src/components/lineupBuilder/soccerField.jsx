@@ -24,15 +24,15 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
 
     return (
         <Box
-            sx={{
+            sx={(theme) => ({
                 position: "relative",
                 width: 1000,
                 height: 604,
-                bgcolor: "#003300",
+                bgcolor: theme.palette.mode === "dark" ? "#003300" : "#42763c",
                 border: "4px solid #ccc",
                 borderRadius: 2,
                 overflow: "hidden",
-            }}
+            })}
         >
             {/* Center circle at the halfway line */}
             <Box
