@@ -7,6 +7,7 @@ import playersByTeamReducer from '../redux/players/fetchPlayersByTeam';
 import standingsByLeagueIdReducer from '../redux/standings/fetchStandingsByLeagueId';
 import playerStatsBySeasonReducer from '../redux/stats/fetchPlayerStatsBySeason';
 import teamsByLeagueIdReducer from '../redux/teams/fetchTeamsByLeagueId';
+import selectedPlayersReducer from './statTracking/selectedPlayers';
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
         playerStatsBySeason: playerStatsBySeasonReducer,
         headToHeadFixtures: headToHeadFixturesReducer,
         recentFormByTeamId: recentFormByTeamIdReducer,
-        standingsByLeagueId: standingsByLeagueIdReducer
+        standingsByLeagueId: standingsByLeagueIdReducer,
+        selectedPlayers: selectedPlayersReducer
     },
 });

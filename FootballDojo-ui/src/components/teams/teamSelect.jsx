@@ -1,12 +1,10 @@
-import {
-    Box,
-    Button
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyListObject, isNonEmptyObject } from "../../global/constants";
 import { clearPlayers, fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
 import { clearStandings } from '../../redux/standings/fetchStandingsByLeagueId';
+import { clearPerformancePredictionData } from '../../redux/statTracking/selectedPlayers';
 import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
 import FixturesGrid from "../fixtures/fixtureGrid";
@@ -18,7 +16,6 @@ import PlayerGrid from '../players/playerGrid';
 import StandingsGrid from '../standings/standingsGrid';
 import TeamLogoIcon from '../teams/teamLogoIcon';
 import TeamSelectDropdown from '../teams/teamSelectDropdown';
-
 
 function TeamSelect() {
     const dispatch = useDispatch();
@@ -73,11 +70,13 @@ function TeamSelect() {
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
         dispatch(clearPlayers());
+        dispatch(clearPerformancePredictionData());
     };
 
     const handleTeamChange = (event) => {
         setResetFlag(prev => !prev);
         setSelectedTeam(event.target.value);
+        dispatch(clearPerformancePredictionData());
     };
 
     const handleReset = () => {
@@ -86,6 +85,7 @@ function TeamSelect() {
         setSelectedTeam(null);
         dispatch(clearPlayers());
         dispatch(clearStandings());
+        dispatch(clearPerformancePredictionData());
     };
 
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
@@ -137,10 +137,14 @@ function TeamSelect() {
                         </Box>
                     </Box>
                 </Box>
-                <LineupBuilder
-                    selectedTeam={selectedTeam ? selectedTeam.name : ""}
-                    playersByTeam={sortedPlayers}
-                    resetFlag={resetFlag} />
+                <Box>
+                    <LineupBuilder
+                        selectedTeam={selectedTeam ? selectedTeam.name : ""}
+                        playersByTeam={sortedPlayers}
+                        resetFlag={resetFlag}
+                        selectedLeague={selectedLeague}
+                        seasonYear={2025} />
+                </Box>
             </div>
         </div>
     );

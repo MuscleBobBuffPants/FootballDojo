@@ -1,4 +1,5 @@
-﻿using FootballDojo.Services;
+﻿using FootballDojo.Models;
+using FootballDojo.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -24,7 +25,7 @@ namespace FootballDojo.Controllers
             {
                 var stats = await _statsService.GetStatsByPlayerIdAndLeagueIdAndSeasonYearAsync(playerId, leagueId, seasonYear);
 
-                if (stats is null) return NotFound();
+                if (stats is null) return NotFound(new List<Stats>());
 
                 return Ok(stats);
             }
