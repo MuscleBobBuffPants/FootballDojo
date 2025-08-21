@@ -28,7 +28,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
 
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
-            dispatch(fetchPlayerStatsBySeason({ playerId: selectedPlayer.id, leagueId: selectedLeague.id, seasonYear: 2024 }));
+            dispatch(fetchPlayerStatsBySeason({ playerId: selectedPlayer.id, leagueId: selectedLeague.id, seasonYear: 2025 }));
         }
     }, [dispatch, selectedLeague, selectedPlayer]);
 
