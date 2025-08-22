@@ -29,7 +29,7 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
                 width: 1000,
                 height: 604,
                 bgcolor: theme.palette.mode === "dark" ? "#003300" : "#42763c",
-                border: theme.palette.mode === "dark" ? "2px solid #ccc" : "2px solid #000000",
+                border: "2px solid #eaeaea",
                 borderRadius: 1,
                 overflow: "hidden",
             })}

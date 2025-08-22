@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
+import { DARKMODE_GRID_BORDER, LIGHTMODE_GRID_BORDER } from "../../global/constants";
 
 export default function PerformancePredictor() {
     const playerStats = useSelector(state => state.selectedPlayers.playerStats);
@@ -74,39 +75,46 @@ export default function PerformancePredictor() {
     }));
 
     return (
-        <Box sx={{ maxWidth: 1000, mx: "auto", ml: 4 }}>
-            <Typography variant="h5" align="center" sx={{ mb: 4 }}>
-                Potential Lineup Performance
-                (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>
-                    per 90 mins
-                </Box>)
-            </Typography>
-            <Grid container spacing={3} wrap="wrap">
-                {fields.map((field, i) => (
-                    <Grid key={i}>
-                        <Box
-                            sx={{
-                                width: 220,
-                                border: "1px solid gray",
-                                borderRadius: 1,
-                                px: 1.5,
-                                py: 1,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                bgcolor: "background.paper",
-                            }}
-                        >
-                            <Typography variant="body2" sx={{ fontSize: 16 }}>
-                                {field.label}:
-                            </Typography>
-                            <Typography variant="body2" sx={{ fontSize: 15 }}>
-                                {field.value}
-                            </Typography>
-                        </Box>
-                    </Grid>
-                ))}
-            </Grid>
+        <Box sx={(theme) => ({
+            backgroundColor: theme.palette.background.default,
+            height: "100%",
+            border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
+            borderRadius: 1
+        })}>
+            <Box sx={{ maxWidth: 1000, mx: "auto", ml: 4, mb: 2.2 }}>
+                <Typography variant="h5" align="center" sx={{ mb: 3, mt: 1 }}>
+                    Potential Lineup Performance
+                    (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>
+                        per 90 mins
+                    </Box>)
+                </Typography>
+                <Grid container spacing={3} wrap="wrap">
+                    {fields.map((field, i) => (
+                        <Grid key={i}>
+                            <Box
+                                sx={{
+                                    width: 220,
+                                    border: "1px solid gray",
+                                    borderRadius: 1,
+                                    px: 1.5,
+                                    py: 1,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    bgcolor: "background.paper",
+                                }}
+                            >
+                                <Typography variant="body2" sx={{ fontSize: 16 }}>
+                                    {field.label}:
+                                </Typography>
+                                <Typography variant="body2" sx={{ fontSize: 15 }}>
+                                    {field.value}
+                                </Typography>
+                            </Box>
+                        </Grid>
+                    ))}
+                </Grid>
+            </Box>
         </Box>
     );
 }

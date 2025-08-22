@@ -11,7 +11,9 @@ function FixtureSeasonDropdown({ selectedTeam, selectedSeason }) {
     return (
         <Box>
             <FormControl sx={{ minWidth: 200 }} size="small">
-                <InputLabel id="season-select-label">Season</InputLabel>
+                <InputLabel id="season-select-label">
+                    Season
+                </InputLabel>
                 <Select
                     labelId="season-select-label"
                     id="season-select"

@@ -11,7 +11,9 @@ function LeagueSelectDropdown({ selectedLeague, handleLeagueChange }) {
     return (
         <Box>
             <FormControl sx={{ minWidth: 200 }} size="small">
-                <InputLabel id="league-select-label">League</InputLabel>
+                <InputLabel id="league-select-label">
+                    League
+                </InputLabel>
                 <Select
                     labelId="league-select-label"
                     id="league-select"

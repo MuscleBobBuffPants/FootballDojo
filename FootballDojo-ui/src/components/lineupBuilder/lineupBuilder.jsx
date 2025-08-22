@@ -1,4 +1,12 @@
-﻿import { Box, Button, MenuItem, Select, Typography } from "@mui/material";
+﻿import {
+    Box,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    Typography
+} from "@mui/material";
 import { toPng } from "html-to-image";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -78,7 +86,7 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
     return (
         <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
             <Box flex={1}>
-                <Typography variant="h5" align="center" sx={{ mt: "+1%", mb: "+2%" }}>
+                <Typography variant="h5" align="center" sx={{ mb: 2.1 }}>
                     Lineup Builder
                 </Typography>
                 <Box ref={fieldRef}>
@@ -93,24 +101,29 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                     </Box>
                 </Box>
             </Box>
-            <Box mt={"+7%"}>
-                <Typography sx={{ mb: "+5%" }}>
-                    Formation:
-                </Typography>
-                <Select
-                    size="small"
-                    value={formation}
-                    onChange={e => setFormation(e.target.value)}
-                    sx={(theme) => ({
-                        backgroundColor: theme.palette.background.paper,
-                        color: "text.primary",
-                        borderRadius: 1
-                    })}
-                >
-                    {Object.keys(FORMATIONS).map(f => (
-                        <MenuItem key={f} value={f}>{f}</MenuItem>
-                    ))}
-                </Select>
+            <Box mt={8}>
+                <FormControl sx={{ minWidth: 125 }} size="small">
+                    <InputLabel id="formation-select-label">
+                        Formation:
+                    </InputLabel>
+                    <Select
+                        labelId="formation-select-label"
+                        id="formation-select"
+                        label="Formation"
+                        size="small"
+                        value={formation}
+                        onChange={e => setFormation(e.target.value)}
+                        sx={(theme) => ({
+                            backgroundColor: theme.palette.background.paper,
+                            color: "text.primary",
+                            borderRadius: 1
+                        })}
+                    >
+                        {Object.keys(FORMATIONS).map(f => (
+                            <MenuItem key={f} value={f}>{f}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <Box mt={2}>
                     <Button
                         variant="contained"
