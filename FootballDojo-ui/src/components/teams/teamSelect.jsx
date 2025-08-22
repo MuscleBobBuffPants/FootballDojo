@@ -1,16 +1,8 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    DARKMODE_RED,
-    DARKMODE_TEXT,
-    LIGHTMODE_RED,
-    LIGHTMODE_TEXT,
-    isNonEmptyListObject,
-    isNonEmptyObject,
-} from "../../global/constants";
+import { isNonEmptyListObject, isNonEmptyObject } from "../../global/constants";
 import { clearPlayers, fetchPlayersByTeam } from '../../redux/players/fetchPlayersByTeam';
-import { clearStandings } from '../../redux/standings/fetchStandingsByLeagueId';
 import { clearPerformancePredictionData } from '../../redux/statTracking/selectedPlayers';
 import { fetchTeamByName } from '../../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../../redux/teams/fetchTeamsByLeagueId';
@@ -86,15 +78,6 @@ function TeamSelect() {
         dispatch(clearPerformancePredictionData());
     };
 
-    const handleReset = () => {
-        setResetFlag(prev => !prev);
-        setSelectedLeague(null)
-        setSelectedTeam(null);
-        dispatch(clearPlayers());
-        dispatch(clearStandings());
-        dispatch(clearPerformancePredictionData());
-    };
-
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
         a.name.localeCompare(b.name)
     ) : [];
@@ -121,18 +104,6 @@ function TeamSelect() {
                 <FixtureSeasonDropdown
                     selectedTeam={selectedTeam}
                     selectedSeason={selectedSeason} />
-
-                <Button
-                    variant="contained"
-                    onClick={handleReset}
-                    disabled={!selectedLeague}
-                    sx={(theme) => ({
-                        backgroundColor: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
-                        color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-                    })}
-                >
-                    Reset
-                </Button>
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
