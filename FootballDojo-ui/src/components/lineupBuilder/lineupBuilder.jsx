@@ -13,12 +13,14 @@ import { useDispatch } from "react-redux";
 import PerformancePredictor from '../../components/lineupBuilder/performancePredictor';
 import {
     DARKMODE_PURPLE,
+    DARKMODE_RED,
     DARKMODE_TEXT,
     FORMATIONS,
     LIGHTMODE_PURPLE,
+    LIGHTMODE_RED,
     LIGHTMODE_TEXT
 } from "../../global/constants";
-import { setPlayerStatsForLineup } from "../../redux/statTracking/selectedPlayers";
+import { clearPerformancePredictionData, setPlayerStatsForLineup } from "../../redux/statTracking/selectedPlayers";
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
 
@@ -31,6 +33,11 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
     useEffect(() => {
         setLineup({});
     }, [resetFlag, formation]);
+
+    const handleReset = () => {
+        setLineup({});
+        dispatch(clearPerformancePredictionData());
+    }
 
     const handleAssign = (slotId, playerId) => {
         const player = playersByTeam.find(p => p.id === playerId);
@@ -124,6 +131,19 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                         ))}
                     </Select>
                 </FormControl>
+                <Box mt={2}>
+                    <Button
+                        onClick={handleReset}
+                        sx={(theme) =>
+                        ({
+                            borderRadius: 2,
+                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
+                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
+                        })}
+                    >
+                        Reset Lineup
+                    </Button>
+                </Box>
                 <Box mt={2}>
                     <Button
                         variant="contained"
