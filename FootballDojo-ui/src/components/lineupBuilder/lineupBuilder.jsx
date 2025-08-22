@@ -101,6 +101,11 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                     size="small"
                     value={formation}
                     onChange={e => setFormation(e.target.value)}
+                    sx={(theme) => ({
+                        backgroundColor: theme.palette.background.paper,
+                        color: "text.primary",
+                        borderRadius: 1
+                    })}
                 >
                     {Object.keys(FORMATIONS).map(f => (
                         <MenuItem key={f} value={f}>{f}</MenuItem>
