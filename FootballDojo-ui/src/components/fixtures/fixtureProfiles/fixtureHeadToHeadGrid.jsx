@@ -89,7 +89,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             headerName: `Previous Matchups (${headToHeadFixtures.length})`,
             headerAlign: 'center',
             align: 'center',
-            width: 300,
+            width: 230,
             sortable: false,
             renderCell: (params) => (
                 <Box
@@ -166,7 +166,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                     hideFooterSelectedRowCount
                     disableColumnMenu
                     sx={{
-                        maxWidth: 480,
+                        maxWidth: 410,
                         height: 52 * 3 + 56, // 3 items at 52px height + padding
                         backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                         "& .MuiDataGrid-columnHeaders": {
