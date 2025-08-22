@@ -20,7 +20,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
             open={modalOpen}
             onClose={handleClose}
             BackdropProps={{
-                sx: { backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(3px)' }
+                sx: { backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(5px)' }
             }}
         >
             <Box
@@ -35,7 +35,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     flexDirection: 'column',
                     alignItems: 'center',
                     gap: 4,
-                    p: 5,
+                    p: 4,
                     borderRadius: 3,
                     border: `3px solid ${theme.palette.divider}`,
                     minWidth: 450,
@@ -123,7 +123,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                 {isNonEmptyObject(selectedFixture) && <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />}
                 <Box
                     sx={{
-                        mt: 4,
+                        mt: 1,
                         display: 'flex',
                         justifyContent: 'flex-end',
                         width: '100%',

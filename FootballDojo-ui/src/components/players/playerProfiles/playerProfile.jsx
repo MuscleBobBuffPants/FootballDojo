@@ -47,7 +47,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
             open={modalOpen}
             onClose={handleClose}
             BackdropProps={{
-                sx: { backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(4px)' }
+                sx: { backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(5px)' }
             }}
         >
             <Box
