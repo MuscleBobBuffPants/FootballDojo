@@ -15,7 +15,11 @@ export const getTheme = (mode) =>
                 }
                 : {
                     primary: { main: "#1976d2" },
-                    secondary: { main: "#9c27b0" }
+                    secondary: { main: "#9c27b0" },
+                    background: {
+                        default: "#edebdf",
+                        paper: "#ffffff",
+                    }
                 }),
         },
     });

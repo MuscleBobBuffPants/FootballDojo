@@ -3,8 +3,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+    DARKMODE_GRID_BORDER,
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
+    LIGHTMODE_GRID_BORDER,
     LIGHTMODE_PURPLE,
     LIGHTMODE_TEXT,
     isNonEmptyObject
@@ -32,7 +34,7 @@ function CustomNoRowsOverlay({ selectedLeague }) {
 const columns = [
     { field: "rank", headerName: "", width: 1, sortable: false },
     {
-        field: "teamName", headerName: "", headerAlign: 'center', align: 'left', width: 250, sortable: false,
+        field: "teamName", headerName: "", headerAlign: 'center', align: 'left', width: 280, sortable: false,
         renderCell: (params) => (
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <img
@@ -96,10 +98,21 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
 
     return (
         <div style={{ textAlign: "left" }}>
-            <div style={{ width: 505, border: "3px solid #ccc", borderRadius: 8 }}>
+            <Box sx={(theme) => ({
+                display: "inline-block",
+                marginLeft: 0,
+                backgroundColor: DARKMODE_TEXT,
+                border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
+                borderRadius: 1
+            })}>
                 <Typography
                     variant="h6"
-                    sx={{ textAlign: "center", p: 1 }}
+                    sx={(theme) => ({
+                        textAlign: "center",
+                        p: 1,
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : theme.palette.background.default,
+                        borderBottom: "1px solid #4b0052"
+                    })}
                 >
                     {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
                 </Typography>
@@ -122,18 +135,23 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                             ? "highlighted-row"
                             : ""
                     }
-                    sx={{
+                    sx={(theme) => ({
                         width: 500,
                         height: 52 * 4 + 56, // 3 items at 52px height + padding
                         fontSize: 15,
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        "& .MuiDataGrid-columnHeaders": {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
                         '& .MuiDataGrid-cell': {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                             cursor: 'default',
-                            '&:hover': {
-                                backgroundColor: 'transparent',
-                            },
                         },
                         '& .MuiDataGrid-columnHeader': {
                             cursor: 'default',
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },
@@ -157,9 +175,9 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                             backgroundColor: (theme) =>
                                 theme.palette.mode === "dark" ? `${DARKMODE_PURPLE} !important` : `${LIGHTMODE_PURPLE} !important`
                         }
-                    }}
+                    })}
                 />
-            </div>
+            </Box>
         </div>
     );
 }

@@ -29,8 +29,8 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
                 width: 1000,
                 height: 604,
                 bgcolor: theme.palette.mode === "dark" ? "#003300" : "#42763c",
-                border: "4px solid #ccc",
-                borderRadius: 2,
+                border: theme.palette.mode === "dark" ? "2px solid #ccc" : "2px solid #000000",
+                borderRadius: 1,
                 overflow: "hidden",
             })}
         >
@@ -55,7 +55,9 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
                     left: "50%",
                     width: 700,
                     height: 150,
-                    border: "2px solid #eaeaea",
+                    borderLeft: "2px solid #eaeaea",
+                    borderRight: "2px solid #eaeaea",
+                    borderTop: "2px solid #eaeaea",
                     transform: "translateX(-50%)", // center it
                 }}
             />
@@ -68,7 +70,9 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
                     left: "50%",
                     width: 250,
                     height: 60,
-                    border: "2px solid #eaeaea",
+                    borderLeft: "2px solid #eaeaea",
+                    borderRight: "2px solid #eaeaea",
+                    borderTop: "2px solid #eaeaea",
                     transform: "translateX(-50%)",
                 }}
             />

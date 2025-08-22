@@ -3,7 +3,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixtureProfile";
-import { formatUtcDate, isNonEmptyObject } from "../../global/constants";
+import {
+    DARKMODE_GRID_BORDER,
+    DARKMODE_TEXT,
+    LIGHTMODE_GRID_BORDER,
+    formatUtcDate,
+    isNonEmptyObject
+} from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
 
 function CustomNoRowsOverlay({ selectedTeam }) {
@@ -25,8 +31,8 @@ function CustomNoRowsOverlay({ selectedTeam }) {
 }
 
 const columns = [
-    { field: "matchdayNumber", headerName: "MD #", headerAlign: 'center', align: 'center', width: 65, sortable: false },
-    { field: "date", headerName: "Date", headerAlign: 'center', align: 'center', width: 118, sortable: false },
+    { field: "matchdayNumber", headerName: "MD #", headerAlign: 'center', align: 'center', width: 58, sortable: false },
+    { field: "date", headerName: "Date", headerAlign: 'center', align: 'center', width: 120, sortable: false },
     { field: "matchup", headerName: "Matchup", headerAlign: 'center', align: 'center', width: 300, sortable: false }
 ];
 
@@ -94,7 +100,13 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
 
     return (
         <div style={{ textAlign: "left" }}>
-            <div style={{ display: "inline-block", marginLeft: 0, border: "3px solid #ccc", borderRadius: 8 }}>
+            <Box sx={(theme) => ({
+                display: "inline-block",
+                marginLeft: 0,
+                backgroundColor: DARKMODE_TEXT,
+                border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
+                borderRadius: 1
+            })}>
                 <DataGrid
                     rows={filteredFixtures}
                     columns={columns}
@@ -110,10 +122,22 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                             <CustomNoRowsOverlay selectedTeam={selectedTeam} />
                         ),
                     }}
-                    sx={{
+                    sx={(theme) => ({
                         width: 500,
                         height: 52 * 5 + 56, // 5 items at 52px height + padding
                         fontSize: 15,
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        },
+                        "& .MuiDataGrid-columnHeader": {
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
                         '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
                             outline: 'none',
                             userSelect: 'none'
@@ -124,7 +148,7 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                         "& .MuiDataGrid-row:hover": {
                             cursor: 'pointer'
                         }
-                    }}
+                    })}
                 />
                 {selectedFixture && (
                     <FixtureProfile
@@ -134,7 +158,7 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                         selectedFixture={selectedFixture} />
                 )}
 
-            </div>
+            </Box>
         </div>
     );
 }

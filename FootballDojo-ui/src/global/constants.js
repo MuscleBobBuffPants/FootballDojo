@@ -19,6 +19,8 @@ export const DARKMODE_RED = "#8b0000";
 export const LIGHTMODE_RED = "#ff7f7f";
 export const DARKMODE_TEXT = "#ffffff";
 export const LIGHTMODE_TEXT = "#000000";
+export const DARKMODE_GRID_BORDER = "2px solid #ccc";
+export const LIGHTMODE_GRID_BORDER = "2px solid #000000";
 
 // Europe's Top 5 Leagues
 export const TOP5LEAGUES = [

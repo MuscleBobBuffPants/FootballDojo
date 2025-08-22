@@ -3,7 +3,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PlayerProfile from "../../components/players/playerProfiles/playerProfile";
-import { POSITION_ORDER, isNonEmptyObject } from "../../global/constants";
+import {
+    DARKMODE_GRID_BORDER,
+    DARKMODE_TEXT,
+    LIGHTMODE_GRID_BORDER,
+    POSITION_ORDER,
+    isNonEmptyObject
+} from "../../global/constants";
 import { clearPlayer, fetchPlayerProfileByPlayerId } from "../../redux/players/fetchPlayerProfileByPlayerId";
 
 function CustomNoRowsOverlay({ selectedTeam }) {
@@ -26,7 +32,7 @@ function CustomNoRowsOverlay({ selectedTeam }) {
 
 const columns = [
     { field: "number", headerName: "", width: 60, sortable: false },
-    { field: "name", headerName: "Name", width: 225, sortable: false },
+    { field: "name", headerName: "Name", width: 270, sortable: false },
     {
         field: "position", headerName: "Position", width: 150, sortable: false,
         sortComparator: (v1, v2) => {
@@ -92,7 +98,13 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
 
     return (
         <div style={{ textAlign: "left" }}>
-            <div style={{ display: "inline-block", border: "3px solid #ccc", borderRadius: 8 }}>
+            <Box sx={(theme) => ({
+                display: "inline-block",
+                marginLeft: 0,
+                backgroundColor: DARKMODE_TEXT,
+                border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
+                borderRadius: 1
+            })}>
                 <DataGrid
                     rows={filteredPlayers}
                     columns={columns}
@@ -108,10 +120,22 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
                             <CustomNoRowsOverlay selectedTeam={selectedTeam} />
                         ),
                     }}
-                    sx={{
+                    sx={(theme) => ({
                         width: 500,
                         height: 52 * 5 + 56, // 5 items at 52px height + padding
                         fontSize: 15,
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        "& .MuiDataGrid-cell": {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        },
+                        "& .MuiDataGrid-columnHeader": {
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
+                        "& .MuiDataGrid-columnHeaders": {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
                         '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
                             outline: 'none',
                             userSelect: 'none'
@@ -122,14 +146,14 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam }) {
                         "& .MuiDataGrid-row:hover": {
                             cursor: 'pointer'
                         }
-                    }}
+                    })}
                 />
                 <PlayerProfile
                     modalOpen={modalOpen}
                     handleClose={handleClose}
                     selectedLeague={selectedLeague}
                     selectedPlayer={selectedPlayer} />
-            </div>
+            </Box>
         </div>
     );
 }
