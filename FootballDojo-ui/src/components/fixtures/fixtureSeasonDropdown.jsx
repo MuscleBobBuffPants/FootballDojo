@@ -29,7 +29,6 @@ function FixtureSeasonDropdown({ selectedTeam, selectedSeason }) {
                         color: "text.primary",
                         borderRadius: 1,
                         pointerEvents: "none"
-
                     })}
                 >
                     <MenuItem value={2025}>2025</MenuItem>

@@ -6,6 +6,9 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useMemo, useState } from 'react';
+import {
+    DARKMODE_TEXT
+} from "../../global/constants";
 import YouTubeCard from '../players/playerProfiles/youtubeCard';
 
 const STAT_LABELS = {
@@ -72,8 +75,9 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                     maxWidth: 300,
                     maxHeight: 300,
                     overflowY: 'auto',
-                    borderRadius: 1,
-                    p: 1
+                    p: 1,
+                    marginLeft: 0,
+                    borderRadius: 1
                 }}
             >
                 <DataGrid
@@ -88,16 +92,21 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                     disableDensitySelector
                     hideFooterSelectedRowCount
                     sortingMode="none"
-                    sx={{
+                    sx={(theme) => ({
                         fontSize: 13,
                         pointerEvents: 'none',
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        "& .MuiDataGrid-columnHeaders": {
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
                         '& .MuiDataGrid-cell': {
-                            '&:hover': {
-                                backgroundColor: 'transparent',
-                            },
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
+                            cursor: 'default',
                         },
                         '& .MuiDataGrid-columnHeader': {
+                            cursor: 'default',
                             fontSize: 12,
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },
@@ -108,7 +117,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                         '& .MuiDataGrid-columnSeparator': {
                             display: 'none',
                         },
-                    }}
+                    })}
                 />
             </Box>
         );
@@ -132,7 +141,12 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                         value={selectedCategory}
                         onChange={handleChange}
                         label="Stat Category"
-                        sx={{ fontSize: 13 }}
+                        sx={(theme) => ({
+                            backgroundColor: theme.palette.background.paper,
+                            color: "text.primary",
+                            borderRadius: 1,
+                            fontSize: 13
+                        })}
                         MenuProps={{
                             PaperProps: {
                                 style: {

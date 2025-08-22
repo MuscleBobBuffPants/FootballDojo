@@ -29,7 +29,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    bgcolor: theme.palette.background.paper,
+                    bgcolor: theme.palette.background.default,
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     display: 'flex',
                     flexDirection: 'column',
@@ -55,7 +55,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     <Typography variant="h6" fontWeight="bold" color="text.primary">
                         {selectedFixture.date}
                     </Typography>
-                    <Typography variant="subtitle1" fontWeight="bold"  color="text.secondary">
+                    <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
                         {selectedFixture.venue}
                     </Typography>
                 </Box>
@@ -82,7 +82,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                                 border: `2px solid ${theme.palette.divider}`,
                                 borderRadius: 1,
                                 p: 1,
-                                backgroundColor: theme.palette.background.default,
+                                backgroundColor: theme.palette.background.paper,
                             })}
                         />
                         <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
@@ -109,7 +109,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                                 border: `2px solid ${theme.palette.divider}`,
                                 borderRadius: 1,
                                 p: 1,
-                                backgroundColor: theme.palette.background.default,
+                                backgroundColor: theme.palette.background.paper,
                             })}
                         />
                         <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">

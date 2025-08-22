@@ -56,7 +56,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    bgcolor: theme.palette.background.paper,
+                    bgcolor: theme.palette.background.default,
                     borderRadius: 3,
                     overflow: 'hidden',
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',

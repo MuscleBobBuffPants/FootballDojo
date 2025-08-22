@@ -4,9 +4,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     DARKMODE_GREEN,
+    DARKMODE_GRID_BORDER,
     DARKMODE_RED,
     DARKMODE_TEXT,
     LIGHTMODE_GREEN,
+    LIGHTMODE_GRID_BORDER,
     LIGHTMODE_RED,
     LIGHTMODE_TEXT,
     formatUtcDate,
@@ -146,7 +148,13 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
 
     return (
         <div style={{ textAlign: "left" }}>
-            <div style={{ display: "inline-block", border: "3px solid #ccc", borderRadius: 8 }}>
+            <Box sx={(theme) => ({
+                display: "inline-block",
+                marginLeft: 0,
+                backgroundColor: DARKMODE_TEXT,
+                border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
+                borderRadius: 1
+            })}>
                 <DataGrid
                     rows={filteredFixtures}
                     columns={columns}
@@ -160,15 +168,20 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                     sx={{
                         maxWidth: 480,
                         height: 52 * 3 + 56, // 3 items at 52px height + padding
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        "& .MuiDataGrid-columnHeaders": {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
                         '& .MuiDataGrid-cell': {
+                            borderBottom: "1px solid #4b0052",
+                            backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                             cursor: 'default',
-                            '&:hover': {
-                                backgroundColor: 'transparent',
-                            },
                         },
                         '& .MuiDataGrid-columnHeader': {
                             cursor: 'default',
                             fontSize: 15,
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             '&:hover': {
                                 backgroundColor: 'transparent',
                             },
@@ -184,7 +197,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                         },
                     }}
                 />
-            </div>
+            </Box>
         </div>
     );
 }
