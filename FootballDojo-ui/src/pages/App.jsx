@@ -1,7 +1,7 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { CssBaseline, IconButton, ThemeProvider, Typography } from "@mui/material";
 import { useState } from "react";
-import TeamSelect from '../components/teams/teamSelect';
+import Home from '../components/home';
 import { getTheme } from '../global/theme';
 import '../styles/App.css';
 
@@ -25,7 +25,7 @@ function App() {
                         {"F\u00fatbol"} Dojo
                     </Typography>
                 </div>
-                <TeamSelect />
+                <Home />
                 <Typography component="h2" sx={{ pt: 12 }}>
                     2025 {"F\u00fatbol"} Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants.
                 </Typography>
