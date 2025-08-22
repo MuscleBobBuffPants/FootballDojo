@@ -10,6 +10,23 @@ export const formatUtcDate = (utcDate) => {
     return `${month} - ${day} - ${year}`;
 }
 
+export const formatDateForFixtureProfile = (dateStr) => {
+    if (!dateStr) return '';
+
+    // Remove spaces around hyphens
+    const cleanStr = dateStr.replace(/\s+/g, '');
+
+    const [month, day, year] = cleanStr.split('-'); // ["08","22","2025"]
+    const date = new Date(`${year}-${month}-${day}`); // ISO format
+
+    return date.toLocaleDateString(undefined, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+};
+
 // Button and Bubble color combos
 export const DARKMODE_GREEN = "#006400";
 export const LIGHTMODE_GREEN = "#90ee90";

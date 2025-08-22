@@ -20,6 +20,7 @@ builder.Services.AddScoped<ITeamsService, TeamsService>();
 builder.Services.AddScoped<IFixturesService, FixturesService>();
 builder.Services.AddScoped<IStatsService, StatsService>();
 builder.Services.AddScoped<IStandingsService, StandingsService>();
+builder.Services.AddScoped<IVenuesService, VenuesService>();
 
 // Enable CORS
 var corsPolicy = "AllowReactDev";

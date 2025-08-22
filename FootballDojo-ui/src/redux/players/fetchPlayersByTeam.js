@@ -26,8 +26,8 @@ const playersByTeam = createSlice({
             state.list = [];
             state.status = 'idle';
             state.error = null;
-        },
-},
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchPlayersByTeam.pending, (state) => {

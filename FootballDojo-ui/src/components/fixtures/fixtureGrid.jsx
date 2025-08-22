@@ -11,6 +11,7 @@ import {
     isNonEmptyObject
 } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
+import { clearVenue } from "../../redux/venues/fetchVenueByVenueId";
 
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
@@ -72,6 +73,7 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
     const handleClose = () => {
         setModalOpen(false);
         setSelectedFixture(null);
+        dispatch(clearVenue());
     };
 
     const filteredFixtures = isNonEmptyObject(selectedTeam)
@@ -82,6 +84,7 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                 matchdayNumber: index + 1,
                 date: formattedDate,
                 matchup: response.teams.away.name + ' @ ' + response.teams.home.name,
+                venueId: response.fixture.venue.id,
                 venue: response.fixture.venue.name + ' - ' + response.fixture.venue.city,
                 homeTeam: {
                     id: response.teams.home.id,

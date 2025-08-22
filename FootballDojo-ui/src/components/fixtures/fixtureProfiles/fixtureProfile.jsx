@@ -4,17 +4,32 @@ import {
     Modal,
     Typography
 } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
     LIGHTMODE_PURPLE,
     LIGHTMODE_TEXT,
+    formatDateForFixtureProfile,
     isNonEmptyObject
 } from "../../../global/constants";
+import { fetchVenueByVenueId } from '../../../redux/venues/fetchVenueByVenueId';
 import FixtureHeadToHeadGrid from "../fixtureProfiles/fixtureHeadToHeadGrid";
 import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
+
 function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixture }) {
+    const dispatch = useDispatch();
+
+    const selectedVenue = useSelector((state) => state.venueByVenueId.list);
+
+    useEffect(() => {
+        if (isNonEmptyObject(selectedFixture)) {
+            dispatch(fetchVenueByVenueId({ venueId: selectedFixture.venueId }));
+        }
+    }, [dispatch, selectedFixture]);
+
     return (
         <Modal
             open={modalOpen}
@@ -34,11 +49,11 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: 4,
+                    gap: 3,
                     p: 4,
                     borderRadius: 3,
                     border: `3px solid ${theme.palette.divider}`,
-                    minWidth: 450,
+                    minWidth: 500,
                     maxWidth: '90vw',
                     animation: 'fadeIn 0.3s ease-in-out',
                 })}
@@ -48,26 +63,51 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        gap: 0.5,
-                        mb: 2,
+                        gap: 0.5
                     }}
                 >
-                    <Typography variant="h6" fontWeight="bold" color="text.primary">
-                        {selectedFixture.date}
+                    <Typography variant="h6" fontWeight="bold">
+                        {formatDateForFixtureProfile(selectedFixture.date)}
                     </Typography>
                     <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
                         {selectedFixture.venue}
                     </Typography>
+                    {selectedVenue && selectedVenue.image && (
+                        <Box>
+                            <Box
+                                component="img"
+                                src={selectedVenue.image}
+                                alt={selectedFixture.venue}
+                                sx={{
+                                    width: '100%',
+                                    maxWidth: 225,
+                                    height: 'auto',
+                                    objectFit: 'contain',
+                                    borderRadius: 2,
+                                    border: '1px solid rgba(255,255,255,0.3)',
+                                    zIndex: 1,
+                                    mt: 1
+                                }}
+                            />
+                            <Typography variant="subtitle2" fontWeight="bold" color="text.secondary"
+                                sx={{
+                                    mt: 1,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                }}>
+                                Capacity: {selectedVenue.capacity.toLocaleString()}
+                            </Typography>
+                        </Box>
+                    )}
                 </Box>
-
                 <Box
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: 3,
-                        width: '100%',
-                        px: 2,
+                        width: '100%'
                     }}
                 >
                     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
@@ -123,7 +163,6 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                 {isNonEmptyObject(selectedFixture) && <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />}
                 <Box
                     sx={{
-                        mt: 1,
                         display: 'flex',
                         justifyContent: 'flex-end',
                         width: '100%',
