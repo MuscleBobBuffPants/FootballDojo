@@ -70,6 +70,11 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
         );
     };
 
+    const headToHeadFixtureHeader = "Previous Matchups (" + headToHeadFixtures.filter(f => {
+        const fixtureDate = new Date(f.fixture.date);
+        return fixtureDate <= new Date();
+    }).length + ")";
+
     const columns = [
         {
             field: 'awayTeamGoals',
@@ -86,7 +91,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
         },
         {
             field: "matchup",
-            headerName: `Previous Matchups (${headToHeadFixtures.length})`,
+            headerName: headToHeadFixtureHeader,
             headerAlign: 'center',
             align: 'center',
             width: 230,
@@ -131,7 +136,10 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
 
     const filteredFixtures = isNonEmptyObject(selectedFixture)
         ? headToHeadFixtures
-            .filter(fixture => fixture.goals.home !== null && fixture.goals.away !== null)
+            .filter(f => {
+                const fixtureDate = new Date(f.fixture.date);
+                return fixtureDate <= new Date();
+            })
             .map((response, index) => {
                 const formattedDate = formatUtcDate(new Date(response.fixture.date));
                 return {

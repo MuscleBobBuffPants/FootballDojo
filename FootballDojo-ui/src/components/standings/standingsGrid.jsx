@@ -234,7 +234,7 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                         >
                             <CircularProgress sx={{ color: "#fff", mb: 2 }} />
                             <Typography variant="body1" fontWeight="bold">
-                                Loading Table Results...
+                                Loading...
                             </Typography>
                         </Box>
                     )}
