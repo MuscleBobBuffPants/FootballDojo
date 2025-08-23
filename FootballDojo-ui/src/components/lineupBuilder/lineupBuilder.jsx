@@ -24,7 +24,7 @@ import { clearPerformancePredictionData, setPlayerStatsForLineup } from "../../r
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
 
-export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, selectedLeague, seasonYear }) {
+export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, selectedLeague, selectedSeason }) {
     const dispatch = useDispatch();
     const fieldRef = useRef(null);
     const [formation, setFormation] = useState("4-3-3");
@@ -34,10 +34,33 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
         setLineup({});
     }, [resetFlag, formation]);
 
-    const handleReset = () => {
-        setLineup({});
+    // Update all players stats in lineup when selectedSeason changes
+    useEffect(() => {
+        if (!selectedSeason) return;
+
+        const assignedEntries = Object.entries(lineup).filter((playerId) => playerId);
+        if (assignedEntries.length === 0) return;
+
         dispatch(clearPerformancePredictionData());
-    }
+
+        assignedEntries.forEach(([slotId, playerId]) => {
+            const player = playersByTeam.find(p => p.id === playerId);
+            if (!player) return;
+
+            dispatch(fetchPlayerStatsBySeason({
+                playerId: player.id,
+                leagueId: selectedLeague.id,
+                seasonYear: selectedSeason
+            })).then(action => {
+                if (action.payload && action.payload.length > 0) {
+                    dispatch(setPlayerStatsForLineup({
+                        slotId: slotId.toString(),
+                        player: { id: player.id, ...action.payload[0] } // action.payload[0] = stats
+                    }));
+                }
+            });
+        });
+    }, [selectedSeason]);
 
     const handleAssign = (slotId, playerId) => {
         const player = playersByTeam.find(p => p.id === playerId);
@@ -47,10 +70,10 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
-                seasonYear
+                seasonYear: selectedSeason
             })).then((action) => {
                 dispatch(setPlayerStatsForLineup({
-                    slotId,
+                    slotId: slotId.toString(),
                     player: { id: player.id, ...action.payload[0] } // action.payload[0] = stats
                 }));
             });
@@ -84,6 +107,11 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
             console.error("Failed to generate PNG:", err);
         }
     };
+
+    const handleReset = () => {
+        setLineup({});
+        dispatch(clearPerformancePredictionData());
+    }
 
     //const isLineupComplete = () => {
     //    const positions = FORMATIONS[formation];

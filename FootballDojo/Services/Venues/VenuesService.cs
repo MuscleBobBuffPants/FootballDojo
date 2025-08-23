@@ -16,7 +16,7 @@ namespace FootballDojo.Services
 
         public async Task<Venue> GetVenueByVenueId(int venueId)
         {
-            var apiUrl = $"{Constants.BASE_URL}venues?id={venueId}";
+            var apiUrl = $"{KeyConstants.BASE_URL}venues?id={venueId}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<Venues>(apiUrl);
 

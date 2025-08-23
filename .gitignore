@@ -6,6 +6,6 @@
 /.vs/FootballDojo
 /FootballDojo/obj
 /FootballDojo-ui/node_modules
-/FootballDojo/Global/Constants.cs
+/FootballDojo/Global/KeyConstants.cs
 /FootballDojo-ui/.vs
 /.vs/ProjectEvaluation

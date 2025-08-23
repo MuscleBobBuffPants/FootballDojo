@@ -9,6 +9,7 @@ import React, { useMemo, useState } from 'react';
 import {
     DARKMODE_TEXT
 } from "../../global/constants";
+import StatsSeasonDropdown from '../players/playerProfiles/statsSeasonDropdown';
 import YouTubeCard from '../players/playerProfiles/youtubeCard';
 
 const STAT_LABELS = {
@@ -24,11 +25,10 @@ const STAT_LABELS = {
 const formatHeaderName = (propName) =>
     STAT_LABELS[propName] || propName.charAt(0).toUpperCase() + propName.slice(1);
 
-function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
+function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handleSeasonChange }) {
     const categories = useMemo(() => Object.entries(playerStatsBySeason[0]), [playerStatsBySeason]);
 
     const [selectedCategory, setSelectedCategory] = useState(categories[0][0]);
-    //const [selectedSeason, setSelectedSeason] = useState("");
 
     const handleChange = (event) => setSelectedCategory(event.target.value);
 
@@ -132,7 +132,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
             width: '100%',
             positon: 'relative'
         }}>
-            <Box sx={{ pl: 1, pt: .25, alignSelf: 'flex-start' }}>
+            <Box sx={{ pl: 1, pt: .25, display: 'flex', alignItems: 'center', gap: 2 }}>
                 <FormControl size="small" sx={{ minWidth: 115 }}>
                     <InputLabel sx={{ fontSize: 13 }}>
                         Stat Category
@@ -161,6 +161,9 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason }) {
                         ))}
                     </Select>
                 </FormControl>
+                <Box sx={{ mr: 3 }} >
+                    <StatsSeasonDropdown selectedSeason={selectedSeason} handleSeasonChange={handleSeasonChange} />
+                </Box>
             </Box>
             <Box sx={{ width: 250 }}>
                 {dataGrids[selectedCategory]}

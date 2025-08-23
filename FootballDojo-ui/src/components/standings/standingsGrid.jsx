@@ -61,7 +61,7 @@ const columns = [
     { field: "points", headerName: "PTS", headerAlign: 'center', align: 'center', width: 5, sortable: false }
 ];
 
-function StandingsGrid({ selectedLeague, selectedTeam }) {
+function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
     const dispatch = useDispatch();
 
     const standingsByLeagueId = useSelector((state) => state.standingsByLeagueId.list);
@@ -78,9 +78,9 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
 
     useEffect(() => {
         if (selectedLeague) {
-            dispatch(fetchStandingsByLeagueId({ leagueId: selectedLeague.id, seasonYear: 2025 }));
+            dispatch(fetchStandingsByLeagueId({ leagueId: selectedLeague.id, seasonYear: selectedSeason }));
         }
-    }, [dispatch, selectedLeague]);
+    }, [dispatch, selectedLeague, selectedSeason]);
 
 
     const standings = isNonEmptyObject(selectedLeague)

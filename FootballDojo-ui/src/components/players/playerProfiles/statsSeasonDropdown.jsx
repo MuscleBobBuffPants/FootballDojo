@@ -6,31 +6,32 @@ import {
     Select
 } from "@mui/material";
 
-function FixtureSeasonDropdown({ selectedSeason, handleSeasonChange }) {
+function StatsSeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
         <Box>
-            <FormControl sx={{ minWidth: 200 }} size="small">
-                <InputLabel id="season-select-label">
+            <FormControl sx={{ minWidth: 103 }} size="small">
+                <InputLabel id="stats-season-select-label">
                     Season
                 </InputLabel>
                 <Select
-                    labelId="season-select-label"
-                    id="season-select"
+                    labelId="stats-season-select-label"
+                    id="stats-season-select"
                     value={selectedSeason}
                     label="Season"
                     onChange={handleSeasonChange}
                     sx={(theme) => ({
                         backgroundColor: theme.palette.background.paper,
                         color: "text.primary",
-                        borderRadius: 1
+                        borderRadius: 1,
+                        fontSize: 13
                     })}
                     MenuProps={{
                         PaperProps: {
                             style: {
-                                maxHeight: 48 * 5 + 8, // 5 items at 48px height + padding
+                                maxHeight: 38 * 4 + 8, // 5 items at 48px height + padding
                             },
                         },
-                    }}
+                    }}  
                 >
                     <MenuItem value={2025}>2025</MenuItem>
                     <MenuItem value={2024}>2024</MenuItem>
@@ -43,4 +44,4 @@ function FixtureSeasonDropdown({ selectedSeason, handleSeasonChange }) {
         </Box>
     )
 }
-export default FixtureSeasonDropdown;
+export default StatsSeasonDropdown;

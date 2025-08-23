@@ -37,7 +37,7 @@ const columns = [
     { field: "matchup", headerName: "Matchup", headerAlign: 'center', align: 'center', width: 300, sortable: false }
 ];
 
-function FixturesGrid({ selectedLeague, selectedTeam }) {
+function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
     const dispatch = useDispatch();
 
     const [selectedFixture, setSelectedFixture] = useState(null);
@@ -57,9 +57,9 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
-            dispatch(fetchFixturesByLeagueId({ leagueId: selectedLeague.id, seasonYear: 2025, teamId: selectedTeam.id }));
+            dispatch(fetchFixturesByLeagueId({ leagueId: selectedLeague.id, seasonYear: selectedSeason, teamId: selectedTeam.id }));
         }
-    }, [dispatch, selectedLeague, selectedTeam]);
+    }, [dispatch, selectedLeague, selectedTeam, selectedSeason]);
 
     useEffect(() => {
         setModalOpen(true);

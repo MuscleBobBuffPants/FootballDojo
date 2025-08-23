@@ -10,15 +10,12 @@ const selectedPlayers = createSlice({
     reducers: {
         setPlayerStatsForLineup(state, action) {
             const { slotId, player } = action.payload;
-            const existingIndex = state.playerStats.findIndex(p => p.slotId === slotId);
 
-            const entry = { slotId, id: player.id, ...player };
+            // Remove any previous entry for this slot
+            state.playerStats = state.playerStats.filter(p => p.slotId !== slotId && p.id !== player.id);
 
-            if (existingIndex !== -1) {
-                state.playerStats[existingIndex] = entry;
-            } else {
-                state.playerStats.push(entry);
-            }
+            // Add new entry
+            state.playerStats.push({ slotId, id: player.id, ...player });
         },
         clearPerformancePredictionData(state) {
             state.playerStats = [];

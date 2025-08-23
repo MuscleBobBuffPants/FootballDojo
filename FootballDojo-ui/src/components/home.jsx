@@ -1,11 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isNonEmptyListObject, isNonEmptyObject } from "../global/constants";
-import { clearPlayers, fetchPlayersByTeam } from '../redux/players/fetchPlayersByTeam';
-import { clearPerformancePredictionData } from '../redux/statTracking/selectedPlayers';
-import { fetchTeamByName } from '../redux/teams/fetchTeamByName';
-import { fetchTeamsByLeagueId } from '../redux/teams/fetchTeamsByLeagueId';
 import FixturesGrid from "../components/fixtures/fixtureGrid";
 import FixtureSeasonDropdown from '../components/fixtures/fixtureSeasonDropdown';
 import LeagueLogoIcon from '../components/leagues/leagueLogoIcon';
@@ -15,6 +10,11 @@ import PlayerGrid from '../components/players/playerGrid';
 import StandingsGrid from '../components/standings/standingsGrid';
 import TeamLogoIcon from '../components/teams/teamLogoIcon';
 import TeamSelectDropdown from '../components/teams/teamSelectDropdown';
+import { isNonEmptyListObject, isNonEmptyObject } from "../global/constants";
+import { clearPlayers, fetchPlayersByTeam } from '../redux/players/fetchPlayersByTeam';
+import { clearPerformancePredictionData } from '../redux/statTracking/selectedPlayers';
+import { fetchTeamByName } from '../redux/teams/fetchTeamByName';
+import { fetchTeamsByLeagueId } from '../redux/teams/fetchTeamsByLeagueId';
 
 function Home() {
     const dispatch = useDispatch();
@@ -65,6 +65,7 @@ function Home() {
     }, [dispatch, selectedTeam]);
 
     const handleLeagueChange = (event) => {
+        setSelectedSeason(2025);
         setResetFlag(prev => !prev);
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
@@ -73,10 +74,15 @@ function Home() {
     };
 
     const handleTeamChange = (event) => {
+        setSelectedSeason(2025);
         setResetFlag(prev => !prev);
         setSelectedTeam(event.target.value);
         dispatch(clearPerformancePredictionData());
     };
+
+    const handleSeasonChange = (event) => {
+        setSelectedSeason(event.target.value);
+    }
 
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
         a.name.localeCompare(b.name)
@@ -103,13 +109,15 @@ function Home() {
 
                 <FixtureSeasonDropdown
                     selectedTeam={selectedTeam}
-                    selectedSeason={selectedSeason} />
+                    selectedSeason={selectedSeason}
+                    handleSeasonChange={handleSeasonChange} />
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                     <StandingsGrid
                         selectedLeague={selectedLeague}
-                        selectedTeam={selectedTeam} />
+                        selectedTeam={selectedTeam}
+                        selectedSeason={selectedSeason} />
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                         <PlayerGrid
                             selectedLeague={selectedLeague}
@@ -118,8 +126,8 @@ function Home() {
                         <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                             <FixturesGrid
                                 selectedLeague={selectedLeague}
-                                selectedTeam={selectedTeam} />
-
+                                selectedTeam={selectedTeam}
+                                selectedSeason={selectedSeason} />
                         </Box>
                     </Box>
                 </Box>
@@ -129,7 +137,7 @@ function Home() {
                         playersByTeam={sortedPlayers}
                         resetFlag={resetFlag}
                         selectedLeague={selectedLeague}
-                        seasonYear={2025} />
+                        selectedSeason={selectedSeason} />
                 </Box>
             </div>
         </div>

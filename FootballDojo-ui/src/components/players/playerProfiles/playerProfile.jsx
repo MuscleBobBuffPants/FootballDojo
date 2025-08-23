@@ -5,7 +5,7 @@ import {
     Modal,
     Typography
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StatsGrid from '../../../components/stats/statsGrid';
 import {
@@ -19,6 +19,7 @@ import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsB
 
 function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
+    const [selectedSeason, setSelectedSeason] = useState(2025);
 
     const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
     //const status = useSelector((state) => state.playerStatsBySeason.status);
@@ -34,13 +35,23 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
 
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
+            setSelectedSeason(2025);
+        }
+    }, [selectedLeague, selectedPlayer]);
+
+    useEffect(() => {
+        if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
             dispatch(fetchPlayerStatsBySeason({
                 playerId: selectedPlayer.id,
                 leagueId: selectedLeague.id,
-                seasonYear: 2025
+                seasonYear: selectedSeason
             }));
         }
-    }, [dispatch, selectedLeague, selectedPlayer]);
+    }, [dispatch, selectedLeague, selectedPlayer, selectedSeason]);
+
+    const handleSeasonChange = (event) => {
+        setSelectedSeason(event.target.value);
+    }
 
     return (
         <Modal
@@ -132,7 +143,9 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                         (
                             <StatsGrid
                                 selectedPlayer={selectedPlayer}
-                                playerStatsBySeason={playerStatsBySeason} />
+                                playerStatsBySeason={playerStatsBySeason}
+                                selectedSeason={selectedSeason}
+                                handleSeasonChange={handleSeasonChange} />
                         )
                     }
                 </Box>
