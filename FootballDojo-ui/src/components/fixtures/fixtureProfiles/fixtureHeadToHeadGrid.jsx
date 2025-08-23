@@ -222,7 +222,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                                 zIndex: 10,
                             }}
                         >
-                            <CircularProgress sx={{ color: "#fff", mb: 2 }} />
+                            <CircularProgress size={20} sx={{ color: "#fff", mb: 2 }} />
                             <Typography variant="body1" fontWeight="bold">
                                 Loading Fixtures...
                             </Typography>

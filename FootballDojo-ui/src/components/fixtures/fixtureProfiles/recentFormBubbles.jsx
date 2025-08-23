@@ -150,7 +150,7 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
                         pointerEvents: "none"
                     }}
                 >
-                    <CircularProgress size={20} />
+                    <CircularProgress size={20} sx={{ color: "#fff" }} />
                 </Box>
             )}
         </Box>
