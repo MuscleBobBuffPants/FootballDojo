@@ -147,10 +147,21 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        backgroundColor: theme.palette.mode === 'dark'
+                            ? theme.palette.background.secondary
+                            : theme.palette.background.secondary,
+                        color: theme.palette.mode === "dark"
+                            ? DARKMODE_TEXT
+                            : LIGHTMODE_TEXT,
                         pointerEvents: "none"
                     }}
                 >
-                    <CircularProgress size={20} sx={{ color: "#fff" }} />
+                    <CircularProgress size={20}
+                        sx={(theme) => ({
+                            color: theme.palette.mode === "dark"
+                                ? DARKMODE_TEXT
+                                : LIGHTMODE_TEXT
+                        })} />
                 </Box>
             )}
         </Box>

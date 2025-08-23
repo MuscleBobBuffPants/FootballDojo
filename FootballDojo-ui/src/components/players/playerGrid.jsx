@@ -7,6 +7,7 @@ import {
     DARKMODE_GRID_BORDER,
     DARKMODE_TEXT,
     LIGHTMODE_GRID_BORDER,
+    LIGHTMODE_TEXT,
     POSITION_ORDER,
     isNonEmptyObject,
 } from "../../global/constants";
@@ -158,19 +159,28 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
 
                     {playersByTeamStatus === "loading" && (
                         <Box
-                            sx={{
+                            sx={(theme) => ({
                                 position: "absolute",
                                 inset: 0,
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                backgroundColor: "rgba(0,0,0,0.4)", // semi-transparent dark overlay
-                                color: "#fff",
+                                backgroundColor: theme.palette.mode === 'dark'
+                                    ? theme.palette.background.secondary
+                                    : theme.palette.background.secondary,
+                                color: theme.palette.mode === "dark"
+                                    ? DARKMODE_TEXT
+                                    : LIGHTMODE_TEXT,
                                 zIndex: 10,
-                            }}
+                            })}
                         >
-                            <CircularProgress size={20} sx={{ color: "#fff", mb: 2 }} />
+                            <CircularProgress size={20}
+                                sx={(theme) => ({
+                                    color: theme.palette.mode === "dark"
+                                        ? DARKMODE_TEXT
+                                        : LIGHTMODE_TEXT, mb: 2
+                                })} />
                             <Typography variant="body1" fontWeight="bold">
                                 Loading Players...
                             </Typography>
@@ -179,19 +189,28 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
 
                     {playerProfileStatus === "loading" && (
                         <Box
-                            sx={{
+                            sx={(theme) => ({
                                 position: "absolute",
                                 inset: 0,
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                backgroundColor: "rgba(0,0,0,0.4)", // semi-transparent dark overlay
-                                color: "#fff",
+                                backgroundColor: theme.palette.mode === 'dark'
+                                    ? theme.palette.background.secondary
+                                    : theme.palette.background.secondary,
+                                color: theme.palette.mode === "dark"
+                                    ? DARKMODE_TEXT
+                                    : LIGHTMODE_TEXT,
                                 zIndex: 10,
-                            }}
+                            })}
                         >
-                            <CircularProgress sx={{ color: "#fff", mb: 2 }} />
+                            <CircularProgress size={20}
+                                sx={(theme) => ({
+                                    color: theme.palette.mode === "dark"
+                                        ? DARKMODE_TEXT
+                                        : LIGHTMODE_TEXT, mb: 2
+                                })} />
                             <Typography variant="body1" fontWeight="bold">
                                 Loading Player Profile...
                             </Typography>

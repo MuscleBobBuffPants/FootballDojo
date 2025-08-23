@@ -123,6 +123,7 @@ export default function LineupBuilder(
 
     const handleReset = () => {
         setLineup({});
+        setSelectedSeason(2025);
         dispatch(clearPerformancePredictionData());
     }
 

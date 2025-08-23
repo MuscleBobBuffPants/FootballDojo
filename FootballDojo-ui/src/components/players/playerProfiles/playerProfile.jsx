@@ -16,6 +16,7 @@ import {
     isNonEmptyObject
 } from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
+import YouTubeCard from './youtubeCard';
 
 function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
@@ -139,15 +140,20 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             </Box>
                         ))}
                     </Box>
-                    {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
-                        (
-                            <StatsGrid
-                                selectedPlayer={selectedPlayer}
-                                playerStatsBySeason={playerStatsBySeason}
-                                selectedSeason={selectedSeason}
-                                handleSeasonChange={handleSeasonChange} />
-                        )
-                    }
+                    <Box sx={{ flexDirection: "column" }}>
+                        {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
+                            (
+                                <StatsGrid
+                                    selectedPlayer={selectedPlayer}
+                                    playerStatsBySeason={playerStatsBySeason}
+                                    selectedSeason={selectedSeason}
+                                    handleSeasonChange={handleSeasonChange} />
+                            )
+                        }
+                        <Box sx={{ flexDirection: "column" }}>
+                            <YouTubeCard selectedPlayer={selectedPlayer} />
+                        </Box>
+                    </Box>
                 </Box>
                 <Box
                     sx={{

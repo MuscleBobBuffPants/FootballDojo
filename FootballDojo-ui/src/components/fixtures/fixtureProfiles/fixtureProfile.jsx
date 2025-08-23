@@ -47,24 +47,33 @@ function VenueImageBox({ venue, alt }) {
                 />
             ) : (
                 <Box
-                    sx={{
+                    sx={(theme) => ({
                         width: "100%",
                         height: 169,
                         borderRadius: 2,
                         border: "1px solid rgba(255,255,255,0.3)",
-                        backgroundColor: "rgba(0,0,0,0.05)",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "text.secondary",
+                            backgroundColor: theme.palette.mode === 'dark'
+                                ? theme.palette.background.secondary
+                                : theme.palette.background.secondary,
+                            color: theme.palette.mode === "dark"
+                                ? DARKMODE_TEXT
+                                : LIGHTMODE_TEXT,
                         fontWeight: "bold",
                         zIndex: 10,
                         backdropFilter: "blur(3px)",
                         gap: 1,
-                    }}
+                    })}
                 >
-                    <CircularProgress size={20} sx={{ color: "#fff", mb: 2 }} />
+                        <CircularProgress size={20}
+                            sx={(theme) => ({
+                                color: theme.palette.mode === "dark"
+                                    ? DARKMODE_TEXT
+                                    : LIGHTMODE_TEXT, mb: 2
+                            })} />
                     <Typography>Loading Venue...</Typography>
                 </Box>
             )}

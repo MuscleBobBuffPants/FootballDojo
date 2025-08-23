@@ -175,6 +175,9 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                         hideFooter={true}
                         hideFooterSelectedRowCount
                         disableColumnMenu
+                        slots={{
+                            noRowsOverlay: () => <></>, // render nothing
+                        }}
                         sx={{
                             maxWidth: 415,
                             height: 52 * 3 + 56, // 3 items at 52px height + padding
@@ -210,19 +213,28 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                     />
                     {status === "loading" && (
                         <Box
-                            sx={{
+                            sx={(theme) => ({
                                 position: "absolute",
                                 inset: 0,
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                backgroundColor: "rgba(0,0,0,0.4)", // semi-transparent dark overlay
-                                color: "#fff",
+                                backgroundColor: theme.palette.mode === 'dark'
+                                    ? theme.palette.background.secondary
+                                    : theme.palette.background.secondary,
+                                color: theme.palette.mode === "dark"
+                                    ? DARKMODE_TEXT
+                                    : LIGHTMODE_TEXT,
                                 zIndex: 10,
-                            }}
+                            })}
                         >
-                            <CircularProgress size={20} sx={{ color: "#fff", mb: 2 }} />
+                            <CircularProgress size={20}
+                                sx={(theme) => ({
+                                    color: theme.palette.mode === "dark"
+                                        ? DARKMODE_TEXT
+                                        : LIGHTMODE_TEXT, mb: 2
+                                })} />
                             <Typography variant="body1" fontWeight="bold">
                                 Loading Fixtures...
                             </Typography>

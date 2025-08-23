@@ -220,19 +220,28 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
 
                     {status === "loading" && (
                         <Box
-                            sx={{
+                            sx={(theme) => ({
                                 position: "absolute",
                                 inset: 0,
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                backgroundColor: "rgba(0,0,0,0.4)", // dark overlay
-                                color: "#fff",
-                                zIndex: 10,
-                            }}
+                                backgroundColor: theme.palette.mode === 'dark'
+                                    ? theme.palette.background.secondary
+                                    : theme.palette.background.secondary,
+                                color: theme.palette.mode === "dark"
+                                    ? DARKMODE_TEXT
+                                    : LIGHTMODE_TEXT,
+                                zIndex: 10
+                            })}
                         >
-                            <CircularProgress size={20} sx={{ color: "#fff", mb: 2 }} />
+                            <CircularProgress size={20}
+                                sx={(theme) => ({
+                                    color: theme.palette.mode === "dark"
+                                        ? DARKMODE_TEXT
+                                        : LIGHTMODE_TEXT, mb: 2
+                                })} />
                             <Typography variant="body1" fontWeight="bold">
                                 Loading...
                             </Typography>

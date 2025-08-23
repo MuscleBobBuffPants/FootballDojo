@@ -167,7 +167,6 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
             </Box>
             <Box sx={{ width: 250 }}>
                 {dataGrids[selectedCategory]}
-                <YouTubeCard selectedPlayer={selectedPlayer} />
             </Box>
         </Box>
     );
