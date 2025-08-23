@@ -71,7 +71,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     borderRadius: 3,
                     overflow: 'hidden',
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    minWidth: 500,
+                    width: 675,
                     maxWidth: '95vw',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif",

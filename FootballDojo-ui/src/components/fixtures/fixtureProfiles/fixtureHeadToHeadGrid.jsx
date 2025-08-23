@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
     const theme = useTheme();
 
     const headToHeadFixtures = useSelector((state) => state.headToHeadFixtures.list);
-    //const status = useSelector((state) => state.headToHeadFixtures.status);
+    const status = useSelector((state) => state.headToHeadFixtures.status);
     //const error = useSelector((state) => state.headToHeadFixtures.error);
 
     //if (status === 'loading') {
@@ -147,56 +147,80 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
         : [];
 
     return (
-        <div style={{ textAlign: "left" }}>
+        <div style={{ textAlign: "left", position: "relative" }}>
             <Box sx={(theme) => ({
                 display: "inline-block",
                 marginLeft: 0,
                 backgroundColor: DARKMODE_TEXT,
                 border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
-                borderRadius: 1
+                borderRadius: 1,
+                position: "relative" // needed for overlay
             })}>
-                <DataGrid
-                    rows={filteredFixtures}
-                    columns={columns}
-                    sortModel={[{ field: "date", sort: "desc" }]}
-                    disableColumnResize={true}
-                    disablePagination={true}
-                    disableRowSelectionOnClick
-                    hideFooter={true}
-                    hideFooterSelectedRowCount
-                    disableColumnMenu
-                    sx={{
-                        maxWidth: 410,
-                        height: 52 * 3 + 56, // 3 items at 52px height + padding
-                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
-                        "& .MuiDataGrid-columnHeaders": {
-                            borderBottom: "1px solid #4b0052",
-                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
-                        },
-                        '& .MuiDataGrid-cell': {
-                            borderBottom: "1px solid #4b0052",
+                <div style={{ position: "relative" }}>
+                    <DataGrid
+                        rows={filteredFixtures}
+                        columns={columns}
+                        sortModel={[{ field: "date", sort: "desc" }]}
+                        disableColumnResize={true}
+                        disablePagination={true}
+                        disableRowSelectionOnClick
+                        hideFooter={true}
+                        hideFooterSelectedRowCount
+                        disableColumnMenu
+                        sx={{
+                            maxWidth: 415,
+                            height: 52 * 3 + 56, // 3 items at 52px height + padding
                             backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
-                            cursor: 'default',
-                        },
-                        '& .MuiDataGrid-columnHeader': {
-                            cursor: 'default',
-                            fontSize: 15,
-                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
-                            '&:hover': {
-                                backgroundColor: 'transparent',
+                            "& .MuiDataGrid-columnHeaders": {
+                                borderBottom: "1px solid #4b0052",
+                                backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
                             },
-                        },
-                        '& .MuiDataGrid-row:hover': {
-                            backgroundColor: 'transparent !important',
-                        },
-                        '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
-                            outline: 'none',
-                        },
-                        '& .MuiDataGrid-columnSeparator': {
-                            display: 'none',
-                        },
-                    }}
-                />
+                            '& .MuiDataGrid-cell': {
+                                borderBottom: "1px solid #4b0052",
+                                backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                                cursor: 'default',
+                            },
+                            '& .MuiDataGrid-columnHeader': {
+                                cursor: 'default',
+                                fontSize: 15,
+                                backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
+                                '&:hover': {
+                                    backgroundColor: 'transparent',
+                                },
+                            },
+                            '& .MuiDataGrid-row:hover': {
+                                backgroundColor: 'transparent !important',
+                            },
+                            '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
+                                outline: 'none',
+                            },
+                            '& .MuiDataGrid-columnSeparator': {
+                                display: 'none',
+                            },
+                            filter: status === "loading" ? "blur(2px)" : "none", // blur grid when loading
+                        }}
+                    />
+                    {status === "loading" && (
+                        <Box
+                            sx={{
+                                position: "absolute",
+                                inset: 0,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                backgroundColor: "rgba(0,0,0,0.4)", // semi-transparent dark overlay
+                                color: "#fff",
+                                zIndex: 10,
+                            }}
+                        >
+                            <CircularProgress sx={{ color: "#fff", mb: 2 }} />
+                            <Typography variant="body1" fontWeight="bold">
+                                Loading Fixtures...
+                            </Typography>
+                        </Box>
+                    )}
+                </div>
             </Box>
         </div>
     );

@@ -29,16 +29,8 @@ function Home() {
     //const status = useSelector((state) => state.teamsByLeagueId.status);
     //const error = useSelector((state) => state.teamsByLeagueId.error);
     const playersByTeam = useSelector((state) => state.playersByTeam.list);
-    //const status = useSelector((state) => state.playersByTeam.status);
+    const playersByTeamStatus = useSelector((state) => state.playersByTeam.status);
     //const error = useSelector((state) => state.playersByTeam.error);
-
-    //if (status === 'loading') {
-    //    return <p>Loading team...</p>;
-    //}
-
-    //if (status === 'failed') {
-    //    return <p>Error: {error}</p>;
-    //}
 
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague)) {
@@ -122,7 +114,8 @@ function Home() {
                         <PlayerGrid
                             selectedLeague={selectedLeague}
                             selectedTeam={selectedTeam}
-                            playersByTeam={sortedPlayers} />
+                            playersByTeam={sortedPlayers}
+                            playersByTeamStatus={playersByTeamStatus} />
                         <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                             <FixturesGrid
                                 selectedLeague={selectedLeague}
