@@ -24,7 +24,15 @@ import { clearPerformancePredictionData, setPlayerStatsForLineup } from "../../r
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
 
-export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, selectedLeague, selectedSeason }) {
+export default function LineupBuilder(
+    {
+        selectedTeam,
+        playersByTeam,
+        resetFlag,
+        selectedLeague,
+        setSelectedSeason,
+        selectedSeason
+    }) {
     const dispatch = useDispatch();
     const fieldRef = useRef(null);
     const [formation, setFormation] = useState("4-3-3");
@@ -33,6 +41,11 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
     useEffect(() => {
         setLineup({});
     }, [resetFlag, formation]);
+
+    // Handler to receive season changes from PerformancePredictor
+    const handleSeasonChange = (selectedSeason) => {
+        setSelectedSeason(selectedSeason);
+    };
 
     // Update all players stats in lineup when selectedSeason changes
     useEffect(() => {
@@ -132,7 +145,9 @@ export default function LineupBuilder({ selectedTeam, playersByTeam, resetFlag, 
                         onAssign={handleAssign}
                     />
                     <Box sx={{ mt: 3 }} >
-                        <PerformancePredictor />
+                        <PerformancePredictor
+                            selectedSeason={selectedSeason}
+                            handleSeasonChange={handleSeasonChange} />
                     </Box>
                 </Box>
             </Box>

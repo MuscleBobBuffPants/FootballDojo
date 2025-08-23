@@ -1,9 +1,10 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { DARKMODE_GRID_BORDER, LIGHTMODE_GRID_BORDER } from "../../global/constants";
+import LineupBuilderSeasonDropdown from "../lineupBuilder/lineupBuilderSeasonDropdown";
 
-export default function PerformancePredictor() {
+export default function PerformancePredictor({ selectedSeason, handleSeasonChange }) {
     const playerStats = useSelector(state => state.selectedPlayers.playerStats);
 
     let fieldValues = {
@@ -82,12 +83,20 @@ export default function PerformancePredictor() {
             borderRadius: 1
         })}>
             <Box sx={{ maxWidth: 1000, mx: "auto", ml: 4, mb: 2.2 }}>
-                <Typography variant="h5" align="center" sx={{ mb: 3, mt: 1 }}>
-                    Potential Lineup Performance
-                    (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>
-                        per 90 mins
-                    </Box>)
-                </Typography>
+                <Box sx={{ position: 'relative', mb: 3, mt: 1, width: '100%', textAlign: 'center' }}>
+                    <Typography variant="h5" sx={{ display: 'inline-flex', alignItems: 'center' }}>
+                        Potential Lineup Performance
+                        (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>
+                            per 90 mins
+                        </Box>)
+                    </Typography>
+                    <Box sx={{ position: 'absolute', left: "80%", top: 5 }}>
+                        <LineupBuilderSeasonDropdown
+                            selectedSeason={selectedSeason}
+                            handleSeasonChange={handleSeasonChange}
+                        />
+                    </Box>
+                </Box>
                 <Grid container spacing={3} wrap="wrap">
                     {fields.map((field, i) => (
                         <Grid key={i}>
@@ -116,5 +125,6 @@ export default function PerformancePredictor() {
                 </Grid>
             </Box>
         </Box>
+
     );
 }

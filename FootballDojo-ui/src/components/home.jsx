@@ -23,7 +23,8 @@ function Home() {
     const [selectedLeague, setSelectedLeague] = useState("");
     const [selectedTeam, setSelectedTeam] = useState("");
     const [teamLogo, setTeamLogo] = useState(null);
-    const [selectedSeason, setSelectedSeason] = useState(2025);
+    const [selectedMainSeason, setSelectedMainSeason] = useState(2025);
+    const [selectedLineupSeason, setSelectedLineupSeason] = useState(2025);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
     //const status = useSelector((state) => state.teamsByLeagueId.status);
@@ -57,7 +58,7 @@ function Home() {
     }, [dispatch, selectedTeam]);
 
     const handleLeagueChange = (event) => {
-        setSelectedSeason(2025);
+        setSelectedMainSeason(2025);
         setResetFlag(prev => !prev);
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
@@ -66,14 +67,14 @@ function Home() {
     };
 
     const handleTeamChange = (event) => {
-        setSelectedSeason(2025);
+        setSelectedMainSeason(2025);
         setResetFlag(prev => !prev);
         setSelectedTeam(event.target.value);
         dispatch(clearPerformancePredictionData());
     };
 
     const handleSeasonChange = (event) => {
-        setSelectedSeason(event.target.value);
+        setSelectedMainSeason(event.target.value);
     }
 
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
@@ -101,7 +102,7 @@ function Home() {
 
                 <FixtureSeasonDropdown
                     selectedTeam={selectedTeam}
-                    selectedSeason={selectedSeason}
+                    selectedSeason={selectedMainSeason}
                     handleSeasonChange={handleSeasonChange} />
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
@@ -109,7 +110,7 @@ function Home() {
                     <StandingsGrid
                         selectedLeague={selectedLeague}
                         selectedTeam={selectedTeam}
-                        selectedSeason={selectedSeason} />
+                        selectedSeason={selectedMainSeason} />
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                         <PlayerGrid
                             selectedLeague={selectedLeague}
@@ -120,7 +121,7 @@ function Home() {
                             <FixturesGrid
                                 selectedLeague={selectedLeague}
                                 selectedTeam={selectedTeam}
-                                selectedSeason={selectedSeason} />
+                                selectedSeason={selectedMainSeason} />
                         </Box>
                     </Box>
                 </Box>
@@ -130,7 +131,8 @@ function Home() {
                         playersByTeam={sortedPlayers}
                         resetFlag={resetFlag}
                         selectedLeague={selectedLeague}
-                        selectedSeason={selectedSeason} />
+                        setSelectedSeason={setSelectedLineupSeason}
+                        selectedSeason={selectedLineupSeason} />
                 </Box>
             </div>
         </div>
