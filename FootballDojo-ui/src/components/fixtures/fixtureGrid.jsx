@@ -159,7 +159,6 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",
                             "& .MuiDataGrid-cell": {
-                                borderBottom: "1px solid #4b0052",
                                 backgroundColor:
                                     theme.palette.mode === "light" ? "transparent" : "",
                             },
@@ -168,7 +167,6 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                                     theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             },
                             "& .MuiDataGrid-columnHeaders": {
-                                borderBottom: "1px solid #4b0052",
                                 backgroundColor:
                                     theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             },

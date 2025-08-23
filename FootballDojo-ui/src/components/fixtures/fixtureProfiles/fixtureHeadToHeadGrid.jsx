@@ -175,11 +175,9 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                             height: 52 * 3 + 56, // 3 items at 52px height + padding
                             backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                             "& .MuiDataGrid-columnHeaders": {
-                                borderBottom: "1px solid #4b0052",
                                 backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
                             },
                             '& .MuiDataGrid-cell': {
-                                borderBottom: "1px solid #4b0052",
                                 backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                                 cursor: 'default',
                             },

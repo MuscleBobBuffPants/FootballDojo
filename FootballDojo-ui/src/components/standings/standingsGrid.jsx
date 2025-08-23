@@ -136,8 +136,7 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                         backgroundColor:
                             theme.palette.mode === "light"
                                 ? "transparent"
-                                : theme.palette.background.default,
-                        borderBottom: "1px solid #4b0052",
+                                : theme.palette.background.default
                     })}
                 >
                     {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
@@ -169,12 +168,10 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",
                             "& .MuiDataGrid-columnHeaders": {
-                                borderBottom: "1px solid #4b0052",
                                 backgroundColor:
                                     theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             },
                             "& .MuiDataGrid-cell": {
-                                borderBottom: "1px solid #4b0052",
                                 backgroundColor:
                                     theme.palette.mode === "light" ? "transparent" : "",
                                 cursor: "default",
