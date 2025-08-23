@@ -24,14 +24,6 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
     const status = useSelector((state) => state.headToHeadFixtures.status);
     //const error = useSelector((state) => state.headToHeadFixtures.error);
 
-    //if (status === 'loading') {
-    //    return <p>Loading players...</p>;
-    //}
-
-    //if (status === 'failed') {
-    //    return <p>Error: {error}</p>;
-    //}
-
     const getGoalColor = (teamGoals, otherGoals) => {
         if (teamGoals > otherGoals)
             return {

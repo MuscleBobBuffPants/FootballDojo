@@ -38,7 +38,7 @@ function VenueImageBox({ venue, alt }) {
                     alt={alt}
                     sx={{
                         width: "100%",
-                        height: 169, // fixed
+                        height: 169,
                         objectFit: "contain",
                         borderRadius: 2,
                         border: "1px solid rgba(255,255,255,0.3)",
@@ -56,29 +56,27 @@ function VenueImageBox({ venue, alt }) {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                            backgroundColor: theme.palette.mode === 'dark'
-                                ? theme.palette.background.secondary
-                                : theme.palette.background.secondary,
-                            color: theme.palette.mode === "dark"
-                                ? DARKMODE_TEXT
-                                : LIGHTMODE_TEXT,
+                        backgroundColor: theme.palette.mode === 'dark'
+                            ? theme.palette.background.secondary
+                            : theme.palette.background.secondary,
+                        color: theme.palette.mode === "dark"
+                            ? DARKMODE_TEXT
+                            : LIGHTMODE_TEXT,
                         fontWeight: "bold",
                         zIndex: 10,
                         backdropFilter: "blur(3px)",
                         gap: 1,
                     })}
                 >
-                        <CircularProgress size={20}
-                            sx={(theme) => ({
-                                color: theme.palette.mode === "dark"
-                                    ? DARKMODE_TEXT
-                                    : LIGHTMODE_TEXT, mb: 2
-                            })} />
+                    <CircularProgress size={20}
+                        sx={(theme) => ({
+                            color: theme.palette.mode === "dark"
+                                ? DARKMODE_TEXT
+                                : LIGHTMODE_TEXT, mb: 2
+                        })} />
                     <Typography>Loading Venue...</Typography>
                 </Box>
             )}
-
-            {/* Capacity */}
             {venue && venue.capacity && (
                 <Typography
                     variant="subtitle2"
@@ -134,7 +132,6 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
-                {/* Header */}
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5 }}>
                     <Typography variant="h6" fontWeight="bold">
                         {formatDateForFixtureProfile(selectedFixture.date)}
@@ -142,14 +139,9 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
                         {selectedFixture.venue}
                     </Typography>
-
-                    {/* Venue Image with Loading */}
                     <VenueImageBox venue={selectedVenue} alt={selectedFixture.venue} />
                 </Box>
-
-                {/* Teams and Recent Form */}
                 <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, width: "100%" }}>
-                    {/* Away Team */}
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
                         <Box
                             component="img"
@@ -175,7 +167,6 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                         @
                     </Typography>
 
-                    {/* Home Team */}
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
                         <Box
                             component="img"
@@ -198,10 +189,9 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     </Box>
                 </Box>
 
-                {/* Head-to-Head Grid */}
-                {isNonEmptyObject(selectedFixture) && <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />}
-
-                {/* Close Button */}
+                {isNonEmptyObject(selectedFixture) &&
+                    <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />
+                }
                 <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                     <Button
                         variant="contained"

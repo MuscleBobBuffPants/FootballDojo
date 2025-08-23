@@ -142,8 +142,6 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                 >
                     {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
                 </Typography>
-
-                {/* Grid wrapper */}
                 <div style={{ position: "relative" }}>
                     <DataGrid
                         rows={standings}
@@ -214,10 +212,9 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                                         ? `${DARKMODE_PURPLE} !important`
                                         : `${LIGHTMODE_PURPLE} !important`,
                             },
-                            filter: status === "loading" ? "blur(2px)" : "none", // blur effect
+                            filter: status === "loading" ? "blur(2px)" : "none"
                         })}
                     />
-
                     {status === "loading" && (
                         <Box
                             sx={(theme) => ({

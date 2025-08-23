@@ -125,6 +125,5 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
                 </Grid>
             </Box>
         </Box>
-
     );
 }

@@ -6,8 +6,8 @@ import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixturePro
 import {
     DARKMODE_GRID_BORDER,
     DARKMODE_TEXT,
-    LIGHTMODE_TEXT,
     LIGHTMODE_GRID_BORDER,
+    LIGHTMODE_TEXT,
     formatUtcDate,
     isNonEmptyObject,
 } from "../../global/constants";
@@ -67,7 +67,9 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
     const fixturesByLeagueId = useSelector(
         (state) => state.fixturesByLeagueId.list
     );
-    const status = useSelector((state) => state.fixturesByLeagueId.status);
+    const status = useSelector(
+        (state) => state.fixturesByLeagueId.status
+    );
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
@@ -154,7 +156,6 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                             width: 500,
                             height: 52 * 5 + 56, // 5 rows visible
                             fontSize: 15,
-                            filter: status === "loading" ? "blur(2px)" : "none", // blur grid when loading
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",
                             "& .MuiDataGrid-cell": {
@@ -181,10 +182,10 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                             "& .MuiDataGrid-row:hover": {
                                 cursor: "pointer",
                             },
+                            filter: status === "loading" ? "blur(2px)" : "none"
+
                         })}
                     />
-
-                    {/* Loading overlay */}
                     {status === "loading" && (
                         <Box
                             sx={(theme) => ({
@@ -215,8 +216,6 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                         </Box>
                     )}
                 </div>
-
-                {/* Fixture modal */}
                 {selectedFixture && (
                     <FixtureProfile
                         modalOpen={modalOpen}

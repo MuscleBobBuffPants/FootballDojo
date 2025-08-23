@@ -56,7 +56,9 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
     const selectedPlayer = useSelector(
         (state) => state.playerProfileByPlayerId.list
     );
-    const playerProfileStatus = useSelector((state) => state.playerProfileByPlayerId.status);
+    const playerProfileStatus = useSelector(
+        (state) => state.playerProfileByPlayerId.status
+    );
 
     useEffect(() => {
         if (selectedId) {
@@ -153,7 +155,8 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
                             "& .MuiDataGrid-row:hover": {
                                 cursor: "pointer",
                             },
-                            filter: playerProfileStatus === "loading" ? "blur(2px)" : "none", // blur when loading
+                            filter: playersByTeamStatus === "loading" ? "blur(2px)" :
+                                playerProfileStatus === "loading" ? "blur(2px)" : "none"
                         })}
                     />
 

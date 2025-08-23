@@ -162,7 +162,9 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
                     </Select>
                 </FormControl>
                 <Box sx={{ mr: 3 }} >
-                    <StatsSeasonDropdown selectedSeason={selectedSeason} handleSeasonChange={handleSeasonChange} />
+                    <StatsSeasonDropdown
+                        selectedSeason={selectedSeason}
+                        handleSeasonChange={handleSeasonChange} />
                 </Box>
             </Box>
             <Box sx={{ width: 250 }}>

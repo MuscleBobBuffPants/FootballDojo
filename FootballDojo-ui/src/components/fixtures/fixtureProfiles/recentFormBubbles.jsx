@@ -89,7 +89,6 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
 
     return (
         <Box sx={{ position: "relative", display: "inline-flex", minHeight: size }}>
-            {/* Bubbles */}
             <Stack
                 direction="row"
                 spacing={1}
@@ -137,8 +136,6 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
                     );
                 })}
             </Stack>
-
-            {/* Loading overlay */}
             {status === "loading" && (
                 <Box
                     sx={{

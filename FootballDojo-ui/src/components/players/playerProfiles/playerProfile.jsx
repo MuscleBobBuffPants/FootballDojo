@@ -26,14 +26,6 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
     //const status = useSelector((state) => state.playerStatsBySeason.status);
     //const error = useSelector((state) => state.playerStatsBySeason.error);
 
-    //if (status === 'loading') {
-    //    return <p>Loading players...</p>;
-    //}
-
-    //if (status === 'failed') {
-    //    return <p>Error: {error}</p>;
-    //}
-
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
             setSelectedSeason(2025);
