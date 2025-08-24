@@ -135,7 +135,7 @@ export default function LineupBuilder(
     return (
         <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
             <Box flex={1}>
-                <Typography variant="h5" align="center" sx={{ mb: 2.1 }}>
+                <Typography variant="h5" align="center" sx={{ mb: 1 }}>
                     Lineup Builder
                 </Typography>
                 <Box ref={fieldRef}>

@@ -82,7 +82,7 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
             border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
             borderRadius: 1
         })}>
-            <Box sx={{ maxWidth: 1000, mx: "auto", ml: 4, mb: 2.2 }}>
+            <Box sx={{ maxWidth: 1000, mx: "auto", mb: 2 }}>
                 <Box sx={{ position: 'relative', mb: 3, mt: 1, width: '100%', textAlign: 'center' }}>
                     <Typography variant="h5" sx={{ display: 'inline-flex', alignItems: 'center' }}>
                         Potential Lineup Performance
@@ -97,7 +97,7 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
                         />
                     </Box>
                 </Box>
-                <Grid container spacing={3} wrap="wrap">
+                <Grid container spacing={5} wrap="wrap">
                     {fields.map((field, i) => (
                         <Grid key={i}>
                             <Box

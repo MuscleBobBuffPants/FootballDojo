@@ -154,7 +154,7 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                         }}
                         sx={(theme) => ({
                             width: 500,
-                            height: 52 * 5 + 56, // 5 rows visible
+                            height: 52 * 6 + 56, // 5 rows visible
                             fontSize: 15,
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",
