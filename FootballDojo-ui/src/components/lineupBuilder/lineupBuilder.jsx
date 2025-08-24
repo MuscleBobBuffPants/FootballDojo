@@ -7,7 +7,7 @@
     Select,
     Typography
 } from "@mui/material";
-import { toPng } from "html-to-image";
+import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import PerformancePredictor from '../../components/lineupBuilder/performancePredictor';
@@ -105,17 +105,19 @@ export default function LineupBuilder(
 
     const handleGeneratePNG = async () => {
         if (!fieldRef.current) return;
-        try {
-            const dataUrl = await toPng(fieldRef.current);
-            const blob = await (await fetch(dataUrl)).blob();
-            const blobUrl = URL.createObjectURL(blob);
 
+        try {
+            const canvas = await html2canvas(fieldRef.current, {
+                backgroundColor: null, // preserve transparency if needed
+                scale: 2,               // higher resolution
+                useCORS: true,    // allow cross-origin images
+            });
+
+            const dataUrl = canvas.toDataURL("image/png");
             const link = document.createElement("a");
-            link.href = blobUrl;
+            link.href = dataUrl;
             link.download = selectedTeam ? `${selectedTeam}_${formation}.png` : "lineup.png";
-            document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);
         } catch (err) {
             console.error("Failed to generate PNG:", err);
         }
