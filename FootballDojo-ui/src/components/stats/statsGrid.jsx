@@ -37,7 +37,10 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
             goals: selectedPlayer.position === "Goalkeeper"
                 ? ['total', 'assists']
                 : ['conceded', 'saves'],
-            cards: ['yellowRed']
+            cards: ['yellowRed'],
+            penalty: selectedPlayer.position === "Goalkeeper"
+                ? ['scored', 'missed']
+                : ['saved'],
         };
 
         const validProps = Object.entries(properties).filter(([propName, value]) =>

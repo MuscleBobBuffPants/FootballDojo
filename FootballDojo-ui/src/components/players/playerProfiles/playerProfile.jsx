@@ -118,7 +118,11 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             >
                                 <Typography
                                     variant="body2"
-                                    sx={(theme) => ({ fontWeight: 'bold', color: theme.palette.text.secondary, fontSize: 14 })}
+                                    sx={(theme) => ({
+                                        fontWeight: 'bold',
+                                        color: theme.palette.text.secondary,
+                                        fontSize: 14
+                                    })}
                                 >
                                     {field.label}:
                                 </Typography>
