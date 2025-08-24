@@ -51,7 +51,7 @@ export const TOP5LEAGUES = [
 // Position Sort Order
 export const POSITION_ORDER = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
-// Allow Attackers for Certain Positions
+// Allow Attackers/Midfielders for Certain Positions
 export const POSSIBLE_ATTACKER_MIDFIELDER_POSITIONS = ["ST", "LW", "RW", "CF", "LAM", "LM", "RAM", "RM"];
 
 // Formations
