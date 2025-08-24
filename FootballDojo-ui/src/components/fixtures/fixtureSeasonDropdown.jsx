@@ -43,7 +43,7 @@ function FixtureSeasonDropdown({ selectedSeason, handleSeasonChange }) {
                 </Select>
             </FormControl>
             <FormHelperText sx={{ color: "text.primary", fontSize: 11 }}>
-                (Does Not <br /> Change Roster)
+                (Does Not <br /> Affect Roster)
             </FormHelperText>
         </Box>
     )
