@@ -22,8 +22,8 @@ const SoccerLineupSlot = React.memo(
                         src={selectedPlayer.photo}
                         alt={selectedPlayer.name}
                         sx={{
-                            width: 69,
-                            height: 69,
+                            width: 73,
+                            height:73,
                             mb: .5,
                             boxShadow: 2,
                         }}
