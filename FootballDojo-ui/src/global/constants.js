@@ -52,7 +52,7 @@ export const TOP5LEAGUES = [
 export const POSITION_ORDER = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
 // Allow Attackers for Certain Positions
-export const POSSIBLE_ATTACKER_POSITIONS = ["ST", "LW", "RW", "CF", "LAM", "LM", "RAM", "RM"];
+export const POSSIBLE_ATTACKER_MIDFIELDER_POSITIONS = ["ST", "LW", "RW", "CF", "LAM", "LM", "RAM", "RM"];
 
 // Formations
 export const FORMATIONS = {

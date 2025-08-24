@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
 import React, { useMemo } from "react";
 import SoccerLineupSlot from "../../components/lineupBuilder/soccerLineupSlot";
-import { POSSIBLE_ATTACKER_POSITIONS } from "../../global/constants";
+import { POSSIBLE_ATTACKER_MIDFIELDER_POSITIONS } from "../../global/constants";
 
-const isAttackerEligible = (pos) => POSSIBLE_ATTACKER_POSITIONS.includes(pos.label);
+const isAttackerEligible = (pos) => POSSIBLE_ATTACKER_MIDFIELDER_POSITIONS.includes(pos.label);
 
 const SoccerField = ({ positions, lineup, players, onAssign }) => {
     const filteredPlayersBySlot = useMemo(() => {
@@ -14,7 +14,7 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
             map[pos.id] = players.filter((p) => {
                 const roleMatch = allowedRoles.includes(p.position);
                 const attackerEligible =
-                    isAttackerEligible(pos) && p.position === "Attacker";
+                    isAttackerEligible(pos) && (p.position === "Attacker" || p.position === "Midfielder");
 
                 return roleMatch || attackerEligible;
             });
