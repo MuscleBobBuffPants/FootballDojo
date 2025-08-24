@@ -1,4 +1,4 @@
-import { Box, MenuItem, Select, Typography, Avatar } from "@mui/material";
+import { Avatar, Box, MenuItem, Select, Typography } from "@mui/material";
 import React from "react";
 
 const SoccerLineupSlot = React.memo(
@@ -17,14 +17,31 @@ const SoccerLineupSlot = React.memo(
                     alignItems: "center",
                 }}
             >
+                {!selectedPlayer && (
+                    <Typography
+                        variant="caption"
+                        sx={(theme) => ({
+                            bgcolor: theme.palette.background.paper,
+                            color: theme.palette.primary,
+                            mb: 0.5,
+                            px: 1,
+                            py: 0.25,
+                            borderRadius: 1,
+                            boxShadow: 1,
+                            display: "inline-block",
+                        })}
+                    >
+                        {slot.label}
+                    </Typography>
+                )}
                 {selectedPlayer?.photo && (
                     <Avatar
                         src={selectedPlayer.photo}
                         alt={selectedPlayer.name}
                         sx={{
                             width: 73,
-                            height:73,
-                            mb: .5,
+                            height: 73,
+                            mb: 0.5,
                             boxShadow: 2,
                         }}
                     />
@@ -34,9 +51,7 @@ const SoccerLineupSlot = React.memo(
                     displayEmpty
                     MenuProps={{
                         PaperProps: {
-                            style: {
-                                maxHeight: 48 * 4 + 8, // 4 items
-                            },
+                            style: { maxHeight: 48 * 4 + 8 }, // 4 items
                         },
                     }}
                     value={value ?? ""}
