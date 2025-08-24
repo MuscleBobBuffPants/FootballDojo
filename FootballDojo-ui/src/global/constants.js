@@ -16,8 +16,8 @@ export const formatDateForFixtureProfile = (dateStr) => {
     // Remove spaces around hyphens
     const cleanStr = dateStr.replace(/\s+/g, '');
 
-    const [month, day, year] = cleanStr.split('-'); // ["08","22","2025"]
-    const date = new Date(`${year}-${month}-${day}`); // ISO format
+    const [month, day, year] = cleanStr.split('-');
+    const date = new Date(`${year}-${month}-${day}`);
 
     return date.toLocaleDateString(undefined, {
         weekday: 'long',
