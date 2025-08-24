@@ -1,6 +1,7 @@
 import {
     Box,
     FormControl,
+    FormHelperText,
     InputLabel,
     MenuItem,
     Select
@@ -8,7 +9,7 @@ import {
 
 function LineupBuilderSeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
-        <Box>
+        <Box display="flex" alignItems="center" gap={2}>
             <FormControl sx={{ minWidth: 103 }} size="small">
                 <InputLabel id="stats-season-select-label">
                     Season
@@ -43,6 +44,9 @@ function LineupBuilderSeasonDropdown({ selectedSeason, handleSeasonChange }) {
                     <MenuItem value={2020}>2020</MenuItem>
                 </Select>
             </FormControl>
+            <FormHelperText sx={{ color: "text.primary", fontSize: 11, width: 100 }}>
+                (Only Affects <br /> Stat Calculations)
+            </FormHelperText>
         </Box>
     )
 }

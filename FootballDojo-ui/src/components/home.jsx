@@ -101,7 +101,6 @@ function Home() {
                     handleTeamChange={handleTeamChange} />
 
                 <FixtureSeasonDropdown
-                    selectedTeam={selectedTeam}
                     selectedSeason={selectedMainSeason}
                     handleSeasonChange={handleSeasonChange} />
             </Box>
