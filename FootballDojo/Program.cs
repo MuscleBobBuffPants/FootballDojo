@@ -37,8 +37,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(corsPolicy, policy =>
     {
-        policy.WithOrigins("http://localhost:5174",
-                           "http://localhost:5173") // React dev server URLs
+        policy.WithOrigins(
+            "http://localhost:5174",
+            "http://localhost:5173",
+            "https://FootballDojo.azurewebsites.net") // Add Azure URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
