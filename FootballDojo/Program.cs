@@ -40,7 +40,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
             "http://localhost:5174",
             "http://localhost:5173",
-            "https://FootballDojo.azurewebsites.net") // Add Azure URL
+            "https://footballdojo-ekbuardhekdsg6ba.canadacentral-01.azurewebsites.net") // Add Azure URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
