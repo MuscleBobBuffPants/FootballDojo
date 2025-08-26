@@ -31,9 +31,10 @@ jobs:
 
       # Copy React build to backend wwwroot
       - name: Copy React build to backend wwwroot
+        shell: pwsh
         run: |
-          mkdir -p ./FootballDojo.API/wwwroot
-          cp -r ./FootballDojo.Client/dist/* ./FootballDojo.API/wwwroot/
+            New-Item -ItemType Directory -Force -Path FootballDojo/wwwroot
+            Copy-Item -Path FootballDojo-UI/dist/* -Destination FootballDojo/wwwroot -Recurse -Force
 
       # Setup .NET
       - name: Set up .NET
@@ -41,17 +42,17 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Restore dependencies
-        working-directory: ./FootballDojo.API
+      - name: Restore backend dependencies
+        working-directory: FootballDojo
         run: dotnet restore
 
       - name: Build backend
-        working-directory: ./FootballDojo.API
+        working-directory: FootballDojo
         run: dotnet build --configuration Release
 
       - name: Publish backend
-        working-directory: ./FootballDojo.API
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
+        working-directory: FootballDojo
+        run: dotnet publish -c Release -o "${{ env.DOTNET_ROOT }}/myapp"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
