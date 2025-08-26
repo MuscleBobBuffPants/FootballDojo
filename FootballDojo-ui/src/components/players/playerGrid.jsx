@@ -9,7 +9,8 @@ import {
     LIGHTMODE_GRID_BORDER,
     LIGHTMODE_TEXT,
     POSITION_ORDER,
-    isNonEmptyObject,
+    isNonEmptyListObject,
+    isNonEmptyObject
 } from "../../global/constants";
 import {
     clearPlayer,
@@ -82,7 +83,7 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
         dispatch(clearPlayer());
     };
 
-    const filteredPlayers = isNonEmptyObject(selectedTeam)
+    const filteredPlayers = isNonEmptyObject(selectedTeam) && isNonEmptyListObject(playersByTeam)
         ? playersByTeam
             .filter((player) => player.number !== null)
             .map((player) => ({

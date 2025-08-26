@@ -9,7 +9,8 @@ import {
     LIGHTMODE_GRID_BORDER,
     LIGHTMODE_PURPLE,
     LIGHTMODE_TEXT,
-    isNonEmptyObject,
+    isNonEmptyListObject,
+    isNonEmptyObject
 } from "../../global/constants";
 import { fetchStandingsByLeagueId } from "../../redux/standings/fetchStandingsByLeagueId";
 
@@ -99,7 +100,7 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
         }
     }, [dispatch, selectedLeague, selectedSeason]);
 
-    const standings = isNonEmptyObject(selectedLeague)
+    const standings = isNonEmptyObject(selectedLeague) && isNonEmptyListObject(standingsByLeagueId)
         ? standingsByLeagueId.map((response, index) => {
             return {
                 id: index,
