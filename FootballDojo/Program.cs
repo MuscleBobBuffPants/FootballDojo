@@ -1,14 +1,11 @@
 using FootballDojo.Client;
 using FootballDojo.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -40,7 +37,7 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
             "http://localhost:5174",
             "http://localhost:5173",
-            "https://footballdojo-ekbuardhekdsg6ba.canadacentral-01.azurewebsites.net") // Add Azure URL
+            "https://footballdojo-ekbuardhekdsg6ba.canadacentral-01.azurewebsites.net")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
