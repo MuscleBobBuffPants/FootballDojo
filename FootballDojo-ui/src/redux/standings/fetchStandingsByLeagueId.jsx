@@ -6,7 +6,7 @@ export const fetchStandingsByLeagueId = createAsyncThunk(
     async ({ leagueId, seasonYear }, thunkAPI) => {
         try {
             const response = await api.get(`standings/leagueId=${leagueId}/seasonYear=${seasonYear}`);
-            return response.data;
+            return response.data || [];
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
         }
@@ -26,6 +26,7 @@ const standingsByLeagueId = createSlice({
         builder
             .addCase(fetchStandingsByLeagueId.pending, (state) => {
                 state.status = 'loading';
+                state.list = [];
                 state.error = null;
             })
             .addCase(fetchStandingsByLeagueId.fulfilled, (state, action) => {
@@ -34,6 +35,7 @@ const standingsByLeagueId = createSlice({
             })
             .addCase(fetchStandingsByLeagueId.rejected, (state, action) => {
                 state.status = 'failed';
+                state.list = [];
                 state.error = action.error.message || 'Something went wrong';
             });
     },
