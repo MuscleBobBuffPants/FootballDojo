@@ -19,8 +19,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<FootballDojoClient>(sp =>
 {
     var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
-    var apiHost = Environment.GetEnvironmentVariable("FOOTBALL_API_HOST");
-    var apiKey = Environment.GetEnvironmentVariable("FOOTBALL_API_KEY");
+    var apiHost = Environment.GetEnvironmentVariable("FOOTBALLDOJO_API_HOST");
+    var apiKey = Environment.GetEnvironmentVariable("FOOTBALLDOJO_API_KEY");
 
     return new FootballDojoClient(httpClientFactory, apiHost, apiKey);
 });

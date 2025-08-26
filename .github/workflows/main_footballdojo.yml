@@ -87,5 +87,5 @@ jobs:
           package: ./${{env.DOTNET_ROOT}}/myapp
 
     env:
-      FOOTBALL_API_HOST: ${{ secrets.FOOTBALL_API_HOST }}
-      FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+      FOOTBALLDOJO_API_HOST: ${{ secrets.FOOTBALLDOJO_API_HOST }}
+      FOOTBALLDOJO_API_KEY: ${{ secrets.FOOTBALLDOJO_API_KEY }}
