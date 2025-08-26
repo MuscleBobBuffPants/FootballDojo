@@ -147,7 +147,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             )
                         }
                         <Box sx={{ flexDirection: "column" }}>
-                            <YouTubeCard selectedPlayer={selectedPlayer} />
+                            {/*<YouTubeCard selectedPlayer={selectedPlayer} />*/}
                         </Box>
                     </Box>
                 </Box>
