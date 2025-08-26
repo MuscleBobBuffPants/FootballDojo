@@ -15,7 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Setup Node for React
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,15 +28,7 @@ jobs:
         working-directory: FootballDojo-UI
         run: npm run build
 
-      # Copy React build to backend wwwroot
-      - name: Copy React build to backend wwwroot
-        shell: pwsh
-        run: |
-            New-Item -ItemType Directory -Force -Path FootballDojo/wwwroot
-            Copy-Item -Path FootballDojo-UI/dist/* -Destination FootballDojo/wwwroot -Recurse -Force
-
-      # Setup .NET
-      - name: Set up .NET
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
@@ -52,13 +43,19 @@ jobs:
 
       - name: Publish backend
         working-directory: FootballDojo
-        run: dotnet publish -c Release -o "${{ env.DOTNET_ROOT }}/myapp"
+        run: dotnet publish -c Release -o ./publish
+
+      - name: Copy React build to backend wwwroot
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path FootballDojo/publish/wwwroot
+          Copy-Item -Path FootballDojo-UI/dist/* -Destination FootballDojo/publish/wwwroot -Recurse -Force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: FootballDojo/publish
 
   deploy:
     runs-on: windows-latest
@@ -80,13 +77,13 @@ jobs:
           client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
+          
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'FootballDojo'
           slot-name: 'Production'
-          package: ./${{env.DOTNET_ROOT}}/myapp
+          package: ./FootballDojo/publish
 
     env:
       FOOTBALLDOJO_API_HOST: ${{ secrets.FOOTBALLDOJO_API_HOST }}
