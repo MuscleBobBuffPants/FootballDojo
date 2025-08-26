@@ -37,6 +37,9 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseDefaultFiles();  // serves index.html
+app.UseStaticFiles();   // serves everything in wwwroot
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -51,5 +54,7 @@ app.UseAuthorization();
 app.UseCors(corsPolicy);
 
 app.MapControllers();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
