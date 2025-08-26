@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy ASP.Net Core app to Azure Web App - FootballDojo
+name: Build and deploy ASP.Net Core + React to Azure Web App - FootballDojo
 
 on:
   push:
@@ -13,23 +10,50 @@ jobs:
   build:
     runs-on: windows-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      # Setup Node for React
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install frontend dependencies
+        working-directory: ./FootballDojo.Client
+        run: npm install
+
+      - name: Build React frontend
+        working-directory: ./FootballDojo.Client
+        run: npm run build
+
+      # Copy React build to backend wwwroot
+      - name: Copy React build to backend wwwroot
+        run: |
+          mkdir -p ./FootballDojo.API/wwwroot
+          cp -r ./FootballDojo.Client/dist/* ./FootballDojo.API/wwwroot/
+
+      # Setup .NET
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
+      - name: Restore dependencies
+        working-directory: ./FootballDojo.API
+        run: dotnet restore
+
+      - name: Build backend
+        working-directory: ./FootballDojo.API
         run: dotnet build --configuration Release
 
-      - name: dotnet publish
+      - name: Publish backend
+        working-directory: ./FootballDojo.API
         run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
@@ -39,27 +63,29 @@ jobs:
     runs-on: windows-latest
     needs: build
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_83D529D42C5C4EAC8E1317D154D9B026 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_38312E2D79284F73B9F3C0E3B0EA8D73 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DE72B2A8E82A43809A591490AD380E5F }}
+          client-id: ${{ secrets.__clientidsecretname__ }}
+          tenant-id: ${{ secrets.__tenantidsecretname__ }}
+          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'FootballDojo'
           slot-name: 'Production'
-          package: .
-          
+          package: ./${{env.DOTNET_ROOT}}/myapp
+
+    env:
+      FOOTBALL_API_HOST: ${{ secrets.FOOTBALL_API_HOST }}
+      FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}

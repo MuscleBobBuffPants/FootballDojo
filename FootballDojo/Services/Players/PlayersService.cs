@@ -15,7 +15,7 @@ namespace FootballDojo.Services
 
         public async Task<List<Player>> GetPlayersByTeamIdAsync(int teamId)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}players/squads?team={teamId}";
+            var apiUrl = $"{Constants.BASE_URL}players/squads?team={teamId}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<PlayerRoot>(apiUrl);
 
@@ -26,7 +26,7 @@ namespace FootballDojo.Services
 
         public async Task<PlayerProfile> GetPlayerProfileByPlayerIdAsync(int playerId)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}/players/profiles?player={playerId}";
+            var apiUrl = $"{Constants.BASE_URL}/players/profiles?player={playerId}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<PlayerProfileRoot>(apiUrl);
 

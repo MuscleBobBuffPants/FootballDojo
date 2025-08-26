@@ -15,7 +15,7 @@ namespace FootballDojo.Services
 
         public async Task<List<FixturesResponse>> GetFixturesByLeagueIdAndSeasonYearAndTeamIdAsync(int leagueId, int seasonYear, int teamId)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}fixtures?league={leagueId}&season={seasonYear}&team={teamId}";
+            var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&season={seasonYear}&team={teamId}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 
@@ -26,7 +26,7 @@ namespace FootballDojo.Services
 
         public async Task<List<FixturesResponse>> GetHeadToHeadFixturesByTeamIdsAsync(int homeTeamId, int awayTeamId)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}fixtures/headtohead?h2h={homeTeamId}-{awayTeamId}";
+            var apiUrl = $"{Constants.BASE_URL}fixtures/headtohead?h2h={homeTeamId}-{awayTeamId}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 
@@ -37,7 +37,7 @@ namespace FootballDojo.Services
 
         public async Task<List<FixturesResponse>> GetRecentFormByLeagueIdAndTeamIdAsync(int leagueId, int teamId)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}fixtures?league={leagueId}&team={teamId}&last=5"; // Default = last 5 games
+            var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&team={teamId}&last=5"; // Default = last 5 games
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 

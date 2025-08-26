@@ -4,6 +4,10 @@ namespace FootballDojo.Global
 {
     public class Constants
     {
+        public const string BASE_URL = "https://v3.football.api-sports.io/";
+
+        #region Defaults
+
         public static readonly List<Stats> DEFAULT_STATS = new List<Stats>
         {
             new Stats
@@ -67,5 +71,7 @@ namespace FootballDojo.Global
                 }
             }
         };
+
+        #endregion
     }
 }

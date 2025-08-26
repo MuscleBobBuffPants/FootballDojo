@@ -15,7 +15,7 @@ namespace FootballDojo.Services
 
         public async Task<Team> GetTeamByCountryAndTeamNameAsync(string country, string teamName)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}teams?name={teamName}&country={country}";
+            var apiUrl = $"{Constants.BASE_URL}teams?name={teamName}&country={country}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<TeamRoot>(apiUrl);
 
@@ -26,7 +26,7 @@ namespace FootballDojo.Services
 
         public async Task<List<TeamResponse>> GetTeamsByLeagueIdAndSeasonYearAsync(int leagueId, int seasonYear)
         {
-            var apiUrl = $"{KeyConstants.BASE_URL}teams?league={leagueId}&season={seasonYear}";
+            var apiUrl = $"{Constants.BASE_URL}teams?league={leagueId}&season={seasonYear}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<TeamRoot>(apiUrl);
 
