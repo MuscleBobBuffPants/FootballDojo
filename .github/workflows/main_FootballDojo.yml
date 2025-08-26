@@ -51,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.__clientidsecretname__ }}
-          tenant-id: ${{ secrets.__tenantidsecretname__ }}
-          subscription-id: ${{ secrets.__subscriptionidsecretname__ }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_83D529D42C5C4EAC8E1317D154D9B026 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_38312E2D79284F73B9F3C0E3B0EA8D73 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DE72B2A8E82A43809A591490AD380E5F }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -62,3 +62,4 @@ jobs:
           app-name: 'FootballDojo'
           slot-name: 'Production'
           package: .
+          
