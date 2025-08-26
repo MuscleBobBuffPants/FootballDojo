@@ -8,8 +8,6 @@ import {
 import { isNonEmptyObject } from "../../global/constants";
 
 function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange }) {
-    const safeTeamsByLeagueId = Array.isArray(teamsByLeagueId) ? teamsByLeagueId : [];
-
     return (
         <Box>
             <FormControl sx={{ minWidth: 200 }} size="small">
@@ -34,12 +32,12 @@ function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange })
                         borderRadius: 1,
                     })}
                 >
-                    {[...safeTeamsByLeagueId]
+                    {[...teamsByLeagueId]
                         .filter(({ team }) => team)  // remove undefined
                         .sort((a, b) => (a.team?.name || '').localeCompare(b.team?.name || ''))
                         .map(({ team }) => (
-                            <MenuItem key={team.id} value={team}>
-                                {team.name}
+                            <MenuItem key={team?.id} value={team}>
+                                {team?.name}
                             </MenuItem>
                         ))}
                 </Select>
