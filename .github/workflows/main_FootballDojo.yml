@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Setup Node for React
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -28,7 +29,15 @@ jobs:
         working-directory: FootballDojo-UI
         run: npm run build
 
-      - name: Setup .NET
+      # Copy React build to backend wwwroot
+      - name: Copy React build to backend wwwroot
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path FootballDojo/wwwroot
+          Copy-Item -Path FootballDojo-UI/dist/* -Destination FootballDojo/wwwroot -Recurse -Force
+
+      # Setup .NET
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
@@ -43,13 +52,7 @@ jobs:
 
       - name: Publish backend
         working-directory: FootballDojo
-        run: dotnet publish -c Release -o ./publish
-
-      - name: Copy React build to backend wwwroot
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path FootballDojo/publish/wwwroot
-          Copy-Item -Path FootballDojo-UI/dist/* -Destination FootballDojo/publish/wwwroot -Recurse -Force
+        run: dotnet publish -c Release -o publish
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -69,6 +72,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: .net-app
+          path: ./app
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -76,13 +80,13 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'FootballDojo'
           slot-name: 'Production'
-          package: ./FootballDojo/publish
+          package: ./app
 
     env:
       FOOTBALLDOJO_API_HOST: ${{ secrets.FOOTBALLDOJO_API_HOST }}
