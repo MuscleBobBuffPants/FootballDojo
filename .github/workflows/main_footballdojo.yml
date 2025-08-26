@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Build React frontend
-        working-directory:FootballDojo.Client
+        working-directory: FootballDojo.Client
         run: npm run build
 
       # Copy React build to backend wwwroot
