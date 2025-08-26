@@ -1,5 +1,7 @@
 using FootballDojo.Client;
 using FootballDojo.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +16,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 
 // Register FootballDojo Client & Services
-builder.Services.AddScoped<FootballDojoClient>();
+builder.Services.AddScoped<FootballDojoClient>(sp =>
+{
+    var httpClientFactory = sp.GetRequiredService<IHttpClientFactory>();
+    var apiHost = Environment.GetEnvironmentVariable("FOOTBALL_API_HOST");
+    var apiKey = Environment.GetEnvironmentVariable("FOOTBALL_API_KEY");
+
+    return new FootballDojoClient(httpClientFactory, apiHost, apiKey);
+});
 builder.Services.AddScoped<IPlayersService, PlayersService>();
 builder.Services.AddScoped<ITeamsService, TeamsService>();
 builder.Services.AddScoped<IFixturesService, FixturesService>();

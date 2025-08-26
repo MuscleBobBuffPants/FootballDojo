@@ -6,12 +6,12 @@ namespace FootballDojo.Client
     {
         public HttpClient HttpClient { get; }
 
-        public FootballDojoClient(IHttpClientFactory httpClientFactory)
+        public FootballDojoClient(IHttpClientFactory httpClientFactory, string apiHost, string apiKey)
         {
             HttpClient = httpClientFactory.CreateClient();
 
-            HttpClient.DefaultRequestHeaders.Add("x-rapidapi-host", Environment.GetEnvironmentVariable("FOOTBALL_API_HOST"));
-            HttpClient.DefaultRequestHeaders.Add("x-rapidapi-key", Environment.GetEnvironmentVariable("FOOTBALL_API_KEY"));
+            HttpClient.DefaultRequestHeaders.Add("x-rapidapi-host", apiHost);
+            HttpClient.DefaultRequestHeaders.Add("x-rapidapi-key", apiKey);
         }
     }
 }
