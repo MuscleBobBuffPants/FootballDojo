@@ -33,8 +33,7 @@ function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange })
                     })}
                 >
                     {[...teamsByLeagueId]
-                        .filter(({ team }) => team)  // remove undefined
-                        .sort((a, b) => (a.team?.name || '').localeCompare(b.team?.name || ''))
+                        .sort((a, b) => a.team.name.localeCompare(b.team.name))
                         .map(({ team }) => (
                             <MenuItem key={team?.id} value={team}>
                                 {team?.name}

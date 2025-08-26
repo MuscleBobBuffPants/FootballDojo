@@ -9,7 +9,6 @@ import {
     LIGHTMODE_GRID_BORDER,
     LIGHTMODE_TEXT,
     formatUtcDate,
-    isNonEmptyListObject,
     isNonEmptyObject
 } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
@@ -98,7 +97,7 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
         dispatch(clearVenue());
     };
 
-    const filteredFixtures = isNonEmptyObject(selectedTeam) && isNonEmptyListObject(fixturesByLeagueId)
+    const filteredFixtures = isNonEmptyObject(selectedTeam)
         ? fixturesByLeagueId.map((response, index) => {
             const formattedDate = formatUtcDate(new Date(response.fixture.date));
             return {
