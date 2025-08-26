@@ -22,11 +22,11 @@ jobs:
           node-version: '18'
 
       - name: Install frontend dependencies
-        working-directory: FootballDojo.Client
+        working-directory: FootballDojo-UI
         run: npm install
 
       - name: Build React frontend
-        working-directory: FootballDojo.Client
+        working-directory: FootballDojo-UI
         run: npm run build
 
       # Copy React build to backend wwwroot
