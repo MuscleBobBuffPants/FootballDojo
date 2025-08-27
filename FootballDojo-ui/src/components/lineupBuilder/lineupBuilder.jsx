@@ -38,6 +38,13 @@ export default function LineupBuilder(
     const [formation, setFormation] = useState("4-3-3");
     const [lineup, setLineup] = useState({});
 
+    // For PerformancePredictor
+    const [resetTrigger, setResetTrigger] = useState(0);
+
+    useEffect(() => {
+        handleReset();
+    }, [selectedTeam]);
+
     useEffect(() => {
         setLineup({});
     }, [resetFlag, formation]);
@@ -127,6 +134,7 @@ export default function LineupBuilder(
         setLineup({});
         setSelectedSeason(2025);
         dispatch(clearPerformancePredictionData());
+        setResetTrigger(prev => prev + 1); // triggers PerformancePredictor
     }
 
     //const isLineupComplete = () => {
@@ -150,7 +158,8 @@ export default function LineupBuilder(
                     <Box sx={{ mt: 3 }} >
                         <PerformancePredictor
                             selectedSeason={selectedSeason}
-                            handleSeasonChange={handleSeasonChange} />
+                            handleSeasonChange={handleSeasonChange}
+                            resetTrigger={resetTrigger} />
                     </Box>
                 </Box>
             </Box>
