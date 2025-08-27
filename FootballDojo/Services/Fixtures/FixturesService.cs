@@ -56,5 +56,16 @@ namespace FootballDojo.Services
                 ? response.Response
                 : null;
         }
+
+        public async Task<List<FixtureStats>> GetStatsForFixtureByFixtureIdAsync(int fixtureId)
+        {
+            var apiUrl = $"{Constants.BASE_URL}fixtures/statistics?fixture={fixtureId}";
+
+            var response = await _client.HttpClient.GetFromJsonAsync<FixtureStatsResponse>(apiUrl);
+
+            return (response?.Response?.Count ?? 0) > 0
+                ? response.Response
+                : null;
+        }
     }
 }

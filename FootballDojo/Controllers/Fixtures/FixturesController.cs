@@ -91,5 +91,24 @@ namespace FootballDojo.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("stats/fixtureId={fixtureId}")]
+        public async Task<IActionResult> GetStatsForFixtureByFixtureId(int fixtureId)
+        {
+            try
+            {
+                var stats = await _fixturesService.GetStatsForFixtureByFixtureIdAsync(fixtureId);
+
+                if (stats is null) return NotFound();
+
+                return Ok(stats);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching stats for fixtureId: {fixtureId}");
+                return BadRequest();
+            }
+        }
     }
 }
