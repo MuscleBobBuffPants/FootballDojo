@@ -119,8 +119,8 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
                         let sx = { fontSize: 15 };
 
                         if (!skipAnimation && prevValue !== undefined) {
-                            if (field.value > prevValue) sx.animation = `${flashGreen} 3s linear`;
-                            else if (field.value < prevValue) sx.animation = `${flashRed} 3s linear`;
+                            if (field.value > prevValue) sx.animation = `${flashGreen} 5s linear`;
+                            else if (field.value < prevValue) sx.animation = `${flashRed} 5s linear`;
                         }
 
                         return (
