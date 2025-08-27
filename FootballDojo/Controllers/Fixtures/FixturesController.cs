@@ -72,5 +72,24 @@ namespace FootballDojo.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet]
+        [Route("fixtureId={fixtureId}")]
+        public async Task<IActionResult> GetLineupsForFixtureByFixtureId(int fixtureId)
+        {
+            try
+            {
+                var lineups = await _fixturesService.GetLineupsForFixtureByFixtureIdAsync(fixtureId);
+
+                if (lineups is null) return NotFound();
+
+                return Ok(lineups);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching lineups for fixtureId: {fixtureId}");
+                return BadRequest();
+            }
+        }
     }
 }

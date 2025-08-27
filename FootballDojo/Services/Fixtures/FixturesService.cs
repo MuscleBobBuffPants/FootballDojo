@@ -45,5 +45,16 @@ namespace FootballDojo.Services
                 ? response.Response
                 : null;
         }
+
+        public async Task<List<Lineups>> GetLineupsForFixtureByFixtureIdAsync(int fixtureId)
+        {
+            var apiUrl = $"{Constants.BASE_URL}fixtures/lineups?fixture={fixtureId}";
+
+            var response = await _client.HttpClient.GetFromJsonAsync<LineupsResponse>(apiUrl);
+
+            return (response?.Response?.Count ?? 0) > 0
+                ? response.Response
+                : null;
+        }
     }
 }
