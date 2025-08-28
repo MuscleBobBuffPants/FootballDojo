@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FixturesGrid from "../components/fixtures/fixtureGrid";
@@ -103,6 +103,10 @@ function Home() {
                 <FixtureSeasonDropdown
                     selectedSeason={selectedMainSeason}
                     handleSeasonChange={handleSeasonChange} />
+
+                <Typography sx={{ color: "text.primary", fontSize: 11 }}>
+                    (Does Not <br /> Affect Roster)
+                </Typography>
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>

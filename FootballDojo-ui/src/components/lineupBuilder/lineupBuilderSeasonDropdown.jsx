@@ -44,12 +44,7 @@ function LineupBuilderSeasonDropdown({ selectedSeason, handleSeasonChange }) {
                     <MenuItem value={2020}>2020</MenuItem>
                 </Select>
             </FormControl>
-            <FormHelperText sx={{
-                color: "text.primary",
-                fontSize: 11,
-                lineHeight: 1.5,
-                whiteSpace: { xs: "normal", sm: "nowrap" }, // wrap on mobile
-            }}>
+            <FormHelperText sx={{ color: "text.primary", fontSize: 11, width: 100 }}>
                 (Only Affects <br /> Stat Calculations)
             </FormHelperText>
         </Box>
