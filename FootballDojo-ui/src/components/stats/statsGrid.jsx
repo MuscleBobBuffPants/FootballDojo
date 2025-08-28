@@ -51,7 +51,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
         const columns = validProps.map(([propName]) => ({
             field: propName,
             headerName: formatHeaderName(propName),
-            minWidth: 50,   // optional minimum column width
+            width: 70,
             flex: 1,
             align: 'center',
             headerAlign: 'center',
@@ -75,7 +75,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
                 key={categoryName}
                 sx={{
                     width: '100%',
-                    maxWidth: '100%',
+                    maxWidth: { xs: '100%', sm: 300 }, // full width on mobile
                     maxHeight: 300,
                     overflowY: 'auto',
                     p: 1,
@@ -169,7 +169,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
                         handleSeasonChange={handleSeasonChange} />
                 </Box>
             </Box>
-            <Box sx={{ width: '100%', maxWidth: '100%' }}>
+            <Box sx={{ width: '100%', maxWidth: { xs: '100%', sm: 300 } }}>
                 {dataGrids[selectedCategory]}
             </Box>
         </Box>

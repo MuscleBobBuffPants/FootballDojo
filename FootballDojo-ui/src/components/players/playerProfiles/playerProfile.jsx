@@ -69,7 +69,6 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     width: 'auto',
                     minWidth: { xs: '90vw', sm: 600 },
                     maxWidth: { xs: '90vw', md: 800 },
-                    //overflowX: 'visible',
 
                     // height
                     height: 'auto',        // shrink to fit content
@@ -92,12 +91,12 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             border: `3px solid ${theme.palette.divider}`,
                             boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
                         })}
-                        />
+                    />
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 1,
-                        width: 220,
+                        minWidth: 220,
                         flexShrink: 0,
                     }}>
                         {[
@@ -148,7 +147,7 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             </Box>
                         ))}
                     </Box>
-                    <Box sx={{ flexDirection: "column", width: 'auto' }}>
+                    <Box sx={{ flexDirection: "column" }}>
                         {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
                             (
                                 <StatsGrid
