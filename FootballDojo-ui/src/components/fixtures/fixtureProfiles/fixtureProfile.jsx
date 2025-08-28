@@ -127,8 +127,12 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     p: 4,
                     borderRadius: 3,
                     border: `3px solid ${theme.palette.divider}`,
-                    minWidth: 500,
-                    maxWidth: "90vw",
+                    // Responsive width handling
+                    width: "auto", // shrink to fit content when possible
+                    minWidth: { xs: "90vw", sm: 400 }, // smaller on phones, 400px min on larger
+                    maxWidth: { xs: "90vw", md: 800 }, // never wider than viewport or a set max
+                    maxHeight: "95vh", // prevent vertical overflow
+                    overflowY: "auto", // scroll inside if content overflows
                     animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
