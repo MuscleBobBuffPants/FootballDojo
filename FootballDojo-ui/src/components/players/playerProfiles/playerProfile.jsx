@@ -63,10 +63,11 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     bgcolor: theme.palette.background.default,
                     borderRadius: 3,
                     overflowY: 'auto',        // allow vertical scroll
-                    maxHeight: '90vh',        // stay inside viewport
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    width: '95vw',            // responsive width
-                    maxWidth: 725,            // optional desktop cap
+                    width: 'fit-content',   // shrink to children
+                    minWidth: 0,            // don’t lock it wider
+                    maxWidth: '95vw',       // cap at viewport edge
+                    maxHeight: '90vh',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif"
                 })}
