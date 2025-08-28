@@ -112,7 +112,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             headerName: '',
             align: 'center',
             width: 80,
-            flex: 0.2,
+            flex: 0.2, 
             sortable: false,
             renderCell: (params) => (
                 <GoalBubble
@@ -173,7 +173,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                             noRowsOverlay: () => <></>, // render nothing
                         }}
                         sx={{
-                            width: "100%",
+                            width: 400,
                             minWidth: 0,   // ensures it can shrink
                             maxWidth: "100%",
                             height: 52 * 3 + 56, // 3 items at 52px height + padding
