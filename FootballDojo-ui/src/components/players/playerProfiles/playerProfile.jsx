@@ -68,13 +68,15 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
 
                     // width
                     width: 'fit-content',
-                    minWidth: { xs: '90vw', sm: 600 },
-                    maxWidth: { xs: '90vw', md: 800 },
+                    minWidth: { xs: '95vw', sm: 725 },
+                    maxWidth: { xs: '95vw', md: 800 },
 
                     // height
                     height: 'auto',        // shrink to fit content
                     maxHeight: '95vh',     // only cap for extremely tall content
                     overflowY: 'visible',  // don’t force scroll
+
+                    animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
                 <Box sx={{

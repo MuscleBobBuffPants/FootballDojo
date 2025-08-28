@@ -171,7 +171,9 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                             noRowsOverlay: () => <></>, // render nothing
                         }}
                         sx={{
-                            maxWidth: 415,
+                            width: '100%',   // shrink with container
+                            maxWidth: '100%',
+                            minWidth: 0,     // allows shrinking below content if needed
                             height: 52 * 3 + 56, // 3 items at 52px height + padding
                             backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                             "& .MuiDataGrid-columnHeaders": {
