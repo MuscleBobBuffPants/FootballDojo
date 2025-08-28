@@ -149,12 +149,11 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
     return (
         <div style={{ textAlign: "left", position: "relative" }}>
             <Box sx={(theme) => ({
-                display: "inline-block",
-                marginLeft: 0,
+                width: "100%",
+                maxWidth: 415,
                 backgroundColor: DARKMODE_TEXT,
                 border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
                 borderRadius: 1,
-                position: "relative" // needed for overlay
             })}>
                 <div style={{ position: "relative" }}>
                     <DataGrid
@@ -171,6 +170,8 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                             noRowsOverlay: () => <></>, // render nothing
                         }}
                         sx={{
+                            width: "100%",
+                            minWidth: 0,   // ensures it can shrink
                             maxWidth: 415,
                             height: 52 * 3 + 56, // 3 items at 52px height + padding
                             backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
