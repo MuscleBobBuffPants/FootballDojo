@@ -75,11 +75,10 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
                 key={categoryName}
                 sx={{
                     width: '100%',
-                    maxWidth: 300,
+                    maxWidth: { xs: '100%', sm: 300 }, // full width on mobile
                     maxHeight: 300,
                     overflowY: 'auto',
                     p: 1,
-                    marginLeft: 0,
                     borderRadius: 1
                 }}
             >
@@ -170,7 +169,7 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
                         handleSeasonChange={handleSeasonChange} />
                 </Box>
             </Box>
-            <Box sx={{ width: 250 }}>
+            <Box sx={{ width: '100%', maxWidth: { xs: '100%', sm: 300 } }}>
                 {dataGrids[selectedCategory]}
             </Box>
         </Box>

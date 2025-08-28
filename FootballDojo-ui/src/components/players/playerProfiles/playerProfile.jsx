@@ -62,15 +62,21 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     transform: 'translate(-50%, -50%)',
                     bgcolor: theme.palette.background.default,
                     borderRadius: 3,
-                    overflow: 'hidden',
+                    overflowY: 'auto',        // allow vertical scroll
+                    maxHeight: '90vh',        // stay inside viewport
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    minWidth: 675,
-                    maxWidth: '95vw',
+                    width: '95vw',            // responsive width
+                    maxWidth: 725,            // optional desktop cap
                     border: `4px solid ${theme.palette.divider}`,
-                    fontFamily: "'Roboto', sans-serif",
+                    fontFamily: "'Roboto', sans-serif"
                 })}
             >
-                <Box sx={{ display: 'flex', p: 3, gap: 3 }}>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    p: 3,
+                    gap: 3
+                }}>
                     <Avatar
                         src={selectedPlayer.photo}
                         alt={`${selectedPlayer.firstName} ${selectedPlayer.lastName}`}
