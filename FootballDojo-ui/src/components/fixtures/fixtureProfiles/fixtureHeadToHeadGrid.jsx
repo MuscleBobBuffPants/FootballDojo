@@ -73,6 +73,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             headerName: '',
             align: 'center',
             width: 80,
+            flex: 0.2,
             sortable: false,
             renderCell: (params) => (
                 <GoalBubble
@@ -87,6 +88,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             headerAlign: 'center',
             align: 'center',
             width: 230,
+            flex: 0.6,
             sortable: false,
             renderCell: (params) => (
                 <Box
@@ -110,6 +112,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             headerName: '',
             align: 'center',
             width: 80,
+            flex: 0.2,
             sortable: false,
             renderCell: (params) => (
                 <GoalBubble
@@ -172,7 +175,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                         sx={{
                             width: "100%",
                             minWidth: 0,   // ensures it can shrink
-                            maxWidth: 415,
+                            maxWidth: "100%",
                             height: 52 * 3 + 56, // 3 items at 52px height + padding
                             backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
                             "& .MuiDataGrid-columnHeaders": {

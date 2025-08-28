@@ -128,11 +128,12 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     borderRadius: 3,
                     border: `3px solid ${theme.palette.divider}`,
                     // Responsive width handling
-                    width: "auto", // shrink to fit content when possible
-                    minWidth: { xs: "90vw", sm: 400 }, // smaller on phones, 400px min on larger
-                    maxWidth: { xs: "90vw", md: 800 }, // never wider than viewport or a set max
-                    maxHeight: "95vh", // prevent vertical overflow
-                    overflowY: "auto", // scroll inside if content overflows
+                    width: 'auto',         // shrink to content
+                    minWidth: { xs: '90vw', sm: 400 },  // prevent it from being too tiny
+                    maxWidth: { xs: '90vw', md: 800 },  // cap for large screens
+                    height: 'auto',
+                    overflowX: 'visible',   // allow grid to shrink, no horizontal scroll
+                    overflowY: 'visible',
                     animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
