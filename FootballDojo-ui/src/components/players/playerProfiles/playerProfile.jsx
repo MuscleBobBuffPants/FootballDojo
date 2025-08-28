@@ -73,7 +73,6 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
 
                     // height
                     height: 'auto',        // shrink to fit content
-                    maxHeight: '95vh',     // only cap for extremely tall content
                     overflowY: 'visible',  // don’t force scroll
 
                     animation: "fadeIn 0.3s ease-in-out",

@@ -129,13 +129,12 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                     border: `3px solid ${theme.palette.divider}`,
 
                     // width
-                    width: '100%',
+                    width: 'fit-content',
                     minWidth: { xs: '95vw', sm: 500 },
                     maxWidth: { xs: '95vw', md: 500 },
 
                     // height
                     height: 'auto',        // shrink to fit content
-                    maxHeight: '95vh',     // only cap for extremely tall content
                     overflowY: 'visible',  // don’t force scroll
 
                     animation: "fadeIn 0.3s ease-in-out",

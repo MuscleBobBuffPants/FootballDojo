@@ -75,7 +75,6 @@ function StatsGrid({ selectedPlayer, playerStatsBySeason, selectedSeason, handle
                 key={categoryName}
                 sx={{
                     width: '100%',
-                    maxWidth: { xs: '100%', sm: 300 }, // full width on mobile
                     maxHeight: 300,
                     overflowY: 'auto',
                     p: 1,
