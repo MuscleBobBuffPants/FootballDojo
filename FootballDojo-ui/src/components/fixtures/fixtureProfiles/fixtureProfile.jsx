@@ -194,9 +194,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                 </Box>
 
                 {isNonEmptyObject(selectedFixture) &&
-                    <Box sx={{ px: { xs: 1, sm: 2 } }}>
-                        <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />
-                    </Box>
+                    <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />
                 }
                 <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
                     <Button

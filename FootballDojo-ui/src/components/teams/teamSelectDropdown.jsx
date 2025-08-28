@@ -20,10 +20,12 @@ function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange })
                     value={isNonEmptyObject(selectedTeam) ? selectedTeam : ""}
                     label="Team"
                     onChange={handleTeamChange}
+                    native={false} 
                     MenuProps={{
                         PaperProps: {
                             style: {
                                 maxHeight: 48 * 5 + 8, // 5 items at 48px height + padding
+                                overflowY: "auto"
                             },
                         },
                     }}
