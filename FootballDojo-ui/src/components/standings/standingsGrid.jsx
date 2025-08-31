@@ -90,12 +90,7 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
 
     useEffect(() => {
         if (selectedLeague) {
-            dispatch(
-                fetchStandingsByLeagueId({
-                    leagueId: selectedLeague.id,
-                    seasonYear: selectedSeason,
-                })
-            );
+            dispatch(fetchStandingsByLeagueId({ leagueId: selectedLeague.id, season: selectedSeason }));
         }
     }, [dispatch, selectedLeague, selectedSeason]);
 

@@ -13,7 +13,7 @@ namespace FootballDojo.Services
             _client = client;
         }
 
-        public async Task<List<FixturesResponse>> GetFixturesByLeagueIdAndSeasonYearAndTeamIdAsync(int leagueId, int seasonYear, int teamId)
+        public async Task<List<FixturesResponse>> GetFixturesByLeagueIdAndSeasonAndTeamIdAsync(int leagueId, int seasonYear, int teamId)
         {
             var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&season={seasonYear}&team={teamId}";
 
@@ -43,6 +43,28 @@ namespace FootballDojo.Services
 
             return (response?.Response?.Count ?? 0) > 0
                 ? response.Response
+                : null;
+        }
+
+        public async Task<int?> GetLastCompletedFixtureIdByLeagueIdAndTeamIdAsync(int leagueId, int season, int teamId)
+        {
+            var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&season={season}&team={teamId}&last=1&status=FT";
+
+            var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
+
+            return (response?.Response?.Count ?? 0) > 0
+                ? response.Response[0].Fixture.Id
+                : null;
+        }
+
+        public async Task<List<StartingXI>> GetLineupByFixtureIdAndTeamIdAsync(int fixtureId, int teamId)
+        {
+            var apiUrl = $"{Constants.BASE_URL}fixtures/lineups?fixture={fixtureId}&team={teamId}";
+
+            var response = await _client.HttpClient.GetFromJsonAsync<LineupsResponse>(apiUrl);
+
+            return (response?.Response?.Count ?? 0) > 0
+                ? response.Response[0].StartXI
                 : null;
         }
 

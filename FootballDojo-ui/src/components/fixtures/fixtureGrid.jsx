@@ -73,13 +73,7 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
-            dispatch(
-                fetchFixturesByLeagueId({
-                    leagueId: selectedLeague.id,
-                    seasonYear: selectedSeason,
-                    teamId: selectedTeam.id,
-                })
-            );
+            dispatch(fetchFixturesByLeagueId({ leagueId: selectedLeague.id, season: selectedSeason, teamId: selectedTeam.id }));
         }
     }, [dispatch, selectedLeague, selectedTeam, selectedSeason]);
 

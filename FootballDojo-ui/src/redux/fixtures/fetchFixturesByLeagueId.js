@@ -3,9 +3,9 @@ import { api } from '../../services/api';
 
 export const fetchFixturesByLeagueId = createAsyncThunk(
     'fixtures/fetchFixturesByLeagueId',
-    async ({ leagueId, seasonYear, teamId }, thunkAPI) => {
+    async ({ leagueId, season, teamId }, thunkAPI) => {
         try {
-            const response = await api.get(`fixtures/leagueId=${leagueId}/seasonYear=${seasonYear}/teamId=${teamId}`);
+            const response = await api.get(`fixtures/leagueId=${leagueId}/season=${season}/teamId=${teamId}`);
             return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);

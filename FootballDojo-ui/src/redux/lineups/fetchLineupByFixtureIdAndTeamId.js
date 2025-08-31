@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { api } from '../../services/api';
 
-export const fetchStandingsByLeagueId = createAsyncThunk(
-    'standings/fetchStandingsByLeagueId',
-    async ({ leagueId, season }, thunkAPI) => {
+export const fetchLineupByFixtureIdAndTeamId = createAsyncThunk(
+    'fixtures/fetchLineupByFixtureIdAndTeamId',
+    async ({ fixtureId, teamId }, thunkAPI) => {
         try {
-            const response = await api.get(`standings/leagueId=${leagueId}/season=${season}`);
-            return response.data || [];
+            const response = await api.get(`fixtures/fixtureId=${fixtureId}/teamId=${teamId}`);
+            return response.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
         }
@@ -18,27 +18,25 @@ const initialState = {
     error: null,
 };
 
-const standingsByLeagueId = createSlice({
-    name: 'standingsByLeagueId',
+const lineupByFixtureIdAndTeamId = createSlice({
+    name: 'lineupByFixtureIdAndTeamId',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchStandingsByLeagueId.pending, (state) => {
+            .addCase(fetchLineupByFixtureIdAndTeamId.pending, (state) => {
                 state.status = 'loading';
-                state.list = [];
                 state.error = null;
             })
-            .addCase(fetchStandingsByLeagueId.fulfilled, (state, action) => {
+            .addCase(fetchLineupByFixtureIdAndTeamId.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.list = action.payload;
             })
-            .addCase(fetchStandingsByLeagueId.rejected, (state, action) => {
+            .addCase(fetchLineupByFixtureIdAndTeamId.rejected, (state, action) => {
                 state.status = 'failed';
-                state.list = [];
                 state.error = action.error.message || 'Something went wrong';
             });
     },
 });
 
-export default standingsByLeagueId.reducer;
+export default lineupByFixtureIdAndTeamId.reducer;

@@ -17,12 +17,12 @@ namespace FootballDojo.Controllers
         }
 
         [HttpGet]
-        [Route("leagueId={leagueId}/seasonYear={seasonYear}/teamId={teamId}")]
-        public async Task<IActionResult> GetFixturesByLeagueIdAndSeasonYearAndTeamId(int leagueId, int seasonYear, int teamId)
+        [Route("leagueId={leagueId}/season={season}/teamId={teamId}")]
+        public async Task<IActionResult> GetFixturesByLeagueIdAndSeasonAndTeamId(int leagueId, int season, int teamId)
         {
             try
             {
-                var fixtures = await _fixturesService.GetFixturesByLeagueIdAndSeasonYearAndTeamIdAsync(leagueId, seasonYear, teamId);
+                var fixtures = await _fixturesService.GetFixturesByLeagueIdAndSeasonAndTeamIdAsync(leagueId, season, teamId);
 
                 if (fixtures is null) return NotFound();
 
@@ -30,7 +30,7 @@ namespace FootballDojo.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, $"Error fetching fixtures for leagueId: {leagueId}, seasonYear: {seasonYear}, teamId: {teamId}");
+                _logger.LogError(ex, $"Error fetching fixtures for leagueId: {leagueId}, season: {season}, teamId: {teamId}");
                 return BadRequest();
             }
         }
@@ -69,6 +69,44 @@ namespace FootballDojo.Controllers
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, $"Error fetching recent fixtures for leagueId: {leagueId}, teamId: {teamId}");
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("lastFixture/leagueId={leagueId}/season={season}/teamId={teamId}")]
+        public async Task<IActionResult> GetLastCompletedFixtureIdByLeagueIdAndTeamId(int leagueId, int season, int teamId)
+        {
+            try
+            {
+                var fixtureId = await _fixturesService.GetLastCompletedFixtureIdByLeagueIdAndTeamIdAsync(leagueId, season, teamId);
+
+                if (fixtureId is null) return NotFound();
+
+                return Ok(fixtureId);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching last completed fixture for leagueId: {leagueId}, season: {season}, teamId: {teamId}");
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("fixtureId={fixtureId}/teamId={teamId}")]
+        public async Task<IActionResult> GetLineupByFixtureIdAndTeamId(int fixtureId, int teamId)
+        {
+            try
+            {
+                var lineup = await _fixturesService.GetLineupByFixtureIdAndTeamIdAsync(fixtureId, teamId);
+
+                if (lineup is null) return NotFound();
+
+                return Ok(lineup);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching lineup for fixtureId: {fixtureId}, teamId: {teamId}");
                 return BadRequest();
             }
         }

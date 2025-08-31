@@ -24,9 +24,9 @@ namespace FootballDojo.Services
                 : null;
         }
 
-        public async Task<List<TeamResponse>> GetTeamsByLeagueIdAndSeasonYearAsync(int leagueId, int seasonYear)
+        public async Task<List<TeamResponse>> GetTeamsByLeagueIdAndSeasonAsync(int leagueId, int season)
         {
-            var apiUrl = $"{Constants.BASE_URL}teams?league={leagueId}&season={seasonYear}";
+            var apiUrl = $"{Constants.BASE_URL}teams?league={leagueId}&season={season}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<TeamRoot>(apiUrl);
 

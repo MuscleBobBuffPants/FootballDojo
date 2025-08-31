@@ -11,6 +11,7 @@ import StandingsGrid from '../components/standings/standingsGrid';
 import TeamLogoIcon from '../components/teams/teamLogoIcon';
 import TeamSelectDropdown from '../components/teams/teamSelectDropdown';
 import { isNonEmptyListObject, isNonEmptyObject } from "../global/constants";
+import { fetchLastCompletedFixtureId } from "../redux/fixtures/fetchLastCompletedFixtureId";
 import { clearPlayers, fetchPlayersByTeam } from '../redux/players/fetchPlayersByTeam';
 import { clearPerformancePredictionData } from '../redux/statTracking/selectedPlayers';
 import { fetchTeamByName } from '../redux/teams/fetchTeamByName';
@@ -27,6 +28,7 @@ function Home() {
     const [selectedLineupSeason, setSelectedLineupSeason] = useState(2025);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
+    const lineupByFixtureIdAndTeamId = useSelector((state) => state.lineupByFixtureIdAndTeamId.list);
     //const status = useSelector((state) => state.teamsByLeagueId.status);
     //const error = useSelector((state) => state.teamsByLeagueId.error);
     const playersByTeam = useSelector((state) => state.playersByTeam.list);
@@ -35,13 +37,14 @@ function Home() {
 
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague)) {
-            dispatch(fetchTeamsByLeagueId({ leagueId: selectedLeague.id, seasonYear: 2025 }));
+            dispatch(fetchTeamsByLeagueId({ leagueId: selectedLeague.id, season: 2025 }));
         }
     }, [dispatch, selectedLeague]);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
             dispatch(fetchTeamByName({ country: selectedLeague.country, teamName: selectedTeam.name }));
+            dispatch(fetchLastCompletedFixtureId({ leagueId: selectedLeague.id, season: 2025, teamId: selectedTeam.id }));
         }
     }, [dispatch, selectedLeague, selectedTeam]);
 

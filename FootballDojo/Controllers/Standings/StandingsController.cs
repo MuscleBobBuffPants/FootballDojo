@@ -17,12 +17,12 @@ namespace FootballDojo.Controllers
         }
 
         [HttpGet]
-        [Route("leagueId={leagueId}/seasonYear={seasonYear}")]
-        public async Task<IActionResult> GetStandingsByLeagueIdAndSeasonYear(int leagueId, int seasonYear)
+        [Route("leagueId={leagueId}/season={season}")]
+        public async Task<IActionResult> GetStandingsByLeagueIdAndSeason(int leagueId, int season)
         {
             try
             {
-                var standings = await _standingsService.GetStandingsByLeagueIdAndSeasonYearAsync(leagueId, seasonYear);
+                var standings = await _standingsService.GetStandingsByLeagueIdAndSeasonAsync(leagueId, season);
 
                 if (standings is null) return NotFound();
 
@@ -30,7 +30,7 @@ namespace FootballDojo.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, $"Error fetching standings for leagueId: {leagueId}, seasonYear: {seasonYear}");
+                _logger.LogError(ex, $"Error fetching standings for leagueId: {leagueId}, season: {season}");
                 return BadRequest();
             }
         }
