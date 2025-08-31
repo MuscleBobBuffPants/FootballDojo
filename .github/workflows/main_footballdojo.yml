@@ -28,9 +28,6 @@ jobs:
       - name: Build React frontend
         working-directory: FootballDojo-UI
         run: npm run build
-        env:
-          FOOTBALLDOJO_API_HOST: ${{ secrets.FOOTBALLDOJO_API_HOST }}
-          FOOTBALLDOJO_API_KEY: ${{ secrets.FOOTBALLDOJO_API_KEY }}
 
       # Copy React build to backend wwwroot
       - name: Copy React build to backend wwwroot
@@ -90,3 +87,7 @@ jobs:
           app-name: 'FootballDojo'
           slot-name: 'Production'
           package: ./app
+
+    env:
+      FOOTBALLDOJO_API_HOST: ${{ secrets.FOOTBALLDOJO_API_HOST }}
+      FOOTBALLDOJO_API_KEY: ${{ secrets.FOOTBALLDOJO_API_KEY }}
