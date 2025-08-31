@@ -12,3 +12,5 @@
 /FootballDojo/wwwroot
 /FootballDojo-ui/dist
 /FootballDojo/Properties/launchSettings.json
+/FootballDojo-ui/.env.development
+/FootballDojo-ui/.env.production
