@@ -1,22 +1,18 @@
 import { Box } from "@mui/material";
 import React, { useMemo } from "react";
 import SoccerLineupSlot from "../../components/lineupBuilder/soccerLineupSlot";
-import { POSSIBLE_ATTACKER_MIDFIELDER_POSITIONS } from "../../global/constants";
-
-const isAttackerEligible = (pos) => POSSIBLE_ATTACKER_MIDFIELDER_POSITIONS.includes(pos.label);
 
 const SoccerField = ({ positions, lineup, players, onAssign }) => {
     const filteredPlayersBySlot = useMemo(() => {
         const map = {};
         positions.forEach((pos) => {
-            const allowedRoles = Array.isArray(pos.role) ? pos.role : [pos.role];
-
             map[pos.id] = players.filter((p) => {
-                const roleMatch = allowedRoles.includes(p.position);
-                const attackerEligible =
-                    isAttackerEligible(pos) && (p.position === "Attacker" || p.position === "Midfielder");
-
-                return roleMatch || attackerEligible;
+                // Always allow only GK in GK slot
+                if (pos.role === "Goalkeeper") {
+                    return p.position === "Goalkeeper";
+                }
+                // For any other slot, allow Defender, Midfielder, or Attacker
+                return ["Defender", "Midfielder", "Attacker"].includes(p.position);
             });
         });
         return map;

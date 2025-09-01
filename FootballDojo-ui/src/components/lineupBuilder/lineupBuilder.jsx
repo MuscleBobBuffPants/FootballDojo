@@ -24,46 +24,54 @@ import { clearPerformancePredictionData, setPlayerStatsForLineup } from "../../r
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
 
-export default function LineupBuilder(
-    {
-        selectedTeam,
-        playersByTeam,
-        resetFlag,
-        selectedLeague,
-        setSelectedSeason,
-        selectedSeason
-    }) {
+// Helper: map API lineup to FORMATIONS slots
+const mapApiLineupToSlots = (apiLineup) => {
+    if (!apiLineup || !apiLineup.startXI) return { formation: "4-3-3", slots: {} };
+
+    const formationName = apiLineup.formation;
+    const slots = {};
+
+    apiLineup.startXI.forEach(({ player }) => {
+        if (player.grid) {
+            slots[player.grid] = player.id; // Use grid directly as slotId
+        }
+    });
+
+    return { formation: formationName, slots };
+};
+
+export default function LineupBuilder({
+    selectedTeam,
+    playersByTeam,
+    selectedLeague,
+    setSelectedSeason,
+    selectedSeason,
+    lineupByFixtureIdAndTeamId
+}) {
     const dispatch = useDispatch();
     const fieldRef = useRef(null);
+
     const [formation, setFormation] = useState("4-3-3");
     const [lineup, setLineup] = useState({});
-
-    // For PerformancePredictor
     const [resetTrigger, setResetTrigger] = useState(0);
 
+    // Auto-map lineup from API
     useEffect(() => {
-        handleReset();
-    }, [selectedTeam]);
+        if (lineupByFixtureIdAndTeamId) {
+            const mappedLineup = mapApiLineupToSlots(lineupByFixtureIdAndTeamId, FORMATIONS);
+            setFormation(mappedLineup.formation);
+            setLineup(mappedLineup.slots);
+        } else {
+            setLineup({});
+        }
+    }, [lineupByFixtureIdAndTeamId]);
 
-    useEffect(() => {
-        setLineup({});
-    }, [resetFlag, formation]);
 
-    // Handler to receive season changes from PerformancePredictor
-    const handleSeasonChange = (selectedSeason) => {
-        setSelectedSeason(selectedSeason);
-    };
-
-    // Update all players stats in lineup when selectedSeason changes
+    // Update player stats whenever season changes
     useEffect(() => {
         if (!selectedSeason) return;
 
-        const assignedEntries = Object.entries(lineup).filter((playerId) => playerId);
-        if (assignedEntries.length === 0) return;
-
-        dispatch(clearPerformancePredictionData());
-
-        assignedEntries.forEach(([slotId, playerId]) => {
+        Object.entries(lineup).forEach(([slotId, playerId]) => {
             const player = playersByTeam.find(p => p.id === playerId);
             if (!player) return;
 
@@ -75,31 +83,31 @@ export default function LineupBuilder(
                 if (action.payload && action.payload.length > 0) {
                     dispatch(setPlayerStatsForLineup({
                         slotId: slotId.toString(),
-                        player: { id: player.id, ...action.payload[0] } // action.payload[0] = stats
+                        player: { id: player.id, ...action.payload[0] }
                     }));
                 }
             });
         });
-    }, [selectedSeason]);
+    }, [selectedSeason, lineup]);
 
     const handleAssign = (slotId, playerId) => {
         const player = playersByTeam.find(p => p.id === playerId);
 
-        // Fetch stats per player
+        // Fetch stats for assigned player
         if (player) {
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
                 seasonYear: selectedSeason
-            })).then((action) => {
+            })).then(action => {
                 dispatch(setPlayerStatsForLineup({
                     slotId: slotId.toString(),
-                    player: { id: player.id, ...action.payload[0] } // action.payload[0] = stats
+                    player: { id: player.id, ...action.payload[0] }
                 }));
             });
         }
 
-        // Update local lineup to keep the field updated
+        // Update lineup locally
         setLineup(prev => {
             const newLineup = { ...prev };
             Object.keys(newLineup).forEach(key => {
@@ -115,9 +123,9 @@ export default function LineupBuilder(
 
         try {
             const canvas = await html2canvas(fieldRef.current, {
-                backgroundColor: null, // preserve transparency if needed
-                scale: 2,               // higher resolution
-                useCORS: true,    // allow cross-origin images
+                backgroundColor: null,
+                scale: 2,
+                useCORS: true,
             });
 
             const dataUrl = canvas.toDataURL("image/png");
@@ -134,8 +142,8 @@ export default function LineupBuilder(
         setLineup({});
         setSelectedSeason(2025);
         dispatch(clearPerformancePredictionData());
-        setResetTrigger(prev => prev + 1); // triggers PerformancePredictor
-    }
+        setResetTrigger(prev => prev + 1);
+    };
 
     //const isLineupComplete = () => {
     //    const positions = FORMATIONS[formation];
@@ -158,7 +166,7 @@ export default function LineupBuilder(
                     <Box sx={{ mt: 3 }} >
                         <PerformancePredictor
                             selectedSeason={selectedSeason}
-                            handleSeasonChange={handleSeasonChange}
+                            handleSeasonChange={setSelectedSeason}
                             resetTrigger={resetTrigger} />
                     </Box>
                 </Box>
@@ -171,11 +179,10 @@ export default function LineupBuilder(
                     <Select
                         labelId="formation-select-label"
                         id="formation-select"
-                        label="Formation"
                         size="small"
                         value={formation}
                         onChange={e => setFormation(e.target.value)}
-                        sx={(theme) => ({
+                        sx={theme => ({
                             backgroundColor: theme.palette.background.paper,
                             color: "text.primary",
                             borderRadius: 1
@@ -186,11 +193,11 @@ export default function LineupBuilder(
                         ))}
                     </Select>
                 </FormControl>
+
                 <Box mt={2}>
                     <Button
                         onClick={handleReset}
-                        sx={(theme) =>
-                        ({
+                        sx={theme => ({
                             borderRadius: 2,
                             backgroundColor: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
                             color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
@@ -199,17 +206,16 @@ export default function LineupBuilder(
                         Reset Lineup
                     </Button>
                 </Box>
+
                 <Box mt={2}>
                     <Button
                         variant="contained"
                         onClick={handleGeneratePNG}
-                        sx={(theme) =>
-                        ({
+                        sx={theme => ({
                             borderRadius: 2,
                             backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
                             color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                         })}
-                    //disabled={!isLineupComplete()}
                     >
                         Download Lineup & Share
                     </Button>

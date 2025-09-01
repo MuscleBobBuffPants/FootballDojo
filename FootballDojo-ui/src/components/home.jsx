@@ -20,7 +20,6 @@ import { fetchTeamsByLeagueId } from '../redux/teams/fetchTeamsByLeagueId';
 function Home() {
     const dispatch = useDispatch();
 
-    const [resetFlag, setResetFlag] = useState(false);
     const [selectedLeague, setSelectedLeague] = useState("");
     const [selectedTeam, setSelectedTeam] = useState("");
     const [teamLogo, setTeamLogo] = useState(null);
@@ -62,7 +61,6 @@ function Home() {
 
     const handleLeagueChange = (event) => {
         setSelectedMainSeason(2025);
-        setResetFlag(prev => !prev);
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
         dispatch(clearPlayers());
@@ -71,7 +69,6 @@ function Home() {
 
     const handleTeamChange = (event) => {
         setSelectedMainSeason(2025);
-        setResetFlag(prev => !prev);
         setSelectedTeam(event.target.value);
         dispatch(clearPerformancePredictionData());
     };
@@ -135,10 +132,11 @@ function Home() {
                     <LineupBuilder
                         selectedTeam={selectedTeam ? selectedTeam.name : ""}
                         playersByTeam={sortedPlayers}
-                        resetFlag={resetFlag}
                         selectedLeague={selectedLeague}
                         setSelectedSeason={setSelectedLineupSeason}
-                        selectedSeason={selectedLineupSeason} />
+                        selectedSeason={selectedLineupSeason}
+                        lineupByFixtureIdAndTeamId={lineupByFixtureIdAndTeamId}
+                    />
                 </Box>
             </div>
         </div>
