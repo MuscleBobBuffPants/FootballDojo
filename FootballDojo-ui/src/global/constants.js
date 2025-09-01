@@ -124,13 +124,13 @@ export const FORMATIONS = {
     ],
 
     "4-3-3": [
-        { id: "4:2", label: "ST", role: "Attacker", top: "5%", left: "50%" },
         { id: "4:1", label: "LW", role: "Attacker", top: "10%", left: "25%" },
+        { id: "4:2", label: "ST", role: "Attacker", top: "5%", left: "50%" },
         { id: "4:3", label: "RW", role: "Attacker", top: "10%", left: "75%" },
 
-        { id: "3:1", label: "CM", role: "Midfielder", top: "35%", left: "30%" },
-        { id: "3:3", label: "CM", role: "Midfielder", top: "35%", left: "70%" },
-        { id: "3:2", label: "CDM", role: "Midfielder", top: "45%", left: "50%" },
+        { id: "3:1", label: "CM", role: "Midfielder", top: "37%", left: "25%" },
+        { id: "3:2", label: "CM", role: "Midfielder", top: "37%", left: "50%" },
+        { id: "3:3", label: "CM", role: "Midfielder", top: "37%", left: "75%" },
 
         { id: "2:1", label: "LB", role: "Defender", top: "65%", left: "12%" },
         { id: "2:4", label: "RB", role: "Defender", top: "65%", left: "88%" },
