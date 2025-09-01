@@ -70,6 +70,24 @@ export const FORMATIONS = {
         { id: "1:1", label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
     ],
 
+    "3-5-1-1": [
+        { id: "5:1", label: "ST", role: "Attacker", top: "3%", left: "50%" },
+
+        { id: "4:1", label: "CF", role: "Attacker", top: "21%", left: "50%" },
+
+        { id: "3:1", label: "LM", role: "Midfielder", top: "40%", left: "13%" },
+        { id: "3:2", label: "CM", role: "Midfielder", top: "40%", left: "32%" },
+        { id: "3:3", label: "CAM", role: "Midfielder", top: "40%", left: "50%" },
+        { id: "3:4", label: "CM", role: "Midfielder", top: "40%", left: "68%" },
+        { id: "3:5", label: "RM", role: "Midfielder", top: "40%", left: "87%" },
+
+        { id: "2:1", label: "CB", role: "Defender", top: "64%", left: "20%" },
+        { id: "2:2", label: "CB", role: "Defender", top: "64%", left: "50%" },
+        { id: "2:3", label: "CB", role: "Defender", top: "64%", left: "80%" },
+
+        { id: "1:1", label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
+    ],
+
     "3-5-2": [
         { id: "4:1", label: "ST", role: "Attacker", top: "5%", left: "40%" },
         { id: "4:2", label: "ST", role: "Attacker", top: "5%", left: "60%" },
@@ -175,19 +193,19 @@ export const FORMATIONS = {
     ],
 
     "4-1-4-1": [
-        { id: "4:2", label: "ST", role: "Attacker", top: "5%", left: "50%" },
+        { id: "5:1", label: "ST", role: "Attacker", top: "5%", left: "50%" },
 
-        { id: "3:1", label: "LM", role: "Midfielder", top: "25%", left: "20%" },
-        { id: "3:2", label: "CM", role: "Midfielder", top: "25%", left: "40%" },
-        { id: "3:3", label: "CM", role: "Midfielder", top: "25%", left: "60%" },
-        { id: "3:4", label: "RM", role: "Midfielder", top: "25%", left: "80%" },
+        { id: "4:1", label: "LM", role: "Midfielder", top: "25%", left: "20%" },
+        { id: "4:2", label: "CM", role: "Midfielder", top: "25%", left: "40%" },
+        { id: "4:3", label: "CM", role: "Midfielder", top: "25%", left: "60%" },
+        { id: "4:4", label: "RM", role: "Midfielder", top: "25%", left: "80%" },
 
-        { id: "3:5", label: "CDM", role: "Midfielder", top: "40%", left: "50%" },
+        { id: "3:1", label: "CDM", role: "Midfielder", top: "45%", left: "50%" },
 
         { id: "2:1", label: "LB", role: "Defender", top: "65%", left: "12%" },
-        { id: "2:4", label: "RB", role: "Defender", top: "65%", left: "88%" },
         { id: "2:2", label: "CB", role: "Defender", top: "65%", left: "37%" },
         { id: "2:3", label: "CB", role: "Defender", top: "65%", left: "63%" },
+        { id: "2:4", label: "RB", role: "Defender", top: "65%", left: "88%" },
 
         { id: "1:1", label: "GK", role: "Goalkeeper", top: "83%", left: "50%" }
     ],

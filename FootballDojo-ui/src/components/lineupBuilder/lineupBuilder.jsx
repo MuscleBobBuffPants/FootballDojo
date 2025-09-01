@@ -58,11 +58,22 @@ export default function LineupBuilder({
     // Auto-map lineup from API
     useEffect(() => {
         if (lineupByFixtureIdAndTeamId) {
-            const mappedLineup = mapApiLineupToSlots(lineupByFixtureIdAndTeamId, FORMATIONS);
-            setFormation(mappedLineup.formation);
-            setLineup(mappedLineup.slots);
+            const mappedLineup = mapApiLineupToSlots(lineupByFixtureIdAndTeamId);
+
+            // Only set lineup if formation exists in FORMATIONS
+            if (FORMATIONS[mappedLineup.formation]) {
+                setFormation(mappedLineup.formation);
+                setLineup(mappedLineup.slots);
+            } else {
+                // Formation unknown — do not map players to avoid broken UI
+                console.warn(
+                    `Received unknown formation "${mappedLineup.formation}" from API. Skipping player mapping.`
+                );
+                setLineup({}); // clear lineup
+            }
         } else {
             setLineup({});
+            setFormation("4-3-3"); // default safe formation
         }
     }, [lineupByFixtureIdAndTeamId]);
 
