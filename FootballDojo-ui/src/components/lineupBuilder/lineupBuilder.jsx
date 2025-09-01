@@ -156,10 +156,10 @@ export default function LineupBuilder({
         setResetTrigger(prev => prev + 1);
     };
 
-    //const isLineupComplete = () => {
-    //    const positions = FORMATIONS[formation];
-    //    return positions.every(slot => lineup[slot.id]);
-    //};
+    const isLineupComplete = () => {
+        const positions = FORMATIONS[formation];
+        return positions.every(slot => lineup[slot.id]);
+    };
 
     return (
         <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
@@ -227,6 +227,7 @@ export default function LineupBuilder({
                             backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
                             color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
                         })}
+                        disabled={!isLineupComplete()}
                     >
                         Download Lineup & Share
                     </Button>
