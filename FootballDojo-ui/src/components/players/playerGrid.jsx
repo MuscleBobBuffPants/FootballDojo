@@ -34,8 +34,8 @@ function CustomNoRowsOverlay({ selectedTeam }) {
 }
 
 const columns = [
-    { field: "number", headerName: "", width: 60, sortable: false },
-    { field: "name", headerName: "Name", width: 265, sortable: false },
+    { field: "number", headerName: "", width: 75, sortable: false },
+    { field: "name", headerName: "Name", width: 250, sortable: false },
     {
         field: "position",
         headerName: "Position",
