@@ -99,7 +99,7 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
 
     useEffect(() => {
         setSelectedSeason(2025);
-    }, [selectedLeague]);
+    }, [selectedLeague, selectedTeam]);
 
     const handleSeasonChange = (event) => {
         setSelectedSeason(event.target.value);

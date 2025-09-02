@@ -60,7 +60,7 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
 
     useEffect(() => {
         setSelectedSeason(2025);
-    }, [selectedLeague]);
+    }, [selectedLeague, selectedTeam]);
 
     useEffect(() => {
         setModalOpen(true);
