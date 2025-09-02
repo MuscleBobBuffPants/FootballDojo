@@ -141,7 +141,6 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
             field: 'result',
             headerName: '',
             align: 'center',
-            width: 5,
             sortable: false,
             renderCell: (params) => {
                 if (!params.value) return null; // don't render if null
@@ -163,9 +162,9 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
         {
             field: "matchup",
             headerName: "Matchup",
-            headerAlign: "center",
-            align: "center",
-            width: 250,
+            headerAlign: "left",
+            align: "left",
+            width: 205,
             sortable: false,
         }
     ];
@@ -176,6 +175,13 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
 
             const homeGoals = response.goals?.home ?? null;
             const awayGoals = response.goals?.away ?? null;
+
+            let matchup = "";
+            if (selectedTeam.id === response.teams.home.id) {
+                matchup = `vs. ${response.teams.away.name}`;
+            } else if (selectedTeam.id === response.teams.away.id) {
+                matchup = `@ ${response.teams.home.name}`;
+            }
 
             // skip result if no goals yet
             let result = null;
@@ -195,12 +201,12 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                 id: response.fixture.id,
                 matchdayNumber: index + 1,
                 date: formattedDate,
-                matchup: response.teams.away.name + " @ " + response.teams.home.name,
+                result,
+                matchup,
                 venueId: response.fixture.venue.id,
                 venue: response.fixture.venue.name + " - " + response.fixture.venue.city,
                 homeTeam: response.teams.home,
-                awayTeam: response.teams.away,
-                result,
+                awayTeam: response.teams.away
             };
         })
         : [];

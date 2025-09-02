@@ -39,7 +39,7 @@ const columns = [
     {
         field: "position",
         headerName: "Position",
-        width: 150,
+        width: 155,
         sortable: false,
         sortComparator: (v1, v2) => {
             return POSITION_ORDER.indexOf(v1) - POSITION_ORDER.indexOf(v2);
