@@ -1,12 +1,16 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Tooltip, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FixtureProfile from "../../components/fixtures/fixtureProfiles/fixtureProfile";
 import {
+    DARKMODE_GREEN,
     DARKMODE_GRID_BORDER,
+    DARKMODE_RED,
     DARKMODE_TEXT,
+    LIGHTMODE_GREEN,
     LIGHTMODE_GRID_BORDER,
+    LIGHTMODE_RED,
     LIGHTMODE_TEXT,
     formatUtcDate,
     isNonEmptyObject
@@ -31,35 +35,10 @@ function CustomNoRowsOverlay({ selectedTeam }) {
     );
 }
 
-const columns = [
-    {
-        field: "matchdayNumber",
-        headerName: "MD #",
-        headerAlign: "center",
-        align: "center",
-        width: 58,
-        sortable: false,
-    },
-    {
-        field: "date",
-        headerName: "Date",
-        headerAlign: "center",
-        align: "center",
-        width: 120,
-        sortable: false,
-    },
-    {
-        field: "matchup",
-        headerName: "Matchup",
-        headerAlign: "center",
-        align: "center",
-        width: 300,
-        sortable: false,
-    },
-];
 
 function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
     const dispatch = useDispatch();
+    const theme = useTheme();
 
     const [selectedFixture, setSelectedFixture] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
@@ -91,9 +70,127 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
         dispatch(clearVenue());
     };
 
+    const ResultBubble = ({ result }) => {
+        const size = 25;
+
+        let bg, fg, label;
+        switch (result) {
+            case "W":
+                bg = theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN;
+                fg = theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT;
+                label = "Win";
+                break;
+            case "D":
+                bg = theme.palette.grey[500];
+                fg = theme.palette.getContrastText(theme.palette.grey[500]);
+                label = "Draw";
+                break;
+            case "L":
+                bg = theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED;
+                fg = theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT;
+                label = "Loss";
+                break;
+            default:
+                bg = theme.palette.background.paper;
+                fg = theme.palette.text.disabled;
+                label = "";
+        }
+
+        return (
+            <Tooltip title={label} arrow>
+                <Box
+                    sx={{
+                        width: size,
+                        height: size,
+                        borderRadius: "50%",
+                        bgcolor: bg,
+                        color: fg,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: 800,
+                        fontSize: Math.max(12, size * 0.42),
+                        boxShadow: 1,
+                        border: `2px solid ${theme.palette.background.paper}`,
+                    }}
+                >
+                    {result}
+                </Box>
+            </Tooltip>
+        );
+    };
+
+    const columns = [
+        {
+            field: "matchdayNumber",
+            headerName: "MD #",
+            headerAlign: "center",
+            align: "center",
+            width: 58,
+            sortable: false,
+        },
+        {
+            field: "date",
+            headerName: "Date",
+            headerAlign: "center",
+            align: "center",
+            width: 120,
+            sortable: false,
+        },
+        {
+            field: 'result',
+            headerName: '',
+            align: 'center',
+            width: 5,
+            sortable: false,
+            renderCell: (params) => {
+                if (!params.value) return null; // don't render if null
+                return (
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "100%",
+                            height: "100%",
+                        }}
+                    >
+                        <ResultBubble result={params.value} />
+                    </Box>
+                );
+            },
+        },
+        {
+            field: "matchup",
+            headerName: "Matchup",
+            headerAlign: "center",
+            align: "center",
+            width: 250,
+            sortable: false,
+        }
+    ];
+
     const filteredFixtures = isNonEmptyObject(selectedTeam)
         ? fixturesByLeagueId.map((response, index) => {
             const formattedDate = formatUtcDate(new Date(response.fixture.date));
+
+            const homeGoals = response.goals?.home ?? null;
+            const awayGoals = response.goals?.away ?? null;
+
+            // skip result if no goals yet
+            let result = null;
+            if (!(homeGoals === null && awayGoals === null)) {
+                if (selectedTeam.id === response.teams.home.id) {
+                    result =
+                        response.teams.home.winner === true ? "W" :
+                            response.teams.home.winner === false ? "L" : "D";
+                } else if (selectedTeam.id === response.teams.away.id) {
+                    result =
+                        response.teams.away.winner === true ? "W" :
+                            response.teams.away.winner === false ? "L" : "D";
+                }
+            }
+
             return {
                 id: response.fixture.id,
                 matchdayNumber: index + 1,
@@ -101,16 +198,9 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                 matchup: response.teams.away.name + " @ " + response.teams.home.name,
                 venueId: response.fixture.venue.id,
                 venue: response.fixture.venue.name + " - " + response.fixture.venue.city,
-                homeTeam: {
-                    id: response.teams.home.id,
-                    name: response.teams.home.name,
-                    logo: response.teams.home.logo,
-                },
-                awayTeam: {
-                    id: response.teams.away.id,
-                    name: response.teams.away.name,
-                    logo: response.teams.away.logo,
-                },
+                homeTeam: response.teams.home,
+                awayTeam: response.teams.away,
+                result,
             };
         })
         : [];

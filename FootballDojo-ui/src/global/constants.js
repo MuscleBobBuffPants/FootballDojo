@@ -27,6 +27,23 @@ export const formatDateForFixtureProfile = (dateStr) => {
     });
 };
 
+export const getGoalColor = (theme, teamGoals, otherGoals) => {
+    if (teamGoals > otherGoals)
+        return {
+            bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN,
+            fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
+        };
+    if (teamGoals < otherGoals)
+        return {
+            bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
+            fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
+        };
+    return {
+        bg: theme.palette.grey[500],
+        fg: theme.palette.getContrastText(theme.palette.grey[500])
+    };
+};
+
 // Button and Bubble color combos
 export const DARKMODE_GREEN = "#006400";
 export const LIGHTMODE_GREEN = "#90ee90";

@@ -3,15 +3,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    DARKMODE_GREEN,
     DARKMODE_GRID_BORDER,
-    DARKMODE_RED,
     DARKMODE_TEXT,
-    LIGHTMODE_GREEN,
     LIGHTMODE_GRID_BORDER,
-    LIGHTMODE_RED,
     LIGHTMODE_TEXT,
     formatUtcDate,
+    getGoalColor,
     isNonEmptyObject
 } from "../../../global/constants";
 import { fetchHeadToHeadFixtures } from "../../../redux/fixtures/fetchHeadToHeadFixtures";
@@ -24,37 +21,24 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
     const status = useSelector((state) => state.headToHeadFixtures.status);
     //const error = useSelector((state) => state.headToHeadFixtures.error);
 
-    const getGoalColor = (teamGoals, otherGoals) => {
-        if (teamGoals > otherGoals)
-            return {
-                bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN,
-                fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-            };
-        if (teamGoals < otherGoals)
-            return {
-                bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
-                fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-            };
-        return {
-            bg: theme.palette.grey[500],
-            fg: theme.palette.getContrastText(theme.palette.grey[500])
-        };
-    };
-
     const GoalBubble = ({ teamGoals, otherGoals }) => {
-        const { bg, fg } = getGoalColor(teamGoals, otherGoals);
+        const size = 23;
+        const { bg, fg } = getGoalColor(theme, teamGoals, otherGoals);
         return (
             <Box
                 sx={{
                     display: 'inline-flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    width: 18,
-                    height: 18,
+                    width: size,
+                    height: size,
                     borderRadius: '50%',
                     bgcolor: bg,
                     color: fg,
-                    fontWeight: 'bold',
+                    fontWeight: 800,
+                    fontSize: Math.max(12, size * 0.42),
+                    boxShadow: 1,
+                    border: `2px solid ${theme.palette.background.paper}`,
                 }}
             >
                 {teamGoals}
@@ -104,7 +88,6 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                 </Box>
             ),
         },
-
         {
             field: 'homeTeamGoals',
             headerName: '',
@@ -117,7 +100,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                     otherGoals={params.row.awayTeamGoals}
                 />
             ),
-        },
+        }
     ];
 
     useEffect(() => {
