@@ -1,8 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FixturesGrid from "../components/fixtures/fixtureGrid";
-import FixtureSeasonDropdown from '../components/fixtures/fixtureSeasonDropdown';
 import LeagueLogoIcon from '../components/leagues/leagueLogoIcon';
 import LeagueSelectDropdown from '../components/leagues/leagueSelectDropdown';
 import LineupBuilder from '../components/lineupBuilder/lineupBuilder';
@@ -23,7 +22,6 @@ function Home() {
     const [selectedLeague, setSelectedLeague] = useState("");
     const [selectedTeam, setSelectedTeam] = useState("");
     const [teamLogo, setTeamLogo] = useState(null);
-    const [selectedMainSeason, setSelectedMainSeason] = useState(2025);
     const [selectedLineupSeason, setSelectedLineupSeason] = useState(2025);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
@@ -60,7 +58,6 @@ function Home() {
     }, [dispatch, selectedTeam]);
 
     const handleLeagueChange = (event) => {
-        setSelectedMainSeason(2025);
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
         dispatch(clearPlayers());
@@ -68,14 +65,9 @@ function Home() {
     };
 
     const handleTeamChange = (event) => {
-        setSelectedMainSeason(2025);
         setSelectedTeam(event.target.value);
         dispatch(clearPerformancePredictionData());
     };
-
-    const handleSeasonChange = (event) => {
-        setSelectedMainSeason(event.target.value);
-    }
 
     const sortedPlayers = isNonEmptyListObject(playersByTeam) ? [...playersByTeam].sort((a, b) =>
         a.name.localeCompare(b.name)
@@ -99,21 +91,12 @@ function Home() {
                     teamsByLeagueId={teamsByLeagueId}
                     selectedTeam={selectedTeam}
                     handleTeamChange={handleTeamChange} />
-
-                <FixtureSeasonDropdown
-                    selectedSeason={selectedMainSeason}
-                    handleSeasonChange={handleSeasonChange} />
-
-                <Typography sx={{ color: "text.primary", fontSize: 11 }}>
-                    (Does Not <br /> Affect Roster)
-                </Typography>
             </Box>
             <div style={{ display: "flex", gap: "20px" }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                     <StandingsGrid
                         selectedLeague={selectedLeague}
-                        selectedTeam={selectedTeam}
-                        selectedSeason={selectedMainSeason} />
+                        selectedTeam={selectedTeam} />
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                         <PlayerGrid
                             selectedLeague={selectedLeague}
@@ -123,8 +106,7 @@ function Home() {
                         <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                             <FixturesGrid
                                 selectedLeague={selectedLeague}
-                                selectedTeam={selectedTeam}
-                                selectedSeason={selectedMainSeason} />
+                                selectedTeam={selectedTeam} />
                         </Box>
                     </Box>
                 </Box>

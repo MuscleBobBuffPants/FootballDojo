@@ -7,11 +7,9 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
         const map = {};
         positions.forEach((pos) => {
             map[pos.id] = players.filter((p) => {
-                // Always allow only GK in GK slot
                 if (pos.role === "Goalkeeper") {
                     return p.position === "Goalkeeper";
                 }
-                // For any other slot, allow Defender, Midfielder, or Attacker
                 return ["Defender", "Midfielder", "Attacker"].includes(p.position);
             });
         });
@@ -23,7 +21,7 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
             sx={(theme) => ({
                 position: "relative",
                 width: 1120,
-                height: 720,
+                height: 747,
                 bgcolor: theme.palette.mode === "dark" ? "#003300" : "#42763c",
                 border: "2px solid #eaeaea",
                 borderRadius: 1,

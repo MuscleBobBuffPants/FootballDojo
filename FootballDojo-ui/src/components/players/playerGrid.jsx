@@ -109,6 +109,32 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
                     position: "relative", // for overlay
                 })}
             >
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        p: 1,
+                        backgroundColor: (theme) =>
+                            theme.palette.mode === "light"
+                                ? "transparent"
+                                : theme.palette.background.default,
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        sx={(theme) => ({
+                            textAlign: "center",
+                            p: 1,
+                            backgroundColor:
+                                theme.palette.mode === "light"
+                                    ? "transparent"
+                                    : theme.palette.background.default
+                        })}
+                    >
+                        {selectedTeam ? `Roster` : "\u00A0"}
+                    </Typography>
+                </Box>
                 <div style={{ position: "relative" }}>
                     <DataGrid
                         rows={filteredPlayers}
@@ -127,7 +153,7 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
                         }}
                         sx={(theme) => ({
                             width: 500,
-                            height: 52 * 6 + 56, // 5 rows visible
+                            height: 52 * 5 + 56, // 5 rows visible
                             fontSize: 15,
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",

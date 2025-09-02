@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     DARKMODE_GRID_BORDER,
@@ -12,6 +12,7 @@ import {
     isNonEmptyObject
 } from "../../global/constants";
 import { fetchStandingsByLeagueId } from "../../redux/standings/fetchStandingsByLeagueId";
+import SeasonDropdown from '../seasonDropdown';
 
 function CustomNoRowsOverlay({ selectedLeague }) {
     return (
@@ -80,8 +81,10 @@ const columns = [
     },
 ];
 
-function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
+function StandingsGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
+
+    const [selectedSeason, setSelectedSeason] = useState(2025);
 
     const standingsByLeagueId = useSelector(
         (state) => state.standingsByLeagueId.list
@@ -93,6 +96,14 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
             dispatch(fetchStandingsByLeagueId({ leagueId: selectedLeague.id, season: selectedSeason }));
         }
     }, [dispatch, selectedLeague, selectedSeason]);
+
+    useEffect(() => {
+        setSelectedSeason(2025);
+    }, [selectedLeague]);
+
+    const handleSeasonChange = (event) => {
+        setSelectedSeason(event.target.value);
+    }
 
     const standings = isNonEmptyObject(selectedLeague)
         ? standingsByLeagueId.map((response, index) => {
@@ -123,19 +134,38 @@ function StandingsGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                     position: "relative", // needed for overlay
                 })}
             >
-                <Typography
-                    variant="h6"
-                    sx={(theme) => ({
-                        textAlign: "center",
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
                         p: 1,
-                        backgroundColor:
+                        backgroundColor: (theme) =>
                             theme.palette.mode === "light"
                                 ? "transparent"
-                                : theme.palette.background.default
-                    })}
+                                : theme.palette.background.default,
+                    }}
                 >
-                    {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
-                </Typography>
+                    <Typography
+                        variant="h6"
+                        sx={(theme) => ({
+                            textAlign: "center",
+                            p: 1,
+                            backgroundColor:
+                                theme.palette.mode === "light"
+                                    ? "transparent"
+                                    : theme.palette.background.default
+                        })}
+                    >
+                        {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
+                    </Typography>
+                    {isNonEmptyObject(selectedLeague) ?
+                        <SeasonDropdown
+                            selectedSeason={selectedSeason}
+                            handleSeasonChange={handleSeasonChange} /> : null
+                    }
+
+                </Box>
                 <div style={{ position: "relative" }}>
                     <DataGrid
                         rows={standings}

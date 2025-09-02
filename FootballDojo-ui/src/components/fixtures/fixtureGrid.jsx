@@ -17,6 +17,7 @@ import {
 } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
 import { clearVenue } from "../../redux/venues/fetchVenueByVenueId";
+import SeasonDropdown from '../seasonDropdown';
 
 function CustomNoRowsOverlay({ selectedTeam }) {
     return (
@@ -36,10 +37,11 @@ function CustomNoRowsOverlay({ selectedTeam }) {
 }
 
 
-function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
+function FixturesGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
+    const [selectedSeason, setSelectedSeason] = useState(2025);
     const [selectedFixture, setSelectedFixture] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -57,8 +59,16 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
     }, [dispatch, selectedLeague, selectedTeam, selectedSeason]);
 
     useEffect(() => {
+        setSelectedSeason(2025);
+    }, [selectedLeague]);
+
+    useEffect(() => {
         setModalOpen(true);
     }, [selectedFixture]);
+
+    const handleSeasonChange = (event) => {
+        setSelectedSeason(event.target.value);
+    }
 
     const handleRowClick = (fixture) => {
         setSelectedFixture(fixture.row);
@@ -226,6 +236,37 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                     position: "relative", // needed for overlay
                 })}
             >
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        p: 1,
+                        backgroundColor: (theme) =>
+                            theme.palette.mode === "light"
+                                ? "transparent"
+                                : theme.palette.background.default,
+                    }}
+                >
+                    <Typography
+                        variant="h6"
+                        sx={(theme) => ({
+                            textAlign: "center",
+                            p: 1,
+                            backgroundColor:
+                                theme.palette.mode === "light"
+                                    ? "transparent"
+                                    : theme.palette.background.default
+                        })}
+                    >
+                        {selectedTeam ? `Fixtures` : "\u00A0"}
+                    </Typography>
+                    {isNonEmptyObject(selectedTeam) ?
+                        <SeasonDropdown
+                            selectedSeason={selectedSeason}
+                            handleSeasonChange={handleSeasonChange} /> : null
+                    }
+                </Box>
                 <div style={{ position: "relative" }}>
                     <DataGrid
                         rows={filteredFixtures}
@@ -244,7 +285,7 @@ function FixturesGrid({ selectedLeague, selectedTeam, selectedSeason }) {
                         }}
                         sx={(theme) => ({
                             width: 500,
-                            height: 52 * 6 + 56, // 5 rows visible
+                            height: 52 * 5 + 56, // 5 rows visible
                             fontSize: 15,
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",

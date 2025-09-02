@@ -174,7 +174,7 @@ export default function LineupBuilder({
                         players={playersByTeam}
                         onAssign={handleAssign}
                     />
-                    <Box sx={{ mt: 3 }} >
+                    <Box sx={{ mt: 2.7 }} >
                         <PerformancePredictor
                             selectedSeason={selectedSeason}
                             handleSeasonChange={setSelectedSeason}

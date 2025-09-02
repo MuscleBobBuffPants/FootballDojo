@@ -1,25 +1,18 @@
 import {
     Box,
     FormControl,
-    FormHelperText,
-    InputLabel,
     MenuItem,
     Select
 } from "@mui/material";
 
-function FixtureSeasonDropdown({ selectedSeason, handleSeasonChange }) {
+function SeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
         <Box display="flex" alignItems="center" gap={2}>
 
-            <FormControl sx={{ minWidth: 200 }} size="small">
-                <InputLabel id="season-select-label">
-                    Season
-                </InputLabel>
+            <FormControl sx={{ minWidth: 100 }} size="small">
                 <Select
-                    labelId="season-select-label"
                     id="season-select"
                     value={selectedSeason}
-                    label="Season"
                     onChange={handleSeasonChange}
                     sx={(theme) => ({
                         backgroundColor: theme.palette.background.paper,
@@ -29,7 +22,7 @@ function FixtureSeasonDropdown({ selectedSeason, handleSeasonChange }) {
                     MenuProps={{
                         PaperProps: {
                             style: {
-                                maxHeight: 48 * 5 + 8, // 5 items at 48px height + padding
+                                maxHeight: 48 * 5 + 8, // 5 items
                             },
                         },
                     }}
@@ -45,4 +38,4 @@ function FixtureSeasonDropdown({ selectedSeason, handleSeasonChange }) {
         </Box>
     )
 }
-export default FixtureSeasonDropdown;
+export default SeasonDropdown;
