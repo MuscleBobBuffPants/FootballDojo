@@ -1,5 +1,5 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
-import { Box, CssBaseline, IconButton, ThemeProvider, Typography } from "@mui/material";
+import { Box, CssBaseline, IconButton, Link, ThemeProvider, Typography } from "@mui/material";
 import { useState } from "react";
 import Home from '../components/home';
 import { getTheme } from '../global/theme';
@@ -21,13 +21,20 @@ function App() {
             </Box>
             <Box width="100%" textAlign="center">
                 <Typography variant="h4" component="h2" sx={{ pb: 3 }}>
-                    {"F\u00fatbol"} Dojo
+                    Football Dojo
                 </Typography>
             </Box>
             <Home />
             <Box width="100%" textAlign="center" sx={{ pt: 12 }}>
-                <Typography component="h2">
-                    2025 {"F\u00fatbol"} Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants.
+                <Typography component="h2" align="center">
+                    2025 Football Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants. | {' '}
+                    <Link
+                        href="https://github.com/MuscleBobBuffPants/FootballDojo"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub
+                    </Link>
                 </Typography>
             </Box>
         </ThemeProvider>
