@@ -1,4 +1,5 @@
-﻿using FootballDojo.Services;
+﻿using FootballDojo.Models;
+using FootballDojo.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -24,7 +25,7 @@ namespace FootballDojo.Controllers
             {
                 var fixtures = await _fixturesService.GetFixturesByLeagueIdAndSeasonAndTeamIdAsync(leagueId, season, teamId);
 
-                if (fixtures is null) return NotFound();
+                if (fixtures is null) _logger.LogInformation($"No fixtures found for leagueId: {leagueId}, season: {season}, teamId: {teamId}");
 
                 return Ok(fixtures);
             }
@@ -43,7 +44,7 @@ namespace FootballDojo.Controllers
             {
                 var fixtures = await _fixturesService.GetHeadToHeadFixturesByTeamIdsAsync(homeTeamId, awayTeamId);
 
-                if (fixtures is null) return NotFound();
+                if (fixtures is null) _logger.LogInformation($"No head-to-head fixtures found for homeTeamId: {homeTeamId}, awayTeamId: {awayTeamId}");
 
                 return Ok(fixtures);
             }

@@ -6,7 +6,7 @@ export const fetchHeadToHeadFixtures = createAsyncThunk(
     async ({ homeTeamId, awayTeamId }, thunkAPI) => {
         try {
             const response = await api.get(`fixtures/homeTeamId=${homeTeamId}/awayTeamId=${awayTeamId}`);
-            return response.data;
+            return response.data || [];
         } catch (error) {
             return thunkAPI.rejectWithValue(error.response?.data || error.message);
         }

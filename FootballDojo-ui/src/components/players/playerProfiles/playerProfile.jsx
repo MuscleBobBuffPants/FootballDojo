@@ -12,11 +12,9 @@ import {
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
     LIGHTMODE_PURPLE,
-    LIGHTMODE_TEXT,
-    isNonEmptyObject
+    LIGHTMODE_TEXT
 } from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
-import YouTubeCard from './youtubeCard';
 
 function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
@@ -27,19 +25,15 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
     //const error = useSelector((state) => state.playerStatsBySeason.error);
 
     useEffect(() => {
-        if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
-            setSelectedSeason(2025);
-        }
-    }, [selectedLeague, selectedPlayer]);
+        setSelectedSeason(2025);
+    }, [modalOpen]);
 
     useEffect(() => {
-        if (isNonEmptyObject(selectedLeague) && isNonEmptyObject(selectedPlayer)) {
-            dispatch(fetchPlayerStatsBySeason({
-                playerId: selectedPlayer.id,
-                leagueId: selectedLeague.id,
-                seasonYear: selectedSeason
-            }));
-        }
+        dispatch(fetchPlayerStatsBySeason({
+            playerId: selectedPlayer.id,
+            leagueId: selectedLeague.id,
+            seasonYear: selectedSeason
+        }));
     }, [dispatch, selectedLeague, selectedPlayer, selectedSeason]);
 
     const handleSeasonChange = (event) => {

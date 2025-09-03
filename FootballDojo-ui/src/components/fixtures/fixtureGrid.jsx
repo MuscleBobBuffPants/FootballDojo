@@ -13,13 +13,14 @@ import {
     LIGHTMODE_RED,
     LIGHTMODE_TEXT,
     formatUtcDate,
+    isNonEmptyListObject,
     isNonEmptyObject
 } from "../../global/constants";
 import { fetchFixturesByLeagueId } from "../../redux/fixtures/fetchFixturesByLeagueId";
 import { clearVenue } from "../../redux/venues/fetchVenueByVenueId";
 import SeasonDropdown from '../seasonDropdown';
 
-function CustomNoRowsOverlay({ selectedTeam }) {
+function CustomNoRowsOverlay({ selectedLeague, selectedTeam, filteredFixtures, selectedSeason }) {
     return (
         <Box
             sx={{
@@ -30,7 +31,11 @@ function CustomNoRowsOverlay({ selectedTeam }) {
             }}
         >
             <Typography variant="body1">
-                {!selectedTeam ? "Please select a team..." : null}
+                {
+                    !selectedTeam ? "Please select a team..." :
+                        !isNonEmptyListObject(filteredFixtures) ? "No " + selectedLeague.name + " Fixtures (" + selectedSeason + ")"
+                            : null
+                }
             </Typography>
         </Box>
     );
@@ -280,7 +285,11 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                         onRowClick={handleRowClick}
                         slots={{
                             noRowsOverlay: () => (
-                                <CustomNoRowsOverlay selectedTeam={selectedTeam} />
+                                <CustomNoRowsOverlay
+                                    selectedLeague={selectedLeague}
+                                    selectedTeam={selectedTeam}
+                                    filteredFixtures={filteredFixtures}
+                                    selectedSeason={selectedSeason} />
                             ),
                         }}
                         sx={(theme) => ({
