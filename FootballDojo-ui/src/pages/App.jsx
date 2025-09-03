@@ -26,12 +26,23 @@ function App() {
             </Box>
             <Home />
             <Box width="100%" textAlign="center" sx={{ pt: 12 }}>
-                <Typography component="h2" align="center">
-                    2025 Football Dojo. All Rights Reserved. Made & Operated by MuscleBobBuffPants. | {' '}
+                <Typography component="h2" align="center" variant="body2" color="text.secondary">
+                    2025 Football Dojo | All Rights Reserved | Made & Operated by MuscleBobBuffPants
+                    | Data Provided By:{' '}
+                    <Link
+                        href="https://api-sports.io/sports/football"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Visit API-Sports website"
+                    >
+                        API-Sports
+                    </Link> {' '}
+                    | {' '}
                     <Link
                         href="https://github.com/MuscleBobBuffPants/FootballDojo"
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label="View FootballDojo GitHub repository"
                     >
                         GitHub
                     </Link>
