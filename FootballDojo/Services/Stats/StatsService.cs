@@ -13,14 +13,25 @@ namespace FootballDojo.Services
             _client = client;
         }
 
-        public async Task<List<Stats>> GetStatsByPlayerIdAndLeagueIdAndSeasonYearAsync(int playerId, int leagueId, int seasonYear)
+        public async Task<List<PlayerStats>> GetStatsByPlayerIdAndLeagueIdAndSeasonAsync(int playerId, int leagueId, int season)
         {
-            var apiUrl = $"{Constants.BASE_URL}players?id={playerId}&league={leagueId}&season={seasonYear}";
+            var apiUrl = $"{Constants.BASE_URL}players?id={playerId}&league={leagueId}&season={season}";
 
-            var response = await _client.HttpClient.GetFromJsonAsync<StatsRoot>(apiUrl);
+            var response = await _client.HttpClient.GetFromJsonAsync<PlayerStatsRoot>(apiUrl);
 
             return (response?.Response?.Count ?? 0) > 0
                 ? response.Response[0].Statistics
+                : null;
+        }
+
+        public async Task<TeamStats> GetStatsByTeamIdAndLeagueIdAndSeasonAsync(int teamId, int leagueId, int season)
+        {
+            var apiUrl = $"{Constants.BASE_URL}teams/statistics?league={leagueId}&season={season}&team={teamId}";
+
+            var response = await _client.HttpClient.GetFromJsonAsync<TeamStatsRoot>(apiUrl);
+
+            return response?.Response is not null
+                ? response.Response
                 : null;
         }
     }

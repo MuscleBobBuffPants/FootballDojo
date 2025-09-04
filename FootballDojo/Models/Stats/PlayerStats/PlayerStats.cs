@@ -1,6 +1,6 @@
 ﻿namespace FootballDojo.Models
 {
-    public class Stats
+    public class PlayerStats
     {
         public GameStats Games { get; set; }
         public SubstituteStats Substitutes { get; set; }
@@ -15,13 +15,13 @@
         public PenaltyStats Penalty { get; set; }
     }
 
-    public class StatsResponse
+    public class PlayerStatsResponse
     {
-        public List<Stats> Statistics { get; set; }
+        public List<PlayerStats> Statistics { get; set; }
     }
 
-    public class StatsRoot
+    public class PlayerStatsRoot
     {
-        public List<StatsResponse> Response { get; set; }
+        public List<PlayerStatsResponse> Response { get; set; }
     }
 }

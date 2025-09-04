@@ -18,12 +18,12 @@ namespace FootballDojo.Controllers
         }
 
         [HttpGet]
-        [Route("playerId={playerId}/leagueId={leagueId}/seasonYear={seasonYear}")]
-        public async Task<IActionResult> GetStatsByPlayerIdAndLeagueIdAndSeasonYear(int playerId, int leagueId, int seasonYear)
+        [Route("playerId={playerId}/leagueId={leagueId}/season={season}")]
+        public async Task<IActionResult> GetStatsByPlayerIdAndLeagueIdAndSeason(int playerId, int leagueId, int season)
         {
             try
             {
-                var stats = await _statsService.GetStatsByPlayerIdAndLeagueIdAndSeasonYearAsync(playerId, leagueId, seasonYear);
+                var stats = await _statsService.GetStatsByPlayerIdAndLeagueIdAndSeasonAsync(playerId, leagueId, season);
 
                 if (stats is null) return Ok(Constants.DEFAULT_STATS);
 
@@ -31,7 +31,26 @@ namespace FootballDojo.Controllers
             }
             catch (HttpRequestException ex)
             {
-                _logger.LogError(ex, $"Error fetching stats for playerId: {playerId}, leagueId: {leagueId}, seasonYear: {seasonYear}");
+                _logger.LogError(ex, $"Error fetching stats for playerId: {playerId}, leagueId: {leagueId}, seasonYear: {season}");
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("teamId={teamId}/leagueId={leagueId}/season={season}")]
+        public async Task<IActionResult> GetStatsByTeamIdAndLeagueIdAndSeason(int teamId, int leagueId, int season)
+        {
+            try
+            {
+                var stats = await _statsService.GetStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, leagueId, season);
+
+                if (stats is null) return NotFound();
+
+                return Ok(stats);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching stats for teamId: {teamId}, leagueId: {leagueId}, season: {season}");
                 return BadRequest();
             }
         }

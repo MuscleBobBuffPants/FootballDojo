@@ -8,9 +8,9 @@ namespace FootballDojo.Global
 
         #region Defaults
 
-        public static readonly List<Stats> DEFAULT_STATS = new List<Stats>
+        public static readonly List<PlayerStats> DEFAULT_STATS = new List<PlayerStats>
         {
-            new Stats
+            new PlayerStats
             {
                 Games = new GameStats
                 {

@@ -1,44 +1,37 @@
 import {
-    Avatar,
     Box,
     Button,
     Modal,
-    Typography
+    Typography,
+    useTheme
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import StatsGrid from '../../../components/stats/statsGrid';
+import React from 'react';
 import {
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
     LIGHTMODE_PURPLE,
-    LIGHTMODE_TEXT
+    LIGHTMODE_TEXT,
+    isNonEmptyObject
 } from "../../../global/constants";
-import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
 
-function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
-    const dispatch = useDispatch();
-    const [selectedSeason, setSelectedSeason] = useState(2025);
+function TeamProfile({ modalOpen, handleClose, selectedTeamStats }) {
+    const theme = useTheme();
 
-    const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
-    //const status = useSelector((state) => state.playerStatsBySeason.status);
-    //const error = useSelector((state) => state.playerStatsBySeason.error);
+    //const [selectedSeason, setSelectedSeason] = useState(2025);
 
-    useEffect(() => {
-        setSelectedSeason(2025);
-    }, [modalOpen]);
+    //useEffect(() => {
+    //    setSelectedSeason(2025);
+    //}, [modalOpen]);
 
-    useEffect(() => {
-        dispatch(fetchPlayerStatsBySeason({
-            playerId: selectedPlayer.id,
-            leagueId: selectedLeague.id,
-            season: selectedSeason
-        }));
-    }, [dispatch, selectedLeague, selectedPlayer, selectedSeason]);
+    const teamLogoBackground =
+        isNonEmptyObject(selectedTeamStats)
+            ? theme.palette.mode === "dark" ? "#ccc"
+                : theme.palette.background.paper
+            : "transparent";
 
-    const handleSeasonChange = (event) => {
-        setSelectedSeason(event.target.value);
-    }
+    //const handleSeasonChange = (event) => {
+    //    setSelectedSeason(event.target.value);
+    //}
 
     return (
         <Modal
@@ -78,16 +71,29 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     p: 3,
                     gap: 3
                 }}>
-                    <Avatar
-                        src={selectedPlayer.photo}
-                        alt={`${selectedPlayer.firstName} ${selectedPlayer.lastName}`}
-                        sx={(theme) => ({
-                            width: 100,
-                            height: 100,
-                            border: `3px solid ${theme.palette.divider}`,
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
-                        })}
-                    />
+                    <Box>
+                        <Box
+                            sx={{
+                                width: 125,
+                                height: 125,
+                                bgcolor: teamLogoBackground,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: 2,
+                                overflow: "hidden",
+                                border: "1px solid ",
+                                borderColor: isNonEmptyObject(selectedTeamStats) ? "#ccc" : "transparent"
+                            }}
+                        >
+                            {isNonEmptyObject(selectedTeamStats) ? (
+                                <img
+                                    src={selectedTeamStats.team.logo}
+                                    style={{ width: "95%", height: "95%", objectFit: "contain" }}
+                                />
+                            ) : null}
+                        </Box>
+                    </Box>
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -96,13 +102,15 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                         flexShrink: 0,
                     }}>
                         {[
-                            { label: 'Full Name', value: `${selectedPlayer.firstName} ${selectedPlayer.lastName}`, fullWidth: true },
-                            { label: 'Number', value: `#${selectedPlayer.number}` },
-                            { label: 'Position', value: selectedPlayer.position },
-                            { label: 'Age', value: selectedPlayer.age },
-                            { label: 'Height', value: selectedPlayer.height },
-                            { label: 'Weight', value: selectedPlayer.weight },
-                            { label: 'Nationality', value: selectedPlayer.nationality },
+                            { label: 'Club', value: selectedTeamStats.team.name },
+                            { label: 'Country', value: selectedTeamStats.league.country },
+                            { label: 'Games Played', value: selectedTeamStats.fixtures.played.total },
+                            { label: 'Wins', value: selectedTeamStats.fixtures.wins.total },
+                            { label: 'Losses', value: selectedTeamStats.fixtures.loses.total },
+                            { label: 'Draws', value: selectedTeamStats.fixtures.draws.total },
+                            { label: 'Goals For', value: selectedTeamStats.goals.for.total.total },
+                            { label: 'Goals Against', value: selectedTeamStats.goals.against.total.total },
+                            { label: 'Clean Sheets', value: selectedTeamStats.clean_sheet.total }
                         ].map((field, i) => (
                             <Box
                                 key={i}
@@ -143,20 +151,6 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             </Box>
                         ))}
                     </Box>
-                    <Box sx={{ flexDirection: "column" }}>
-                        {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
-                            (
-                                <StatsGrid
-                                    selectedPlayer={selectedPlayer}
-                                    playerStatsBySeason={playerStatsBySeason}
-                                    selectedSeason={selectedSeason}
-                                    handleSeasonChange={handleSeasonChange} />
-                            )
-                        }
-                        <Box sx={{ flexDirection: "column" }}>
-                            {/*<YouTubeCard selectedPlayer={selectedPlayer} />*/}
-                        </Box>
-                    </Box>
                 </Box>
                 <Box
                     sx={{
@@ -184,4 +178,4 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
     );
 }
 
-export default PlayerProfile;
+export default TeamProfile;

@@ -12,7 +12,9 @@ import {
     isNonEmptyObject
 } from "../../global/constants";
 import { fetchStandingsByLeagueId } from "../../redux/standings/fetchStandingsByLeagueId";
+import { clearTeamStats, fetchTeamStatsByTeam } from "../../redux/stats/fetchTeamStatsByTeam";
 import SeasonDropdown from '../seasonDropdown';
+import TeamProfile from "../teams/teamProfiles/teamProfile";
 
 function CustomNoRowsOverlay({ selectedLeague }) {
     return (
@@ -85,11 +87,15 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
 
     const [selectedSeason, setSelectedSeason] = useState(2025);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedTeamId, setSelectedTeamId] = useState(null);
 
     const standingsByLeagueId = useSelector(
         (state) => state.standingsByLeagueId.list
     );
     const status = useSelector((state) => state.standingsByLeagueId.status);
+
+    const selectedTeamStats = useSelector((state) => state.teamStatsByTeam.stats);
 
     useEffect(() => {
         if (selectedLeague) {
@@ -101,6 +107,32 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
         setSelectedSeason(2025);
     }, [selectedLeague, selectedTeam]);
 
+    useEffect(() => {
+        if (selectedTeamId) {
+            dispatch(fetchTeamStatsByTeam({
+                teamId: selectedTeamId,
+                leagueId: selectedLeague.id,
+                season: selectedSeason
+            }));
+        }
+    }, [dispatch, selectedTeamId]);
+
+    useEffect(() => {
+        if (isNonEmptyObject(selectedTeamStats)) {
+            setModalOpen(true);
+        }
+    }, [selectedTeamStats]);
+
+    const handleRowClick = (selection) => {
+        setSelectedTeamId(selection.row.teamId);
+    };
+
+    const handleClose = () => {
+        setModalOpen(false);
+        setSelectedTeamId(null);
+        dispatch(clearTeamStats());
+    };
+
     const handleSeasonChange = (event) => {
         setSelectedSeason(event.target.value);
     }
@@ -109,6 +141,7 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
         ? standingsByLeagueId.map((response, index) => {
             return {
                 id: index,
+                teamId: response.team.id,
                 rank: response.rank,
                 teamName: response.team.name,
                 teamLogo: response.team.logo,
@@ -174,8 +207,8 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                         disablePagination
                         hideFooter
                         hideFooterSelectedRowCount
-                        disableRowSelectionOnClick
                         disableColumnMenu
+                        onRowClick={handleRowClick}
                         slots={{
                             noRowsOverlay: () => (
                                 <CustomNoRowsOverlay selectedLeague={selectedLeague} />
@@ -192,31 +225,27 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                             fontSize: 15,
                             backgroundColor:
                                 theme.palette.mode === "light" ? "transparent" : "",
+                            "& .MuiDataGrid-cell": {
+                                backgroundColor:
+                                    theme.palette.mode === "light" ? "transparent" : "",
+                            },
+                            "& .MuiDataGrid-columnHeader": {
+                                backgroundColor:
+                                    theme.palette.mode === "light" ? DARKMODE_TEXT : "",
+                            },
                             "& .MuiDataGrid-columnHeaders": {
                                 backgroundColor:
                                     theme.palette.mode === "light" ? DARKMODE_TEXT : "",
                             },
-                            "& .MuiDataGrid-cell": {
-                                backgroundColor:
-                                    theme.palette.mode === "light" ? "transparent" : "",
-                                cursor: "default",
-                            },
-                            "& .MuiDataGrid-columnHeader": {
-                                cursor: "default",
-                                backgroundColor:
-                                    theme.palette.mode === "light" ? DARKMODE_TEXT : "",
-                                "&:hover": {
-                                    backgroundColor: "transparent",
-                                },
-                            },
-                            "& .MuiDataGrid-row:hover": {
-                                backgroundColor: "transparent !important",
-                            },
                             "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus": {
                                 outline: "none",
+                                userSelect: "none",
                             },
                             "& .MuiDataGrid-columnSeparator": {
                                 display: "none",
+                            },
+                            "& .MuiDataGrid-row:hover": {
+                                cursor: "pointer",
                             },
                             "& .highlighted-row": {
                                 backgroundColor: (theme) =>
@@ -267,6 +296,12 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                         </Box>
                     )}
                 </div>
+                {isNonEmptyObject(selectedTeamStats) ?
+                    <TeamProfile
+                        modalOpen={modalOpen}
+                        handleClose={handleClose}
+                        selectedTeamStats={selectedTeamStats}
+                    /> : null}
             </Box>
         </div>
     );

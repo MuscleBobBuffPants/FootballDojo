@@ -89,7 +89,7 @@ export default function LineupBuilder({
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
-                seasonYear: selectedSeason
+                season: selectedSeason
             })).then(action => {
                 if (action.payload && action.payload.length > 0) {
                     dispatch(setPlayerStatsForLineup({
@@ -109,7 +109,7 @@ export default function LineupBuilder({
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
-                seasonYear: selectedSeason
+                season: selectedSeason
             })).then(action => {
                 dispatch(setPlayerStatsForLineup({
                     slotId: slotId.toString(),

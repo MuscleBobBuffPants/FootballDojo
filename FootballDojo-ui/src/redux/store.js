@@ -9,6 +9,7 @@ import playersByTeamReducer from '../redux/players/fetchPlayersByTeam';
 import standingsByLeagueIdReducer from '../redux/standings/fetchStandingsByLeagueId';
 import selectedPlayersReducer from '../redux/statTracking/selectedPlayers';
 import playerStatsBySeasonReducer from '../redux/stats/fetchPlayerStatsBySeason';
+import teamStatsByTeamReducer from '../redux/stats/fetchTeamStatsByTeam';
 import teamsByLeagueIdReducer from '../redux/teams/fetchTeamsByLeagueId';
 import venueByVenueIdReducer from '../redux/venues/fetchVenueByVenueId';
 
@@ -25,6 +26,7 @@ export const store = configureStore({
         recentFormByTeamId: recentFormByTeamIdReducer,
         standingsByLeagueId: standingsByLeagueIdReducer,
         selectedPlayers: selectedPlayersReducer,
+        teamStatsByTeam: teamStatsByTeamReducer,
         venueByVenueId: venueByVenueIdReducer
     },
 });
