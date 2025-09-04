@@ -58,14 +58,14 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
     );
 
     useEffect(() => {
+        setSelectedSeason(2025);
+    }, [selectedLeague, selectedTeam]);
+
+    useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
             dispatch(fetchFixturesByLeagueId({ leagueId: selectedLeague.id, season: selectedSeason, teamId: selectedTeam.id }));
         }
     }, [dispatch, selectedLeague, selectedTeam, selectedSeason]);
-
-    useEffect(() => {
-        setSelectedSeason(2025);
-    }, [selectedLeague, selectedTeam]);
 
     useEffect(() => {
         setModalOpen(true);
