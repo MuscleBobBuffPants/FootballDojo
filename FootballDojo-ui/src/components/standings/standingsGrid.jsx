@@ -27,7 +27,7 @@ function CustomNoRowsOverlay({ selectedLeague }) {
             }}
         >
             <Typography variant="body1">
-                {!selectedLeague ? "Please select a league..." : null}
+                {!selectedLeague && "Please select a league..."}
             </Typography>
         </Box>
     );
@@ -192,12 +192,11 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                     >
                         {selectedLeague ? `${selectedLeague.name} Table` : "\u00A0"}
                     </Typography>
-                    {isNonEmptyObject(selectedLeague) ?
+                    {isNonEmptyObject(selectedLeague) &&
                         <SeasonDropdown
                             selectedSeason={selectedSeason}
-                            handleSeasonChange={handleSeasonChange} /> : null
+                            handleSeasonChange={handleSeasonChange} />
                     }
-
                 </Box>
                 <div style={{ position: "relative" }}>
                     <DataGrid

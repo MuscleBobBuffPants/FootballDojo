@@ -31,12 +31,12 @@ function LeagueLogoIcon({ selectedLeague }) {
                     borderColor: isNonEmptyObject(selectedLeague) ? "#ccc" : "transparent"
                 }}
             >
-                {isNonEmptyObject(selectedLeague) ? (
+                {isNonEmptyObject(selectedLeague) &&
                     <img
                         src={getLeagueLogo(selectedLeague.id)}
                         style={{ width: "95%", height: "95%", objectFit: "contain" }}
                     />
-                ) : null}
+                }
             </Box>
         </Box>
     )

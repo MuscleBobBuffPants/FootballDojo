@@ -25,12 +25,12 @@ function TeamLogoIcon({ selectedTeam, teamLogo }) {
                     borderColor: isNonEmptyObject(selectedTeam) ? "#ccc" : "transparent"
                 }}
             >
-                {isNonEmptyObject(selectedTeam) ? (
+                {isNonEmptyObject(selectedTeam) &&
                     <img
                         src={teamLogo}
                         style={{ width: "95%", height: "95%", objectFit: "contain" }}
                     />
-                ) : null}
+                }
             </Box>
         </Box>
     )

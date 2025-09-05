@@ -27,7 +27,7 @@ function CustomNoRowsOverlay({ selectedTeam }) {
             }}
         >
             <Typography variant="body1">
-                {!selectedTeam ? "Please select a team..." : null}
+                {!selectedTeam && "Please select a team..."}
             </Typography>
         </Box>
     );

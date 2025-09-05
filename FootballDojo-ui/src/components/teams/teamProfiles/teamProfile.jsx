@@ -24,12 +24,6 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
     //    setSelectedSeason(2025);
     //}, [modalOpen]);
 
-    const teamLogoBackground =
-        isNonEmptyObject(selectedTeamStats)
-            ? theme.palette.mode === "dark" ? "#ccc"
-                : theme.palette.background.paper
-            : "transparent";
-
     //const handleSeasonChange = (event) => {
     //    setSelectedSeason(event.target.value);
     //}
@@ -56,7 +50,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
 
                     // width
                     width: 'fit-content',
-                    minWidth: { xs: '95vw', sm: 725 },
+                    minWidth: { xs: '95vw', sm: 500 },
                     maxWidth: { xs: '95vw', md: 800 },
 
                     // height
@@ -77,7 +71,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                             sx={{
                                 width: 125,
                                 height: 125,
-                                bgcolor: teamLogoBackground,
+                                bgcolor: theme.palette.background.paper,
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -89,12 +83,12 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                 borderColor: isNonEmptyObject(selectedTeamStats) ? "#ccc" : "transparent"
                             }}
                         >
-                            {isNonEmptyObject(selectedTeamStats) ? (
+                            {isNonEmptyObject(selectedTeamStats) &&
                                 <img
                                     src={selectedTeamStats.team.logo}
                                     style={{ width: "95%", height: "95%", objectFit: "contain" }}
                                 />
-                            ) : null}
+                            }
                         </Box>
                         <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedTeamStats.team.id} />
                     </Box>
