@@ -128,10 +128,10 @@ export const FORMATIONS = {
         { id: "4:1", label: "LAM", role: "Midfielder", top: "18%", left: "35%" },
         { id: "4:2", label: "RAM", role: "Midfielder", top: "18%", left: "65%" },
 
-        { id: "3:1", label: "LM", role: "Midfielder", top: "38%", left: "20%" },
-        { id: "3:2", label: "CM", role: "Midfielder", top: "38%", left: "40%" },
-        { id: "3:3", label: "CM", role: "Midfielder", top: "38%", left: "60%" },
-        { id: "3:4", label: "RM", role: "Midfielder", top: "38%", left: "80%" },
+        { id: "3:1", label: "LM", role: "Midfielder", top: "40%", left: "20%" },
+        { id: "3:2", label: "CM", role: "Midfielder", top: "40%", left: "40%" },
+        { id: "3:3", label: "CM", role: "Midfielder", top: "40%", left: "60%" },
+        { id: "3:4", label: "RM", role: "Midfielder", top: "40%", left: "80%" },
 
         { id: "2:1", label: "CB", role: "Defender", top: "62%", left: "20%" },
         { id: "2:2", label: "CB", role: "Defender", top: "62%", left: "50%" },
@@ -249,11 +249,11 @@ export const FORMATIONS = {
         { id: "4:1", label: "ST", role: "Attacker", top: "5%", left: "40%" },
         { id: "4:2", label: "ST", role: "Attacker", top: "5%", left: "60%" },
 
-        { id: "3:1", label: "LAM", role: "Midfielder", top: "18%", left: "35%" },
-        { id: "3:2", label: "RAM", role: "Midfielder", top: "18%", left: "65%" },
+        { id: "3:1", label: "LAM", role: "Midfielder", top: "24%", left: "25%" },
+        { id: "3:2", label: "RAM", role: "Midfielder", top: "24%", left: "75%" },
 
-        { id: "3:3", label: "CDM", role: "Midfielder", top: "35%", left: "40%" },
-        { id: "3:4", label: "CDM", role: "Midfielder", top: "35%", left: "60%" },
+        { id: "3:3", label: "CDM", role: "Midfielder", top: "43%", left: "40%" },
+        { id: "3:4", label: "CDM", role: "Midfielder", top: "43%", left: "60%" },
 
         { id: "2:1", label: "LB", role: "Defender", top: "65%", left: "12%" },
         { id: "2:4", label: "RB", role: "Defender", top: "65%", left: "88%" },
