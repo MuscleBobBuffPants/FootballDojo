@@ -296,12 +296,15 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
                         </Box>
                     )}
                 </div>
-                {isNonEmptyObject(selectedTeamStats) ?
+                {isNonEmptyObject(selectedTeamStats) &&
                     <TeamProfile
                         modalOpen={modalOpen}
                         handleClose={handleClose}
+                        selectedLeague={selectedLeague}
+                        selectedSeason={selectedSeason}
                         selectedTeamStats={selectedTeamStats}
-                    /> : null}
+                    />
+                }
             </Box>
         </div>
     );

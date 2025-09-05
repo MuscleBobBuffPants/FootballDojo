@@ -35,7 +35,7 @@ function getRecentFormForTeam(fixtures, selectedTeamId) {
         .reverse();
 }
 
-function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
+function RecentFormBubbles({ selectedLeague, selectedSeason, selectedTeamId }) {
     const dispatch = useDispatch();
     const theme = useTheme();
     const size = 23;
@@ -50,7 +50,11 @@ function RecentFormBubbles({ selectedLeague, selectedTeamId }) {
     useEffect(() => {
         if (selectedTeamId) {
             dispatch(
-                fetchRecentFormByTeamId({ leagueId: selectedLeague.id, teamId: selectedTeamId })
+                fetchRecentFormByTeamId({
+                    leagueId: selectedLeague.id,
+                    season: selectedSeason,
+                    teamId: selectedTeamId
+                })
             );
         }
     }, [dispatch, selectedLeague, selectedTeamId]);

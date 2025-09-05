@@ -13,8 +13,9 @@ import {
     LIGHTMODE_TEXT,
     isNonEmptyObject
 } from "../../../global/constants";
+import RecentFormBubbles from "../../fixtures/fixtureProfiles/recentFormBubbles";
 
-function TeamProfile({ modalOpen, handleClose, selectedTeamStats }) {
+function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedTeamStats }) {
     const theme = useTheme();
 
     //const [selectedSeason, setSelectedSeason] = useState(2025);
@@ -81,6 +82,8 @@ function TeamProfile({ modalOpen, handleClose, selectedTeamStats }) {
                                 alignItems: "center",
                                 justifyContent: "center",
                                 borderRadius: 2,
+                                mb: 2,
+                                ml: 1.5,
                                 overflow: "hidden",
                                 border: "1px solid ",
                                 borderColor: isNonEmptyObject(selectedTeamStats) ? "#ccc" : "transparent"
@@ -93,6 +96,7 @@ function TeamProfile({ modalOpen, handleClose, selectedTeamStats }) {
                                 />
                             ) : null}
                         </Box>
+                        <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedTeamStats.team.id} />
                     </Box>
                     <Box sx={{
                         display: 'flex',

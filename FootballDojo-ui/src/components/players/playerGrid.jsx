@@ -244,13 +244,14 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
                         </Box>
                     )}
                 </div>
-
-                <PlayerProfile
-                    modalOpen={modalOpen}
-                    handleClose={handleClose}
-                    selectedLeague={selectedLeague}
-                    selectedPlayer={selectedPlayer}
-                />
+                {isNonEmptyObject(selectedPlayer) &&
+                    <PlayerProfile
+                        modalOpen={modalOpen}
+                        handleClose={handleClose}
+                        selectedLeague={selectedLeague}
+                        selectedPlayer={selectedPlayer}
+                    />
+                }
             </Box>
         </div>
     );

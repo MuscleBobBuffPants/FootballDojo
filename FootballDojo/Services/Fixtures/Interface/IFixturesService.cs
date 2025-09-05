@@ -6,7 +6,7 @@ namespace FootballDojo.Services
     {
         Task<List<FixturesResponse>> GetFixturesByLeagueIdAndSeasonAndTeamIdAsync(int leagueId, int season, int teamId);
         Task<List<FixturesResponse>> GetHeadToHeadFixturesByTeamIdsAsync(int homeTeamId, int awayTeamId);
-        Task<List<FixturesResponse>> GetRecentFormByLeagueIdAndTeamIdAsync(int leagueId, int teamId);
+        Task<List<FixturesResponse>> GetRecentFormByLeagueIdAndTeamIdAsync(int leagueId, int season, int teamId);
         Task<int?> GetLastCompletedFixtureIdByLeagueIdAndTeamIdAsync(int leagueId, int season, int teamId);
         Task<Lineups> GetLineupByFixtureIdAndTeamIdAsync(int fixtureId, int teamId);
         Task<List<Lineups>> GetLineupsForFixtureByFixtureIdAsync(int fixtureId);

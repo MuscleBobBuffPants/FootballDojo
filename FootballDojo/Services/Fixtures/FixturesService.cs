@@ -35,9 +35,9 @@ namespace FootballDojo.Services
                 : null;
         }
 
-        public async Task<List<FixturesResponse>> GetRecentFormByLeagueIdAndTeamIdAsync(int leagueId, int teamId)
+        public async Task<List<FixturesResponse>> GetRecentFormByLeagueIdAndTeamIdAsync(int leagueId, int season, int teamId)
         {
-            var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&team={teamId}&last=5"; // Default = last 5 games
+            var apiUrl = $"{Constants.BASE_URL}fixtures?league={leagueId}&season={season}&team={teamId}&last=5"; // Default = last 5 games
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 

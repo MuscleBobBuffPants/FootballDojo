@@ -6,7 +6,6 @@ namespace FootballDojo.Models
     {
         public League League { get; set; }
         public Team Team { get; set; }
-        public string Form { get; set; }
         public TeamFixtureStats Fixtures { get; set; }
         public TeamGoals Goals { get; set; }
         public TeamCleanSheets Clean_sheet { get; set; }

@@ -94,7 +94,7 @@ function VenueImageBox({ venue, alt }) {
     );
 }
 
-function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixture }) {
+function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedFixture }) {
     const dispatch = useDispatch();
     const selectedVenue = useSelector((state) => state.venueByVenueId.list);
 
@@ -168,7 +168,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                         <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
                             {selectedFixture.awayTeam.name}
                         </Typography>
-                        <RecentFormBubbles selectedLeague={selectedLeague} selectedTeamId={selectedFixture.awayTeam.id} />
+                        <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedFixture.awayTeam.id} />
                     </Box>
 
                     <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
@@ -193,7 +193,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedFixtur
                         <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
                             {selectedFixture.homeTeam.name}
                         </Typography>
-                        <RecentFormBubbles selectedLeague={selectedLeague} selectedTeamId={selectedFixture.homeTeam.id} />
+                        <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedFixture.homeTeam.id} />
                     </Box>
                 </Box>
 

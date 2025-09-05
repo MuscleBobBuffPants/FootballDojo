@@ -353,14 +353,15 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
                         </Box>
                     )}
                 </div>
-                {selectedFixture && (
+                {selectedFixture && 
                     <FixtureProfile
                         modalOpen={modalOpen}
                         handleClose={handleClose}
                         selectedLeague={selectedLeague}
+                        selectedSeason={selectedSeason}
                         selectedFixture={selectedFixture}
                     />
-                )}
+                }
             </Box>
         </div>
     );

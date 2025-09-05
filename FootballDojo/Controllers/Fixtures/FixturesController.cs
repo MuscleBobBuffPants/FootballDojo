@@ -56,12 +56,12 @@ namespace FootballDojo.Controllers
         }
 
         [HttpGet]
-        [Route("leagueId={leagueId}/teamId={teamId}")]
-        public async Task<IActionResult> GetRecentFormByLeagueIdAndTeamId(int leagueId, int teamId)
+        [Route("recent/leagueId={leagueId}/season={season}/teamId={teamId}")]
+        public async Task<IActionResult> GetRecentFormByLeagueIdAndTeamId(int leagueId, int season, int teamId)
         {
             try
             {
-                var fixtures = await _fixturesService.GetRecentFormByLeagueIdAndTeamIdAsync(leagueId, teamId);
+                var fixtures = await _fixturesService.GetRecentFormByLeagueIdAndTeamIdAsync(leagueId, season, teamId);
 
                 if (fixtures is null) return NotFound();
 
