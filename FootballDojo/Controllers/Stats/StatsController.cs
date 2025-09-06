@@ -9,11 +9,13 @@ namespace FootballDojo.Controllers
     public class StatsController : ControllerBase
     {
         private readonly IStatsRepo _statsRepo;
+        private readonly IStatsService _statsService;
         private readonly ILogger<StatsController> _logger;
 
-        public StatsController(IStatsRepo statsRepo, ILogger<StatsController> logger)
+        public StatsController(IStatsRepo statsRepo, IStatsService statsService, ILogger<StatsController> logger)
         {
             _statsRepo = statsRepo;
+            _statsService = statsService;
             _logger = logger;
         }
 
@@ -25,9 +27,7 @@ namespace FootballDojo.Controllers
             {
                 var stats = await _statsRepo.GetStatsByPlayerIdAndLeagueIdAndSeasonAsync(playerId, leagueId, season);
 
-                if (stats is null) return Ok(Constants.DEFAULT_STATS);
-
-                return Ok(stats);
+                return Ok(stats ?? Constants.DEFAULT_STATS);
             }
             catch (HttpRequestException ex)
             {
@@ -57,15 +57,13 @@ namespace FootballDojo.Controllers
 
         [HttpGet]
         [Route("teamId={teamId}/season={season}")]
-        public async Task<IActionResult> GetPlayerStatsByTeamIdAndSeason(int teamId, int season)
+        public async Task<IActionResult> GetStatLeadersByTeamIdAndSeason(int teamId, int season)
         {
             try
             {
-                var stats = await _statsRepo.GetPlayerStatsByTeamIdAndSeasonAsync(teamId, season);
+                var statLeaders = await _statsService.GetTeamStatLeadersBySeason(teamId, season);
 
-                if (stats is null) return NotFound();
-
-                return Ok(stats);
+                return Ok(statLeaders);
             }
             catch (HttpRequestException ex)
             {

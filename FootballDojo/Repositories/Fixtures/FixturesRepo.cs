@@ -19,7 +19,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response
                 : null;
         }
@@ -30,7 +30,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response
                 : null;
         }
@@ -41,7 +41,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response
                 : null;
         }
@@ -52,7 +52,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixturesRoot>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response[0].Fixture.Id
                 : null;
         }
@@ -63,7 +63,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<LineupsResponse>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response[0]
                 : null;
         }
@@ -74,7 +74,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<LineupsResponse>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response
                 : null;
         }
@@ -85,7 +85,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<FixtureStatsResponse>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response
                 : null;
         }

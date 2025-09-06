@@ -19,7 +19,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<PlayerRoot>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response[0].Players
                 : null;
         }
@@ -30,7 +30,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<PlayerProfileRoot>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response[0].Player
                 : null;
         }

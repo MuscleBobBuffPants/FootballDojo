@@ -1,6 +1,4 @@
-﻿using FootballDojo.Models;
-
-namespace FootballDojo.Models
+﻿namespace FootballDojo.Models
 {
     public class TeamStats
     {

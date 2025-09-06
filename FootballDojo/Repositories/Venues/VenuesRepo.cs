@@ -20,7 +20,7 @@ namespace FootballDojo.Repositories
 
             var response = await _client.HttpClient.GetFromJsonAsync<Venues>(apiUrl);
 
-            return (response?.Response?.Count ?? 0) > 0
+            return (response?.Response?.Any() ?? false)
                 ? response.Response[0]
                 : null;
         }

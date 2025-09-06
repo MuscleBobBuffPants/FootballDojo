@@ -1,5 +1,6 @@
 using FootballDojo.Client;
 using FootballDojo.Repositories;
+using FootballDojo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ builder.Services.AddScoped<IPlayersRepo, PlayersRepo>();
 builder.Services.AddScoped<ITeamsRepo, TeamsRepo>();
 builder.Services.AddScoped<IFixturesRepo, FixturesRepo>();
 builder.Services.AddScoped<IStatsRepo, StatsRepo>();
+builder.Services.AddScoped<IStatsService, StatsService>();
 builder.Services.AddScoped<IStandingsRepo, StandingsRepo>();
 builder.Services.AddScoped<IVenuesRepo, VenuesRepo>();
 
