@@ -45,6 +45,7 @@ namespace FootballDojo.Services
                         .Select(p => new PlayerStatLeader
                         {
                             Name = p.Player.Name,
+                            Photo = p.Player.Photo,
                             Description = category.Description,
                             Stat = maxValue
                         });
