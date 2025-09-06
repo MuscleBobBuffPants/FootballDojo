@@ -178,7 +178,7 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
             headerName: "Matchup",
             headerAlign: "left",
             align: "left",
-            width: 205,
+            width: 200,
             sortable: false,
         }
     ];

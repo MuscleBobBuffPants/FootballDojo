@@ -61,7 +61,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var stats = await _statsRepo.GetStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, season);
+                var stats = await _statsRepo.GetPlayerStatsByTeamIdAndSeasonAsync(teamId, season);
 
                 if (stats is null) return NotFound();
 

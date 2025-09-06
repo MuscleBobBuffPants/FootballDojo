@@ -35,7 +35,7 @@ namespace FootballDojo.Repositories
                 : null;
         }
 
-        public async Task<List<PlayerStats>> GetStatsByTeamIdAndLeagueIdAndSeasonAsync(int teamId, int season)
+        public async Task<List<PlayerStats>> GetPlayerStatsByTeamIdAndSeasonAsync(int teamId, int season)
         {
             var apiUrl = $"{Constants.BASE_URL}players?season={season}&team={teamId}";
 
