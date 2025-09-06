@@ -1,8 +1,8 @@
 ﻿using FootballDojo.Models;
 
-namespace FootballDojo.Services
+namespace FootballDojo.Repositories
 {
-    public interface IVenuesService
+    public interface IVenuesRepo
     {
         Task<Venue> GetVenueByVenueId(int venueId);
     }

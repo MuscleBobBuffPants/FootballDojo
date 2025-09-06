@@ -1,5 +1,5 @@
 ﻿using FootballDojo.Global;
-using FootballDojo.Services;
+using FootballDojo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -8,12 +8,12 @@ namespace FootballDojo.Controllers
     [Route("api/stats")]
     public class StatsController : ControllerBase
     {
-        private readonly IStatsService _statsService;
+        private readonly IStatsRepo _statsRepo;
         private readonly ILogger<StatsController> _logger;
 
-        public StatsController(IStatsService statsService, ILogger<StatsController> logger)
+        public StatsController(IStatsRepo statsRepo, ILogger<StatsController> logger)
         {
-            _statsService = statsService;
+            _statsRepo = statsRepo;
             _logger = logger;
         }
 
@@ -23,7 +23,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var stats = await _statsService.GetStatsByPlayerIdAndLeagueIdAndSeasonAsync(playerId, leagueId, season);
+                var stats = await _statsRepo.GetStatsByPlayerIdAndLeagueIdAndSeasonAsync(playerId, leagueId, season);
 
                 if (stats is null) return Ok(Constants.DEFAULT_STATS);
 
@@ -42,7 +42,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var stats = await _statsService.GetStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, leagueId, season);
+                var stats = await _statsRepo.GetStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, leagueId, season);
 
                 if (stats is null) return NotFound();
 
@@ -51,6 +51,25 @@ namespace FootballDojo.Controllers
             catch (HttpRequestException ex)
             {
                 _logger.LogError(ex, $"Error fetching stats for teamId: {teamId}, leagueId: {leagueId}, season: {season}");
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("teamId={teamId}/season={season}")]
+        public async Task<IActionResult> GetPlayerStatsByTeamIdAndSeason(int teamId, int season)
+        {
+            try
+            {
+                var stats = await _statsRepo.GetStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, season);
+
+                if (stats is null) return NotFound();
+
+                return Ok(stats);
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, $"Error fetching player stats for teamId: {teamId}, season: {season}");
                 return BadRequest();
             }
         }

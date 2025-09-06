@@ -1,4 +1,4 @@
-﻿using FootballDojo.Services;
+﻿using FootballDojo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -7,12 +7,12 @@ namespace FootballDojo.Controllers
     [Route("api/standings")]
     public class StandingsController : ControllerBase
     {
-        private readonly IStandingsService _standingsService;
+        private readonly IStandingsRepo _standingsRepo;
         private readonly ILogger<StandingsController> _logger;
 
-        public StandingsController(IStandingsService standingsService, ILogger<StandingsController> logger)
+        public StandingsController(IStandingsRepo standingsRepo, ILogger<StandingsController> logger)
         {
-            _standingsService = standingsService;
+            _standingsRepo = standingsRepo;
             _logger = logger;
         }
 
@@ -22,7 +22,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var standings = await _standingsService.GetStandingsByLeagueIdAndSeasonAsync(leagueId, season);
+                var standings = await _standingsRepo.GetStandingsByLeagueIdAndSeasonAsync(leagueId, season);
 
                 if (standings is null) return NotFound();
 

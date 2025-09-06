@@ -1,4 +1,4 @@
-﻿using FootballDojo.Services;
+﻿using FootballDojo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -7,12 +7,12 @@ namespace FootballDojo.Controllers
     [Route("api/venues")]
     public class VenuesController : ControllerBase
     {
-        private readonly IVenuesService _venuesService;
+        private readonly IVenuesRepo _venuesRepo;
         private readonly ILogger<VenuesController> _logger;
 
-        public VenuesController(IVenuesService venuesService, ILogger<VenuesController> logger)
+        public VenuesController(IVenuesRepo venuesRepo, ILogger<VenuesController> logger)
         {
-            _venuesService = venuesService;
+            _venuesRepo = venuesRepo;
             _logger = logger;
         }
 
@@ -22,7 +22,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var venue = await _venuesService.GetVenueByVenueId(venueId);
+                var venue = await _venuesRepo.GetVenueByVenueId(venueId);
 
                 if (venue is null) return NotFound();
 

@@ -3,13 +3,13 @@ using FootballDojo.Global;
 using FootballDojo.Models;
 using FootballDojo.Models.Venues;
 
-namespace FootballDojo.Services
+namespace FootballDojo.Repositories
 {
-    public class VenuesService : IVenuesService
+    public class VenuesRepo : IVenuesRepo
     {
         private readonly FootballDojoClient _client;
 
-        public VenuesService(FootballDojoClient client)
+        public VenuesRepo(FootballDojoClient client)
         {
             _client = client;
         }

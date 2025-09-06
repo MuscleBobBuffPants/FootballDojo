@@ -1,5 +1,4 @@
-﻿using FootballDojo.Models;
-using FootballDojo.Services;
+﻿using FootballDojo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -8,12 +7,12 @@ namespace FootballDojo.Controllers
     [Route("api/fixtures")]
     public class FixturesController : ControllerBase
     {
-        private readonly IFixturesService _fixturesService;
+        private readonly IFixturesRepo _fixturesRepo;
         private readonly ILogger<FixturesController> _logger;
 
-        public FixturesController(IFixturesService fixturesService, ILogger<FixturesController> logger)
+        public FixturesController(IFixturesRepo fixturesRepo, ILogger<FixturesController> logger)
         {
-            _fixturesService = fixturesService;
+            _fixturesRepo = fixturesRepo;
             _logger = logger;
         }
 
@@ -23,7 +22,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var fixtures = await _fixturesService.GetFixturesByLeagueIdAndSeasonAndTeamIdAsync(leagueId, season, teamId);
+                var fixtures = await _fixturesRepo.GetFixturesByLeagueIdAndSeasonAndTeamIdAsync(leagueId, season, teamId);
 
                 if (fixtures is null) _logger.LogInformation($"No fixtures found for leagueId: {leagueId}, season: {season}, teamId: {teamId}");
 
@@ -42,7 +41,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var fixtures = await _fixturesService.GetHeadToHeadFixturesByTeamIdsAsync(homeTeamId, awayTeamId);
+                var fixtures = await _fixturesRepo.GetHeadToHeadFixturesByTeamIdsAsync(homeTeamId, awayTeamId);
 
                 if (fixtures is null) _logger.LogInformation($"No head-to-head fixtures found for homeTeamId: {homeTeamId}, awayTeamId: {awayTeamId}");
 
@@ -61,7 +60,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var fixtures = await _fixturesService.GetRecentFormByLeagueIdAndTeamIdAsync(leagueId, season, teamId);
+                var fixtures = await _fixturesRepo.GetRecentFormByLeagueIdAndTeamIdAsync(leagueId, season, teamId);
 
                 if (fixtures is null) return NotFound();
 
@@ -80,7 +79,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var fixtureId = await _fixturesService.GetLastCompletedFixtureIdByLeagueIdAndTeamIdAsync(leagueId, season, teamId);
+                var fixtureId = await _fixturesRepo.GetLastCompletedFixtureIdByLeagueIdAndTeamIdAsync(leagueId, season, teamId);
 
                 if (fixtureId is null) return NotFound();
 
@@ -99,7 +98,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var lineup = await _fixturesService.GetLineupByFixtureIdAndTeamIdAsync(fixtureId, teamId);
+                var lineup = await _fixturesRepo.GetLineupByFixtureIdAndTeamIdAsync(fixtureId, teamId);
 
                 if (lineup is null) return NotFound();
 
@@ -118,7 +117,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var lineups = await _fixturesService.GetLineupsForFixtureByFixtureIdAsync(fixtureId);
+                var lineups = await _fixturesRepo.GetLineupsForFixtureByFixtureIdAsync(fixtureId);
 
                 if (lineups is null) return NotFound();
 
@@ -137,7 +136,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var stats = await _fixturesService.GetStatsForFixtureByFixtureIdAsync(fixtureId);
+                var stats = await _fixturesRepo.GetStatsForFixtureByFixtureIdAsync(fixtureId);
 
                 if (stats is null) return NotFound();
 

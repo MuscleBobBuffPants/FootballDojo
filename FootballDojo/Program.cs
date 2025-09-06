@@ -1,9 +1,9 @@
 using FootballDojo.Client;
-using FootballDojo.Services;
+using FootballDojo.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add Services to the container.
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -21,12 +21,12 @@ builder.Services.AddScoped<FootballDojoClient>(sp =>
 
     return new FootballDojoClient(httpClientFactory, apiHost, apiKey);
 });
-builder.Services.AddScoped<IPlayersService, PlayersService>();
-builder.Services.AddScoped<ITeamsService, TeamsService>();
-builder.Services.AddScoped<IFixturesService, FixturesService>();
-builder.Services.AddScoped<IStatsService, StatsService>();
-builder.Services.AddScoped<IStandingsService, StandingsService>();
-builder.Services.AddScoped<IVenuesService, VenuesService>();
+builder.Services.AddScoped<IPlayersRepo, PlayersRepo>();
+builder.Services.AddScoped<ITeamsRepo, TeamsRepo>();
+builder.Services.AddScoped<IFixturesRepo, FixturesRepo>();
+builder.Services.AddScoped<IStatsRepo, StatsRepo>();
+builder.Services.AddScoped<IStandingsRepo, StandingsRepo>();
+builder.Services.AddScoped<IVenuesRepo, VenuesRepo>();
 
 // Enable CORS
 var corsPolicy = "AllowReactDev";

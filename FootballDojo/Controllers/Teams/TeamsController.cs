@@ -1,4 +1,4 @@
-﻿using FootballDojo.Services;
+﻿using FootballDojo.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootballDojo.Controllers
@@ -7,12 +7,12 @@ namespace FootballDojo.Controllers
     [Route("api/teams")]
     public class TeamsController : ControllerBase
     {
-        private readonly ITeamsService _teamsService;
+        private readonly ITeamsRepo _teamsRepo;
         private readonly ILogger<TeamsController> _logger;
 
-        public TeamsController(ITeamsService teamsService, ILogger<TeamsController> logger)
+        public TeamsController(ITeamsRepo teamsRepo, ILogger<TeamsController> logger)
         {
-            _teamsService = teamsService;
+            _teamsRepo = teamsRepo;
             _logger = logger;
         }
 
@@ -22,7 +22,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var team = await _teamsService.GetTeamByCountryAndTeamNameAsync(country, teamName);
+                var team = await _teamsRepo.GetTeamByCountryAndTeamNameAsync(country, teamName);
 
                 if (team is null) return NotFound();
 
@@ -41,7 +41,7 @@ namespace FootballDojo.Controllers
         {
             try
             {
-                var teams = await _teamsService.GetTeamsByLeagueIdAndSeasonAsync(leagueId, season);
+                var teams = await _teamsRepo.GetTeamsByLeagueIdAndSeasonAsync(leagueId, season);
 
                 if (teams is null) return NotFound();
 
