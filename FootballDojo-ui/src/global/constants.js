@@ -39,6 +39,25 @@ export const formatUtcDateForHeadToHeadGrid = (utcDate) => {
     });
 };
 
+export const convertCmToFeetInches = (cmString) => {
+    const cm = parseFloat(cmString); // Extract number
+    if (isNaN(cm)) return "";
+
+    const totalInches = cm / 2.54; // 1 inch = 2.54 cm
+    const feet = Math.floor(totalInches / 12);
+    const inches = Math.round(totalInches % 12);
+
+    return `${feet}'${inches}"`;
+};
+
+export const convertKgToLbs = (kgString) => {
+    const kg = parseFloat(kgString); // Extract number
+    if (isNaN(kg)) return "";
+
+    const lbs = kg * 2.20462; // 1 kg = 2.20462 lbs
+    return `${lbs.toFixed(1)} lbs`;
+};
+
 export const getGoalColor = (theme, teamGoals, otherGoals) => {
     if (teamGoals > otherGoals)
         return {

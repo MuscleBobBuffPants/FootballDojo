@@ -132,6 +132,9 @@ export default function LineupBuilder({
     const handleGeneratePNG = async () => {
         if (!fieldRef.current) return;
 
+        // Disable animations
+        fieldRef.current.classList.add("no-animations");
+
         try {
             const canvas = await html2canvas(fieldRef.current, {
                 backgroundColor: null,
@@ -146,6 +149,8 @@ export default function LineupBuilder({
             link.click();
         } catch (err) {
             console.error("Failed to generate PNG:", err);
+        } finally {
+            fieldRef.current.classList.remove("no-animations");
         }
     };
 

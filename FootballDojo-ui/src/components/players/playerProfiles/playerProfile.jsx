@@ -12,7 +12,9 @@ import {
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
     LIGHTMODE_PURPLE,
-    LIGHTMODE_TEXT
+    LIGHTMODE_TEXT,
+    convertCmToFeetInches,
+    convertKgToLbs
 } from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
 
@@ -96,8 +98,8 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             { label: 'Number', value: `#${selectedPlayer.number}` },
                             { label: 'Position', value: selectedPlayer.position },
                             { label: 'Age', value: selectedPlayer.age },
-                            { label: 'Height', value: selectedPlayer.height },
-                            { label: 'Weight', value: selectedPlayer.weight },
+                            { label: 'Height', value: convertCmToFeetInches(selectedPlayer.height) },
+                            { label: 'Weight', value: convertKgToLbs(selectedPlayer.weight) },
                             { label: 'Nationality', value: selectedPlayer.nationality },
                         ].map((field, i) => (
                             <Box

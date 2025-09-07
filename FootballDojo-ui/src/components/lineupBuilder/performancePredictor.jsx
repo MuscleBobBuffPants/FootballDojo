@@ -1,26 +1,28 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { keyframes } from "@mui/system";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { DARKMODE_GRID_BORDER, LIGHTMODE_GRID_BORDER } from "../../global/constants";
 import LineupBuilderSeasonDropdown from "../lineupBuilder/lineupBuilderSeasonDropdown";
 
-const flashGreen = keyframes`
+// Animations that end in the correct theme text color
+const flashGreen = (theme) => keyframes`
   0% { color: green; }
   99% { color: green; }
-  100% { color: inherit; }
+  100% { color: ${theme.palette.text.primary}; }
 `;
 
-const flashRed = keyframes`
+const flashRed = (theme) => keyframes`
   0% { color: red; }
   99% { color: red; }
-  100% { color: inherit; }
+  100% { color: ${theme.palette.text.primary}; }
 `;
 
 export default function PerformancePredictor({ selectedSeason, handleSeasonChange, resetTrigger }) {
     const playerStats = useSelector(state => state.selectedPlayers.playerStats);
     const prevValuesRef = useRef({});
     const firstUpdateRef = useRef(true); // skip first animation after mount, reset, or season change
+    const theme = useTheme();
 
     // Reset previous values on resetTrigger or season change
     useEffect(() => {
@@ -119,8 +121,8 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
                         let sx = { fontSize: 15 };
 
                         if (!skipAnimation && prevValue !== undefined) {
-                            if (field.value > prevValue) sx.animation = `${flashGreen} 5s linear`;
-                            else if (field.value < prevValue) sx.animation = `${flashRed} 5s linear`;
+                            if (field.value > prevValue) sx.animation = `${flashGreen(theme)} 5s linear`;
+                            else if (field.value < prevValue) sx.animation = `${flashRed(theme)} 5s linear`;
                         }
 
                         return (
