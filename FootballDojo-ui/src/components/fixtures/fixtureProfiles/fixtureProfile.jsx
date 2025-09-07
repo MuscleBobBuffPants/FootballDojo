@@ -22,7 +22,7 @@ function VenueImageBox({ venue, alt }) {
                 position: "relative",
                 width: "100%",
                 maxWidth: 225,
-                height: 169,
+                maxHeight: 169,
                 mt: 1,
                 mb: 5,
                 display: "flex",
@@ -134,8 +134,8 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason
                     maxWidth: { xs: '95vw', md: 500 },
 
                     // height
-                    height: 'auto',        // shrink to fit content
-                    overflowY: 'visible',  // don’t force scroll
+                    maxHeight: '95vh',        // shrink to fit content
+                    overflowY: 'auto',  // don’t force scroll
 
                     animation: "fadeIn 0.3s ease-in-out",
                 })}

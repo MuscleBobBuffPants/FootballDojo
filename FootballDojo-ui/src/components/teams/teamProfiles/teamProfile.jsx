@@ -208,7 +208,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                             {players.map((p, idx) => (
                                                 <Box
                                                     key={idx}
-                                                    sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                                                    sx={{ display: 'flex', alignItems: 'center', gap: 2 }}
                                                 >
                                                     <Typography
                                                         variant="body2"
@@ -226,7 +226,12 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                                         <img
                                                             src={p.photo}
                                                             alt={p.name}
-                                                            style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover' }}
+                                                            style={{
+                                                                width: 50,
+                                                                height: 50,
+                                                                borderRadius: '50%',
+                                                                objectFit: 'contain'
+                                                            }}
                                                         />
                                                     )}
                                                 </Box>
