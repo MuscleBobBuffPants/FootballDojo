@@ -36,7 +36,7 @@ function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) 
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 1,
-                flex: 3
+                flex: 1
             }}
         >
             <Typography
@@ -50,7 +50,7 @@ function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) 
                     border: `3px solid ${theme.palette.divider}`,
                     borderRadius: 1,
                     p: 2,
-                    maxHeight: 410,
+                    maxHeight: 260,
                     overflowY: 'auto',
                     display: 'flex',
                     flexDirection: 'column',
@@ -67,7 +67,7 @@ function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) 
                             mb: 1.5,
                             pt: i === 0 ? 0 : 1,
                             borderTop: i === 0 ? 'none' : `1px solid ${theme.palette.divider}`, // border line except for first group
-                            width: '100%'
+                            maxWidth: '100%'
                         }}>
                         <Typography
                             variant="body2"

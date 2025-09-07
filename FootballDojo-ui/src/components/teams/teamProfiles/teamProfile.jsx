@@ -38,8 +38,8 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif",
-                    minWidth: { xs: '95vw', sm: 500, md: 750 },
-                    maxWidth: { xs: '95vw', md: 950 },
+                    minWidth: { xs: '95vw', sm: 400, md: 900 },
+                    maxWidth: { xs: '95vw', md: 1000 },
                     maxHeight: '80vh',
                     overflowX: 'hidden',
                     overflowY: 'auto',
@@ -99,7 +99,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: 1,
-                                minWidth: 220,
+                                minWidth: 300,
                                 flexShrink: 0,
                                 flex: 1
                             }}
@@ -108,11 +108,19 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                 { label: 'Club', value: selectedTeamStats.team.name },
                                 { label: 'Country', value: selectedTeamStats.league.country },
                                 { label: 'Games Played', value: selectedTeamStats.fixtures.played.total },
-                                { label: 'Wins', value: selectedTeamStats.fixtures.wins.total },
-                                { label: 'Losses', value: selectedTeamStats.fixtures.loses.total },
-                                { label: 'Draws', value: selectedTeamStats.fixtures.draws.total },
-                                { label: 'Goals For', value: selectedTeamStats.goals.for.total.total },
-                                { label: 'Goals Against', value: selectedTeamStats.goals.against.total.total },
+                                {
+                                    label: 'Wins - Losses - Draws', value: selectedTeamStats.fixtures.wins.total
+                                        + ' - '
+                                        + selectedTeamStats.fixtures.loses.total
+                                        + ' - '
+                                        + selectedTeamStats.fixtures.draws.total
+                                },
+                                {
+                                    label: 'Goals (For - Against)',
+                                    value: selectedTeamStats.goals.for.total.total
+                                        + ' - '
+                                        + selectedTeamStats.goals.against.total.total
+                                },
                                 { label: 'Clean Sheets', value: selectedTeamStats.clean_sheet.total }
                             ].map((field, i) => (
                                 <Box
