@@ -38,11 +38,11 @@ namespace FootballDojo.Controllers
 
         [HttpGet]
         [Route("teamId={teamId}/leagueId={leagueId}/season={season}")]
-        public async Task<IActionResult> GetStatsByTeamIdAndLeagueIdAndSeason(int teamId, int leagueId, int season)
+        public async Task<IActionResult> GetTeamStatsByTeamIdAndLeagueIdAndSeason(int teamId, int leagueId, int season)
         {
             try
             {
-                var stats = await _statsRepo.GetStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, leagueId, season);
+                var stats = await _statsRepo.GetTeamStatsByTeamIdAndLeagueIdAndSeasonAsync(teamId, leagueId, season);
 
                 if (stats is null) return NotFound();
 
@@ -56,12 +56,12 @@ namespace FootballDojo.Controllers
         }
 
         [HttpGet]
-        [Route("teamId={teamId}/season={season}")]
-        public async Task<IActionResult> GetStatLeadersByTeamIdAndSeason(int teamId, int season)
+        [Route("leagueId={leagueId}/teamId={teamId}/season={season}")]
+        public async Task<IActionResult> GetStatLeadersByLeagueIdAndTeamIdAndSeason(int leagueId, int teamId, int season)
         {
             try
             {
-                var statLeaders = await _statsService.GetTeamStatLeadersBySeason(teamId, season);
+                var statLeaders = await _statsService.GetTeamStatLeadersByLeagueAndSeason(leagueId, teamId, season);
 
                 return Ok(statLeaders);
             }

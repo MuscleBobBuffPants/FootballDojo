@@ -5,7 +5,8 @@ import {
     Typography,
     useTheme
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
@@ -13,20 +14,30 @@ import {
     LIGHTMODE_TEXT,
     isNonEmptyObject
 } from "../../../global/constants";
+import { clearStatLeaderData, fetchStatLeadersByTeam } from '../../../redux/stats/fetchStatLeadersByTeam';
 import RecentFormBubbles from "../../fixtures/fixtureProfiles/recentFormBubbles";
 
 function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedTeamStats }) {
+    const dispatch = useDispatch();
     const theme = useTheme();
 
-    //const [selectedSeason, setSelectedSeason] = useState(2025);
+    const playerStatLeaders = useSelector((state) => state.statLeadersByTeam.list);
 
-    //useEffect(() => {
-    //    setSelectedSeason(2025);
-    //}, [modalOpen]);
+    useEffect(() => {
+        if (isNonEmptyObject(selectedTeamStats) && selectedSeason === 2025) {
+            dispatch(fetchStatLeadersByTeam({ leagueId: selectedLeague.id, teamId: selectedTeamStats.team.id, season: selectedSeason }));
+        }
+        else {
+            dispatch(clearStatLeaderData());
+        }
+    }, [dispatch, selectedTeamStats, selectedSeason]);
 
-    //const handleSeasonChange = (event) => {
-    //    setSelectedSeason(event.target.value);
-    //}
+    // Group players by description for dynamic top stats
+    const groupedTopStats = playerStatLeaders.reduce((stats, player) => {
+        if (!stats[player.description]) stats[player.description] = [];
+        stats[player.description].push(player);
+        return stats;
+    }, {});
 
     return (
         <Modal
@@ -37,7 +48,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
             }}
         >
             <Box
-                sx={(theme) => ({
+                sx={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
@@ -47,25 +58,21 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif",
-
-                    // width
-                    width: 'fit-content',
-                    minWidth: { xs: '95vw', sm: 500 },
-                    maxWidth: { xs: '95vw', md: 800 },
-
-                    // height
-                    height: 'auto',        // shrink to fit content
-                    overflowY: 'visible',  // don’t force scroll
-
+                    minWidth: { xs: '95vw', sm: 400, md: 750 },
+                    maxWidth: { xs: '95vw', md: 950 },
+                    maxHeight: '95vh',
+                    overflowY: 'auto',
                     animation: "fadeIn 0.3s ease-in-out",
-                })}
+                }}
             >
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    p: 3,
-                    gap: 3
-                }}>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        p: 3,
+                        gap: 3
+                    }}
+                >
                     <Box>
                         <Box
                             sx={{
@@ -90,64 +97,145 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                 />
                             }
                         </Box>
-                        <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedTeamStats.team.id} />
+                        {isNonEmptyObject(selectedTeamStats) && (
+                            <RecentFormBubbles
+                                selectedLeague={selectedLeague}
+                                selectedSeason={selectedSeason}
+                                selectedTeamId={selectedTeamStats.team.id}
+                            />
+                        )}
                     </Box>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 1,
-                        minWidth: 220,
-                        flexShrink: 0,
-                    }}>
-                        {[
-                            { label: 'Club', value: selectedTeamStats.team.name },
-                            { label: 'Country', value: selectedTeamStats.league.country },
-                            { label: 'Games Played', value: selectedTeamStats.fixtures.played.total },
-                            { label: 'Wins', value: selectedTeamStats.fixtures.wins.total },
-                            { label: 'Losses', value: selectedTeamStats.fixtures.loses.total },
-                            { label: 'Draws', value: selectedTeamStats.fixtures.draws.total },
-                            { label: 'Goals For', value: selectedTeamStats.goals.for.total.total },
-                            { label: 'Goals Against', value: selectedTeamStats.goals.against.total.total },
-                            { label: 'Clean Sheets', value: selectedTeamStats.clean_sheet.total }
-                        ].map((field, i) => (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', md: 'row' },
+                            gap: 3,
+                            flex: 1
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 1,
+                                minWidth: 220,
+                                flexShrink: 0,
+                                flex: 1
+                            }}
+                        >
+                            {[
+                                { label: 'Club', value: selectedTeamStats.team.name },
+                                { label: 'Country', value: selectedTeamStats.league.country },
+                                { label: 'Games Played', value: selectedTeamStats.fixtures.played.total },
+                                { label: 'Wins', value: selectedTeamStats.fixtures.wins.total },
+                                { label: 'Losses', value: selectedTeamStats.fixtures.loses.total },
+                                { label: 'Draws', value: selectedTeamStats.fixtures.draws.total },
+                                { label: 'Goals For', value: selectedTeamStats.goals.for.total.total },
+                                { label: 'Goals Against', value: selectedTeamStats.goals.against.total.total },
+                                { label: 'Clean Sheets', value: selectedTeamStats.clean_sheet.total }
+                            ].map((field, i) => (
+                                <Box
+                                    key={i}
+                                    sx={(theme) => ({
+                                        border: `3px solid ${theme.palette.divider}`,
+                                        borderRadius: 1,
+                                        px: 1.5,
+                                        py: 1,
+                                        bgcolor: theme.palette.mode === 'dark'
+                                            ? theme.palette.background.default
+                                            : theme.palette.background.paper,
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    })}
+                                >
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: 'bold', color: theme.palette.text.secondary }}
+                                    >
+                                        {field.label}:
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ color: theme.palette.text.primary }}>
+                                        {field.value}
+                                    </Typography>
+                                </Box>
+                            ))}
+                        </Box>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: 1,
+                                flex: 3
+                            }}
+                        >
+                            <Typography
+                                variant="body1"
+                                sx={{ fontWeight: 'bold', color: theme.palette.text.primary, textAlign: 'center' }}
+                            >
+                                Team Leaders
+                            </Typography>
                             <Box
-                                key={i}
                                 sx={(theme) => ({
                                     border: `3px solid ${theme.palette.divider}`,
                                     borderRadius: 1,
-                                    px: 1.5,
-                                    py: 1,
+                                    p: 2,
+                                    maxHeight: '56vh',
+                                    overflowY: 'auto',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: 1.5,         // space between different stat groups
                                     bgcolor: theme.palette.mode === 'dark'
                                         ? theme.palette.background.default
-                                        : theme.palette.background.paper,
-                                    display: 'inline-flex',
-                                    flexDirection: field.fullWidth ? 'column' : 'row',
-                                    justifyContent: 'space-between',
-                                    fontSize: 12,
-                                    boxShadow: theme.palette.mode === 'light'
-                                        ? 'inset 0 1px 2px rgba(0,0,0,0.05)'
-                                        : 'none',
+                                        : theme.palette.background.paper
                                 })}
                             >
-                                <Typography
-                                    variant="body2"
-                                    sx={(theme) => ({
-                                        fontWeight: 'bold',
-                                        color: theme.palette.text.secondary,
-                                        fontSize: 14
-                                    })}
-                                >
-                                    {field.label}:
-                                </Typography>
-                                <Typography variant="body2" sx={(theme) => ({
-                                    color: theme.palette.text.primary,
-                                    fontSize: field.fullWidth ? 15 : 14,
-                                    marginTop: field.fullWidth ? 1 : 0,
-                                })}>
-                                    {field.value}
-                                </Typography>
+                                {Object.entries(groupedTopStats).map(([desc, players], i) => (
+                                    <Box
+                                        key={i}
+                                        sx={{
+                                            mb: 1.5,
+                                            pt: i === 0 ? 0 : 1,
+                                            borderTop: i === 0 ? 'none' : `1px solid ${theme.palette.divider}`, // border line except for first group
+                                            width: '100%'
+                                        }}>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{ fontWeight: 'bold', color: theme.palette.text.secondary, mb: 0.5 }}
+                                        >
+                                            {desc}
+                                        </Typography>
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                                            {players.map((p, idx) => (
+                                                <Box
+                                                    key={idx}
+                                                    sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                                                >
+                                                    <Typography
+                                                        variant="body2"
+                                                        sx={{ color: theme.palette.text.primary, flex: 1 }}
+                                                    >
+                                                        {p.name || '—'}
+                                                    </Typography>
+                                                    <Typography
+                                                        variant="body2"
+                                                        sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}
+                                                    >
+                                                        {p.stat ?? '—'}
+                                                    </Typography>
+                                                    {p.photo && (
+                                                        <img
+                                                            src={p.photo}
+                                                            alt={p.name}
+                                                            style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover' }}
+                                                        />
+                                                    )}
+                                                </Box>
+                                            ))}
+                                        </Box>
+                                    </Box>
+                                ))}
                             </Box>
-                        ))}
+                        </Box>
                     </Box>
                 </Box>
                 <Box
@@ -161,12 +249,11 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                     <Button
                         variant="contained"
                         onClick={handleClose}
-                        sx={(theme) =>
-                        ({
+                        sx={{
                             borderRadius: 2,
                             backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
                             color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-                        })}
+                        }}
                     >
                         Close
                     </Button>

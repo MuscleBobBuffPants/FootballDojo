@@ -12,10 +12,10 @@ namespace FootballDojo.Services
             _statsRepo = repo;
         }
 
-        public async Task<List<PlayerStatLeader>> GetTeamStatLeadersBySeason(int teamId, int season)
+        public async Task<List<PlayerStatLeader>> GetTeamStatLeadersByLeagueAndSeason(int leagueId, int teamId, int season)
         {
             var statLeaders = new List<PlayerStatLeader>();
-            var stats = await _statsRepo.GetPlayerStatsByTeamIdAndSeasonAsync(teamId, season);
+            var stats = await _statsRepo.GetPlayerStatsByLeagueIdAndTeamIdAndSeasonAsync(leagueId, teamId, season);
 
             if (stats == null || !stats.Any())
                 return statLeaders;

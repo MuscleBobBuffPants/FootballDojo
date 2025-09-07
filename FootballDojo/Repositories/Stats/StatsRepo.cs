@@ -24,7 +24,7 @@ namespace FootballDojo.Repositories
                 : null;
         }
 
-        public async Task<TeamStats> GetStatsByTeamIdAndLeagueIdAndSeasonAsync(int teamId, int leagueId, int season)
+        public async Task<TeamStats> GetTeamStatsByTeamIdAndLeagueIdAndSeasonAsync(int teamId, int leagueId, int season)
         {
             var apiUrl = $"{Constants.BASE_URL}teams/statistics?league={leagueId}&season={season}&team={teamId}";
 
@@ -33,9 +33,9 @@ namespace FootballDojo.Repositories
             return response?.Response;
         }
 
-        public async Task<List<TeamStatsByPlayer>> GetPlayerStatsByTeamIdAndSeasonAsync(int teamId, int season)
+        public async Task<List<TeamStatsByPlayer>> GetPlayerStatsByLeagueIdAndTeamIdAndSeasonAsync(int leagueId, int teamId, int season)
         {
-            var apiUrl = $"{Constants.BASE_URL}players?season={season}&team={teamId}";
+            var apiUrl = $"{Constants.BASE_URL}players?league={leagueId}&season={season}&team={teamId}";
 
             var response = await _client.HttpClient.GetFromJsonAsync<TeamStatsByPlayerRoot>(apiUrl);
 
