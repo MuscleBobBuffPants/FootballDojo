@@ -7,7 +7,7 @@ import {
     DARKMODE_TEXT,
     LIGHTMODE_GRID_BORDER,
     LIGHTMODE_TEXT,
-    formatUtcDate,
+    formatUtcDateForHeadToHeadGrid,
     getGoalColor,
     isNonEmptyObject
 } from "../../../global/constants";
@@ -56,7 +56,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             field: 'awayTeamGoals',
             headerName: '',
             align: 'center',
-            width: 80,
+            width: 60,
             sortable: false,
             renderCell: (params) => (
                 <GoalBubble
@@ -70,7 +70,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             headerName: headToHeadFixtureHeader,
             headerAlign: 'center',
             align: 'center',
-            width: 230,
+            width: 200,
             sortable: false,
             renderCell: (params) => (
                 <Box
@@ -79,10 +79,10 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                     sx={{
                         width: '100%',
                         height: '100%',
-                        pt: .75
+                        pt: 2.5
                     }}>
-                    <Typography variant="body2" sx={{ pb: .2 }}>{params.row.matchup}</Typography>
-                    <Typography variant="caption" color="textSecondary">
+                    <Typography sx={{ pb: 1.5 }}>{params.row.matchup}</Typography>
+                    <Typography variant="body2">
                         {params.row.date}
                     </Typography>
                 </Box>
@@ -92,7 +92,7 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
             field: 'homeTeamGoals',
             headerName: '',
             align: 'center',
-            width: 80,
+            width: 60,
             sortable: false,
             renderCell: (params) => (
                 <GoalBubble
@@ -116,13 +116,28 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
                 return fixtureDate <= new Date();
             })
             .map((response, index) => {
-                const formattedDate = formatUtcDate(new Date(response.fixture.date));
                 return {
                     id: index,
                     homeTeamGoals: response.goals.home,
-                    date: formattedDate,
+                    date: formatUtcDateForHeadToHeadGrid(new Date(response.fixture.date)),
                     rawDate: new Date(response.fixture.date),
-                    matchup: response.teams.away.name + ' @ ' + response.teams.home.name,
+                    matchup: (
+                        <Box display="flex" justifyContent="center">
+                            <Box display="flex" alignItems="center" gap={4}>
+                                <img
+                                    src={response.teams.away.logo}
+                                    alt={response.teams.away.name}
+                                    style={{ width: 37, height: 37 }}
+                                />
+                                <Typography>@</Typography>
+                                <img
+                                    src={response.teams.home.logo}
+                                    alt={response.teams.home.name}
+                                    style={{ width: 37, height: 37 }}
+                                />
+                            </Box>
+                        </Box>
+                    ),
                     awayTeamGoals: response.goals.away
                 }
             })
@@ -130,94 +145,90 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
         : [];
 
     return (
-        <div style={{ textAlign: "left", position: "relative" }}>
-            <Box sx={(theme) => ({
-                display: "inline-block",
-                marginLeft: 0,
-                backgroundColor: DARKMODE_TEXT,
-                border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
-                borderRadius: 1,
-                position: "relative" // needed for overlay
-            })}>
-                <div style={{ position: "relative" }}>
-                    <DataGrid
-                        rows={filteredFixtures}
-                        columns={columns}
-                        sortModel={[{ field: "date", sort: "desc" }]}
-                        disableColumnResize={true}
-                        disablePagination={true}
-                        disableRowSelectionOnClick
-                        hideFooter={true}
-                        hideFooterSelectedRowCount
-                        disableColumnMenu
-                        slots={{
-                            noRowsOverlay: () => <></>, // render nothing
-                        }}
-                        sx={{
-                            width: '100%',   // shrink with container
-                            maxWidth: '100%',
-                            minWidth: 0,     // allows shrinking below content if needed
-                            height: 52 * 3 + 56, // 3 items at 52px height + padding
+        <Box sx={(theme) => ({
+            backgroundColor: DARKMODE_TEXT,
+            border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
+            borderRadius: 1,
+            maxWidth: "100%",
+            position: "relative" // needed for overlay
+        })}>
+            <div style={{ position: "relative" }}>
+                <DataGrid
+                    rows={filteredFixtures}
+                    columns={columns}
+                    sortModel={[{ field: "date", sort: "desc" }]}
+                    disableColumnResize={true}
+                    disablePagination={true}
+                    disableRowSelectionOnClick
+                    hideFooter={true}
+                    hideFooterSelectedRowCount
+                    disableColumnMenu
+                    rowHeight={100}
+                    slots={{
+                        noRowsOverlay: () => <></>, // render nothing
+                    }}
+                    sx={{
+                        maxWidth: '100%',
+                        height: 52 * 5.8 + 56, // 2 items at 52px height + padding
+                        backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
+                        "& .MuiDataGrid-columnHeaders": {
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                        },
+                        '& .MuiDataGrid-cell': {
                             backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
-                            "& .MuiDataGrid-columnHeaders": {
-                                backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : ""
+                            cursor: 'default',
+                        },
+                        '& .MuiDataGrid-columnHeader': {
+                            cursor: 'default',
+                            fontSize: 15,
+                            backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
+                            '&:hover': {
+                                backgroundColor: 'transparent',
                             },
-                            '& .MuiDataGrid-cell': {
-                                backgroundColor: theme.palette.mode === "light" ? "transparent" : "",
-                                cursor: 'default',
-                            },
-                            '& .MuiDataGrid-columnHeader': {
-                                cursor: 'default',
-                                fontSize: 15,
-                                backgroundColor: theme.palette.mode === "light" ? DARKMODE_TEXT : "",
-                                '&:hover': {
-                                    backgroundColor: 'transparent',
-                                },
-                            },
-                            '& .MuiDataGrid-row:hover': {
-                                backgroundColor: 'transparent !important',
-                            },
-                            '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
-                                outline: 'none',
-                            },
-                            '& .MuiDataGrid-columnSeparator': {
-                                display: 'none',
-                            },
-                            filter: status === "loading" ? "blur(2px)" : "none", // blur grid when loading
-                        }}
-                    />
-                    {status === "loading" && (
-                        <Box
+                        },
+                        '& .MuiDataGrid-row:hover': {
+                            backgroundColor: 'transparent !important',
+                        },
+                        '& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus': {
+                            outline: 'none',
+                        },
+                        '& .MuiDataGrid-columnSeparator': {
+                            display: 'none',
+                        },
+                        filter: status === "loading" ? "blur(2px)" : "none", // blur grid when loading
+                    }}
+                />
+                {status === "loading" && (
+                    <Box
+                        sx={(theme) => ({
+                            position: "absolute",
+                            inset: 0,
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            backgroundColor: theme.palette.mode === 'dark'
+                                ? theme.palette.background.secondary
+                                : theme.palette.background.secondary,
+                            color: theme.palette.mode === "dark"
+                                ? DARKMODE_TEXT
+                                : LIGHTMODE_TEXT,
+                            zIndex: 10,
+                        })}
+                    >
+                        <CircularProgress size={20}
                             sx={(theme) => ({
-                                position: "absolute",
-                                inset: 0,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: theme.palette.mode === 'dark'
-                                    ? theme.palette.background.secondary
-                                    : theme.palette.background.secondary,
                                 color: theme.palette.mode === "dark"
                                     ? DARKMODE_TEXT
-                                    : LIGHTMODE_TEXT,
-                                zIndex: 10,
-                            })}
-                        >
-                            <CircularProgress size={20}
-                                sx={(theme) => ({
-                                    color: theme.palette.mode === "dark"
-                                        ? DARKMODE_TEXT
-                                        : LIGHTMODE_TEXT, mb: 2
-                                })} />
-                            <Typography variant="body1" fontWeight="bold">
-                                Loading Fixtures...
-                            </Typography>
-                        </Box>
-                    )}
-                </div>
-            </Box>
-        </div>
+                                    : LIGHTMODE_TEXT, mb: 2
+                            })} />
+                        <Typography variant="body1" fontWeight="bold">
+                            Loading Fixtures...
+                        </Typography>
+                    </Box>
+                )}
+            </div>
+        </Box>
     );
 }
 

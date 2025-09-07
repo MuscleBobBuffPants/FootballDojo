@@ -27,6 +27,18 @@ export const formatDateForFixtureProfile = (dateStr) => {
     });
 };
 
+export const formatUtcDateForHeadToHeadGrid = (utcDate) => {
+    if (!utcDate) return '';
+
+    const date = new Date(utcDate);
+
+    return date.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+};
+
 export const getGoalColor = (theme, teamGoals, otherGoals) => {
     if (teamGoals > otherGoals)
         return {

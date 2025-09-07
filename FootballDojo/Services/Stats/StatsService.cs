@@ -21,14 +21,29 @@ namespace FootballDojo.Services
                 return statLeaders;
 
             // Define the categories dynamically
-            var categories = new List<(string Description, Func<TeamStatsByPlayer, int> Selector)>
+            var categories = new List<(string Description, Func<TeamStatsByPlayer, double> Selector)>
             {
                 ("Goals", p => p.Statistics[0].Goals.Total ?? 0),
                 ("Assists", p => p.Statistics[0].Goals.Assists ?? 0),
+                ("Match Rating", p =>
+                    {
+                        if (double.TryParse(p.Statistics[0].Games.Rating, out var rating))
+                            return rating;
+                        return 0;
+                    }
+                ),
+                ("Mins. Played", p => p.Statistics[0].Games.Minutes ?? 0),
+                ("Shots", p => p.Statistics[0].Shots.Total ?? 0),
+                ("Shots On Target", p => p.Statistics[0].Shots.On ?? 0),
+                ("Passes", p => p.Statistics[0].Passes.Total ?? 0),
                 ("Key Passes", p => p.Statistics[0].Passes.Key ?? 0),
-                ("Tackles", p => p.Statistics[0].Tackles.Total ?? 0),
                 ("Successful Dribbles", p => p.Statistics[0].Dribbles.Success ?? 0),
-                ("Duels Won", p => p.Statistics[0].Duels.Won ?? 0)
+                ("Duels Won", p => p.Statistics[0].Duels.Won ?? 0),
+                ("Tackles", p => p.Statistics[0].Tackles.Total ?? 0),
+                ("Blocks", p => p.Statistics[0].Tackles.Blocks ?? 0),
+                ("Interceptions", p => p.Statistics[0].Tackles.Interceptions ?? 0),
+                ("Fouls Committed", p => p.Statistics[0].Fouls.Committed ?? 0),
+                ("Fouls Drawn", p => p.Statistics[0].Fouls.Drawn ?? 0),
             };
 
             // Loop through each category and find the top player

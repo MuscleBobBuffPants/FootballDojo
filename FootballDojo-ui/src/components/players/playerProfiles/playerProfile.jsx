@@ -59,16 +59,12 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif",
-
-                    // width
                     width: 'fit-content',
-                    minWidth: { xs: '95vw', sm: 725 },
-                    maxWidth: { xs: '95vw', md: 800 },
-
-                    // height
-                    height: 'auto',        // shrink to fit content
-                    overflowY: 'visible',  // don’t force scroll
-
+                    minWidth: { xs: '95vw', sm: 500 },
+                    maxWidth: { xs: '95vw', md: 950 },
+                    maxHeight: '80vh',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
                     animation: "fadeIn 0.3s ease-in-out",
                 })}
             >

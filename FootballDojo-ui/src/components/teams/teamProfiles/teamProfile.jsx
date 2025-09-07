@@ -38,9 +38,10 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                     boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
                     border: `4px solid ${theme.palette.divider}`,
                     fontFamily: "'Roboto', sans-serif",
-                    minWidth: { xs: '95vw', sm: 400, md: 750 },
+                    minWidth: { xs: '95vw', sm: 500, md: 750 },
                     maxWidth: { xs: '95vw', md: 950 },
-                    maxHeight: '90vh',
+                    maxHeight: '80vh',
+                    overflowX: 'hidden',
                     overflowY: 'auto',
                     animation: "fadeIn 0.3s ease-in-out",
                 }}

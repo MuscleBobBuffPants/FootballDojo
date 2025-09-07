@@ -75,7 +75,7 @@ function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) 
                                 fontWeight: 'bold',
                                 fontSize: 15,
                                 color: theme.palette.text.secondary,
-                                mb: 0.5
+                                mb: 2
                             }}
                         >
                             {desc}

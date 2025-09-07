@@ -5,6 +5,6 @@ namespace FootballDojo.Models
         public string Name { get; set; }
         public string Photo { get;set; }
         public string Description { get; set; }
-        public int? Stat {  get; set; }
+        public double? Stat {  get; set; }
     }
 }

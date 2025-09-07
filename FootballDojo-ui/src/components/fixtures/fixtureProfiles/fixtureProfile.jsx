@@ -127,16 +127,12 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason
                     p: 4,
                     borderRadius: 3,
                     border: `3px solid ${theme.palette.divider}`,
-
-                    // width
                     width: 'fit-content',
                     minWidth: { xs: '95vw', sm: 500 },
-                    maxWidth: { xs: '95vw', md: 500 },
-
-                    // height
-                    maxHeight: '90vh',        // shrink to fit content
-                    overflowY: 'auto',  // don’t force scroll
-
+                    maxWidth: { xs: '95vw', md: 950 },
+                    maxHeight: '80vh',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
                     animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
