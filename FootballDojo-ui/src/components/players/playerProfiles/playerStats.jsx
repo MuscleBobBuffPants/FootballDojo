@@ -62,7 +62,7 @@ function StatsList({ selectedPlayer, playerStatsBySeason }) {
                 p: 2,
                 minHeight: 323,
                 maxHeight: 323,
-                width: 175,
+                minWidth: 175,
                 boxSizing: 'border-box',
                 overflowY: "auto",
                 border: `2px solid ${theme.palette.divider}`,
@@ -108,7 +108,7 @@ function StatsList({ selectedPlayer, playerStatsBySeason }) {
                         >
                             {category.category.charAt(0).toUpperCase() + category.category.slice(1)}
                         </Typography>
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                             {category.stats.map((stat, sIdx) => (
                                 <Box
                                     key={sIdx}
