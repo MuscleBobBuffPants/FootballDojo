@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import StatsGrid from '../../../components/stats/statsGrid';
+import StatsList from '../../../components/players/playerProfiles/playerStats';
 import {
     DARKMODE_PURPLE,
     DARKMODE_TEXT,
@@ -17,6 +17,8 @@ import {
     convertKgToLbs
 } from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
+import StatsSeasonDropdown from '../../players/playerProfiles/statsSeasonDropdown';
+
 
 function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
@@ -141,18 +143,37 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             </Box>
                         ))}
                     </Box>
-                    <Box sx={{ flexDirection: "column" }}>
-                        {playerStatsBySeason && playerStatsBySeason.length >> 0 &&
-                            (
-                                <StatsGrid
-                                    selectedPlayer={selectedPlayer}
-                                    playerStatsBySeason={playerStatsBySeason}
-                                    selectedSeason={selectedSeason}
-                                    handleSeasonChange={handleSeasonChange} />
-                            )
-                        }
-                        <Box sx={{ flexDirection: "column" }}>
-                            {/*<YouTubeCard selectedPlayer={selectedPlayer} />*/}
+                    <Box
+                        sx={{
+                            flex: 1,
+                            minWidth: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 1,
+                        }}
+                    >
+                        <StatsSeasonDropdown
+                            selectedSeason={selectedSeason}
+                            handleSeasonChange={handleSeasonChange}
+                        />
+                        <Box
+                            sx={(theme) => ({
+                                minHeight: 150,
+                                maxHeight: 326,
+                                minWidth: 125,
+                                overflowY: 'auto',
+                                overflowX: 'hidden',
+                                borderRadius: 1,
+                                boxSizing: 'border-box',
+                                bgcolor: theme.palette.mode === 'dark'
+                                    ? theme.palette.background.default
+                                    : theme.palette.background.paper,
+                            })}
+                        >
+                            <StatsList
+                                selectedPlayer={selectedPlayer}
+                                playerStatsBySeason={playerStatsBySeason}
+                            />
                         </Box>
                     </Box>
                 </Box>

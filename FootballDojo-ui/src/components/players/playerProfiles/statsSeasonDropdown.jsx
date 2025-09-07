@@ -8,7 +8,7 @@ import {
 
 function StatsSeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
-        <Box>
+        <Box sx={{ mb: .25, mt: .25 }}>
             <FormControl sx={{ minWidth: 103 }} size="small">
                 <InputLabel id="stats-season-select-label">
                     Season
@@ -31,7 +31,7 @@ function StatsSeasonDropdown({ selectedSeason, handleSeasonChange }) {
                                 maxHeight: 38 * 4 + 8, // 5 items at 48px height + padding
                             },
                         },
-                    }}  
+                    }}
                 >
                     <MenuItem value={2025}>2025</MenuItem>
                     <MenuItem value={2024}>2024</MenuItem>
