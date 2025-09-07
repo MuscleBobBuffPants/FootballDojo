@@ -14,7 +14,7 @@ const STAT_LABELS = {
 const formatLabel = (propName) =>
     STAT_LABELS[propName] || propName.charAt(0).toUpperCase() + propName.slice(1);
 
-function StatsList({ selectedPlayer, playerStatsBySeason }) {
+function StatsList({ selectedLeague, selectedPlayer, selectedSeason, playerStatsBySeason }) {
     const theme = useTheme();
 
     const categories = useMemo(
@@ -60,7 +60,6 @@ function StatsList({ selectedPlayer, playerStatsBySeason }) {
                 flexDirection: "column",
                 gap: 1,
                 p: 2,
-                minHeight: 323,
                 maxHeight: 323,
                 minWidth: 175,
                 boxSizing: 'border-box',
@@ -90,52 +89,69 @@ function StatsList({ selectedPlayer, playerStatsBySeason }) {
                         Loading stats...
                     </Typography>
                 </Box>
-            ) : (
-                transformedStats.map((category, idx) => (
-                    <Box
-                        key={idx}
-                        sx={{
-                            borderTop: idx === 0 ? "none" : `1px solid ${theme.palette.divider}`,
-                            pt: idx === 0 ? 0 : 1,
-                            minWidth: 0,
-                            width: '100%',
-                            boxSizing: 'border-box',
-                        }}
+            ) : transformedStats.length === 0 ? (
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{ textAlign: 'center' }}
                     >
-                        <Typography
-                            variant="body2"
-                            sx={{ fontWeight: "bold", color: theme.palette.text.secondary, mb: 1 }}
-                        >
-                            {category.category.charAt(0).toUpperCase() + category.category.slice(1)}
-                        </Typography>
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                            {category.stats.map((stat, sIdx) => (
-                                <Box
-                                    key={sIdx}
-                                    sx={{
-                                        display: "flex",
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                        minWidth: 0
-                                    }}
+                        No {selectedLeague.name} <br /> Stats ({selectedSeason})...
+                    </Typography>
+                </Box>
+            ) : (transformedStats.map((category, idx) => (
+                <Box
+                    key={idx}
+                    sx={{
+                        borderTop: idx === 0 ? "none" : `1px solid ${theme.palette.divider}`,
+                        pt: idx === 0 ? 0 : 1,
+                        minWidth: 0,
+                        width: '100%',
+                        boxSizing: 'border-box',
+                    }}
+                >
+                    <Typography
+                        variant="body2"
+                        sx={{ fontWeight: "bold", color: theme.palette.text.secondary, mb: 1 }}
+                    >
+                        {category.category.charAt(0).toUpperCase() + category.category.slice(1)}
+                    </Typography>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                        {category.stats.map((stat, sIdx) => (
+                            <Box
+                                key={sIdx}
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    minWidth: 0
+                                }}
+                            >
+                                <Typography
+                                    variant="body2"
+                                    sx={{ color: theme.palette.text.primary, minWidth: 0 }}
                                 >
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ color: theme.palette.text.primary, minWidth: 0 }}
-                                    >
-                                        {stat.label}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ fontWeight: "bold", color: theme.palette.text.primary, minWidth: 0 }}
-                                    >
-                                        {stat.value}
-                                    </Typography>
-                                </Box>
-                            ))}
-                        </Box>
+                                    {stat.label}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    sx={{ fontWeight: "bold", color: theme.palette.text.primary, minWidth: 0 }}
+                                >
+                                    {stat.value}
+                                </Typography>
+                            </Box>
+                        ))}
                     </Box>
-                ))
+                </Box>
+            ))
             )}
         </Box>
     );

@@ -171,7 +171,9 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
                             })}
                         >
                             <StatsList
+                                selectedLeague={selectedLeague}
                                 selectedPlayer={selectedPlayer}
+                                selectedSeason={selectedSeason}
                                 playerStatsBySeason={playerStatsBySeason}
                             />
                         </Box>
