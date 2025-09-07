@@ -179,7 +179,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                     border: `3px solid ${theme.palette.divider}`,
                                     borderRadius: 1,
                                     p: 2,
-                                    maxHeight: '56vh',
+                                    maxHeight: 410,
                                     overflowY: 'auto',
                                     display: 'flex',
                                     flexDirection: 'column',
@@ -200,7 +200,12 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                         }}>
                                         <Typography
                                             variant="body2"
-                                            sx={{ fontWeight: 'bold', color: theme.palette.text.secondary, mb: 0.5 }}
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                fontSize: 15,
+                                                color: theme.palette.text.secondary,
+                                                mb: 0.5
+                                            }}
                                         >
                                             {desc}
                                         </Typography>
@@ -227,8 +232,8 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                                                             src={p.photo}
                                                             alt={p.name}
                                                             style={{
-                                                                width: 50,
-                                                                height: 50,
+                                                                width: 45,
+                                                                height: 45,
                                                                 borderRadius: '50%',
                                                                 objectFit: 'contain'
                                                             }}
