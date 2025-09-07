@@ -60,7 +60,7 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
                     fontFamily: "'Roboto', sans-serif",
                     minWidth: { xs: '95vw', sm: 400, md: 750 },
                     maxWidth: { xs: '95vw', md: 950 },
-                    maxHeight: '95vh',
+                    maxHeight: '90vh',
                     overflowY: 'auto',
                     animation: "fadeIn 0.3s ease-in-out",
                 }}

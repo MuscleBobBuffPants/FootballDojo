@@ -134,7 +134,7 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason
                     maxWidth: { xs: '95vw', md: 500 },
 
                     // height
-                    maxHeight: '95vh',        // shrink to fit content
+                    maxHeight: '90vh',        // shrink to fit content
                     overflowY: 'auto',  // don’t force scroll
 
                     animation: "fadeIn 0.3s ease-in-out",
