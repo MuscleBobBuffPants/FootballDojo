@@ -114,7 +114,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                         No {selectedLeague.name} <br /> Stats ({selectedSeason})...
                     </Typography>
                 </Box>
-            ) : (transformedStats.map((category, idx) => (
+            ) : transformedStats.map((category, idx) => (
                 <Box
                     key={idx}
                     sx={{
@@ -127,7 +127,12 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                 >
                     <Typography
                         variant="body2"
-                        sx={{ fontWeight: "bold", color: theme.palette.text.secondary, mb: 1 }}
+                        sx={{
+                            fontWeight: "bold",
+                            color: theme.palette.text.secondary,
+                            mb: 1,
+                            textAlign: "center"
+                        }}
                     >
                         {category.category.charAt(0).toUpperCase() + category.category.slice(1)}
                     </Typography>
@@ -150,7 +155,11 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                                 </Typography>
                                 <Typography
                                     variant="body2"
-                                    sx={{ fontWeight: "bold", color: theme.palette.text.primary, minWidth: 0 }}
+                                    sx={{
+                                        fontWeight: "bold",
+                                        color: theme.palette.text.primary,
+                                        minWidth: 0
+                                    }}
                                 >
                                     {stat.value}
                                 </Typography>
@@ -159,7 +168,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                     </Box>
                 </Box>
             ))
-            )}
+            }
         </Box>
     );
 }
