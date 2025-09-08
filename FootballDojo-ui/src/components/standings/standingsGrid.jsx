@@ -83,7 +83,7 @@ const columns = [
     },
 ];
 
-function StandingsGrid({ selectedLeague, selectedTeam }) {
+export default function StandingsGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
 
     const [selectedSeason, setSelectedSeason] = useState(2025);
@@ -308,5 +308,3 @@ function StandingsGrid({ selectedLeague, selectedTeam }) {
         </div>
     );
 }
-
-export default StandingsGrid;

@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { TOP5LEAGUES, isNonEmptyObject } from "../../global/constants";
 
-function LeagueLogoIcon({ selectedLeague }) {
+export default function LeagueLogoIcon({ selectedLeague }) {
     const theme = useTheme();
 
     const getLeagueLogo = (id) => {
@@ -41,6 +41,3 @@ function LeagueLogoIcon({ selectedLeague }) {
         </Box>
     )
 }
-
-
-export default LeagueLogoIcon;

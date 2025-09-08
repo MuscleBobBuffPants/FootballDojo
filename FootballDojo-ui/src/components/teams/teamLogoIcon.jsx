@@ -1,7 +1,7 @@
 import { Box, useTheme } from "@mui/material";
 import { isNonEmptyObject } from "../../global/constants";
 
-function TeamLogoIcon({ selectedTeam, teamLogo }) {
+export default function TeamLogoIcon({ selectedTeam, teamLogo }) {
     const theme = useTheme();
 
     const teamLogoBackground =
@@ -35,6 +35,3 @@ function TeamLogoIcon({ selectedTeam, teamLogo }) {
         </Box>
     )
 }
-
-
-export default TeamLogoIcon;

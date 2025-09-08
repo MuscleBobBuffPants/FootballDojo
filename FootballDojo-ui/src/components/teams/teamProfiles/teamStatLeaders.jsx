@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyObject } from "../../../global/constants";
 import { clearStatLeaderData, fetchStatLeadersByTeam } from '../../../redux/stats/fetchStatLeadersByTeam';
 
-function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) {
+export default function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
@@ -119,5 +119,3 @@ function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) 
         </Box>
     );
 }
-
-export default TeamStatLeaders;

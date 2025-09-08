@@ -20,7 +20,7 @@ import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsB
 import StatsSeasonDropdown from '../../players/playerProfiles/statsSeasonDropdown';
 
 
-function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
+export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
     const [selectedSeason, setSelectedSeason] = useState(2025);
 
@@ -204,5 +204,3 @@ function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer 
         </Modal>
     );
 }
-
-export default PlayerProfile;

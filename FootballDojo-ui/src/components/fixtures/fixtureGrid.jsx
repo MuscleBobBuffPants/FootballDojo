@@ -41,7 +41,7 @@ function CustomNoRowsOverlay({ selectedLeague, selectedTeam, filteredFixtures, s
     );
 }
 
-function FixturesGrid({ selectedLeague, selectedTeam }) {
+export default function FixturesGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
@@ -366,5 +366,3 @@ function FixturesGrid({ selectedLeague, selectedTeam }) {
         </div>
     );
 }
-
-export default FixturesGrid;

@@ -5,7 +5,7 @@ import Home from '../components/home';
 import { getTheme } from '../global/theme';
 import '../styles/App.css';
 
-function App() {
+export default function App() {
     const [mode, setMode] = useState("dark");
     const toggleMode = () => {
         setMode((prev) => (prev === "light" ? "dark" : "light"));
@@ -51,5 +51,3 @@ function App() {
         </ThemeProvider>
     );
 }
-
-export default App;

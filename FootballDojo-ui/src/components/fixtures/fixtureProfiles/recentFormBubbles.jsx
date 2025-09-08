@@ -35,7 +35,7 @@ function getRecentFormForTeam(fixtures, selectedTeamId) {
         .reverse();
 }
 
-function RecentFormBubbles({ selectedLeague, selectedSeason, selectedTeamId }) {
+export default function RecentFormBubbles({ selectedLeague, selectedSeason, selectedTeamId }) {
     const dispatch = useDispatch();
     const theme = useTheme();
     const size = 23;
@@ -168,5 +168,3 @@ function RecentFormBubbles({ selectedLeague, selectedSeason, selectedTeamId }) {
         </Box>
     );
 }
-
-export default RecentFormBubbles;

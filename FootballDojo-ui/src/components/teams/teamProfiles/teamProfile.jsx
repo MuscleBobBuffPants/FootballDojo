@@ -16,7 +16,7 @@ import {
 import RecentFormBubbles from "../../fixtures/fixtureProfiles/recentFormBubbles";
 import TeamStatLeaders from './teamStatLeaders';
 
-function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedTeamStats }) {
+export default function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedTeamStats }) {
     const theme = useTheme();
 
     return (
@@ -179,5 +179,3 @@ function TeamProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, s
         </Modal>
     );
 }
-
-export default TeamProfile;

@@ -13,7 +13,7 @@ import {
 } from "../../../global/constants";
 import { fetchHeadToHeadFixtures } from "../../../redux/fixtures/fetchHeadToHeadFixtures";
 
-function FixtureHeadToHeadGrid({ selectedFixture }) {
+export default function FixtureHeadToHeadGrid({ selectedFixture }) {
     const dispatch = useDispatch();
     const theme = useTheme();
 
@@ -231,5 +231,3 @@ function FixtureHeadToHeadGrid({ selectedFixture }) {
         </Box>
     );
 }
-
-export default FixtureHeadToHeadGrid;

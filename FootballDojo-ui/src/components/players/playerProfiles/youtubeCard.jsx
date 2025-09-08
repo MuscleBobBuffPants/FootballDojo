@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@mui/material";
 
-function YouTubeCard({ selectedPlayer }) {
+export default function YouTubeCard({ selectedPlayer }) {
     return (
         <Card sx={{ maxWidth: 600, borderRadius: 3, boxShadow: 4, transform: "scale(0.95)" }}>
             <div style={{ position: "relative", paddingTop: "56.25%" }}>
@@ -27,5 +27,3 @@ function YouTubeCard({ selectedPlayer }) {
         </Card>
     );
 }
-
-export default YouTubeCard;

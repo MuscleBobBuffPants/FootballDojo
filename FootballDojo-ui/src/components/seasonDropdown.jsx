@@ -5,7 +5,7 @@ import {
     Select
 } from "@mui/material";
 
-function SeasonDropdown({ selectedSeason, handleSeasonChange }) {
+export default function SeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
         <Box display="flex" alignItems="center" gap={2}>
 
@@ -38,4 +38,3 @@ function SeasonDropdown({ selectedSeason, handleSeasonChange }) {
         </Box>
     )
 }
-export default SeasonDropdown;

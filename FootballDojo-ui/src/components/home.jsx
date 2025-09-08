@@ -16,7 +16,7 @@ import { clearPerformancePredictionData } from '../redux/statTracking/selectedPl
 import { fetchTeamByName } from '../redux/teams/fetchTeamByName';
 import { fetchTeamsByLeagueId } from '../redux/teams/fetchTeamsByLeagueId';
 
-function Home() {
+export default function Home() {
     const dispatch = useDispatch();
 
     const [selectedLeague, setSelectedLeague] = useState("");
@@ -124,5 +124,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;

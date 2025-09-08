@@ -94,7 +94,7 @@ function VenueImageBox({ venue, alt }) {
     );
 }
 
-function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedFixture }) {
+export default function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedFixture }) {
     const dispatch = useDispatch();
     const selectedVenue = useSelector((state) => state.venueByVenueId.list);
 
@@ -215,5 +215,3 @@ function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason
         </Modal>
     );
 }
-
-export default FixtureProfile;

@@ -14,7 +14,7 @@ const STAT_LABELS = {
 const formatLabel = (propName) =>
     STAT_LABELS[propName] || propName.charAt(0).toUpperCase() + propName.slice(1);
 
-function StatsList({ selectedLeague, selectedPlayer, selectedSeason, playerStatsBySeason }) {
+export default function StatsList({ selectedLeague, selectedPlayer, selectedSeason, playerStatsBySeason }) {
     const theme = useTheme();
 
     const categories = useMemo(
@@ -156,5 +156,3 @@ function StatsList({ selectedLeague, selectedPlayer, selectedSeason, playerStats
         </Box>
     );
 }
-
-export default StatsList;

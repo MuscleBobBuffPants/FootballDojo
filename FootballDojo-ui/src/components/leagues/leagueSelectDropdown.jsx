@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { isNonEmptyObject, TOP5LEAGUES } from "../../global/constants";
 
-function LeagueSelectDropdown({ selectedLeague, handleLeagueChange }) {
+export default function LeagueSelectDropdown({ selectedLeague, handleLeagueChange }) {
     return (
         <Box>
             <FormControl sx={{ minWidth: 200 }} size="small">
@@ -44,5 +44,3 @@ function LeagueSelectDropdown({ selectedLeague, handleLeagueChange }) {
         </Box>
     )
 }
-
-export default LeagueSelectDropdown;

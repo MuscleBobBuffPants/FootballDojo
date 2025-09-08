@@ -7,7 +7,7 @@ import {
     Select
 } from "@mui/material";
 
-function LineupBuilderSeasonDropdown({ selectedSeason, handleSeasonChange }) {
+export default function LineupBuilderSeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
         <Box display="flex" alignItems="center" gap={2}>
             <FormControl sx={{ minWidth: 103 }} size="small">
@@ -50,4 +50,3 @@ function LineupBuilderSeasonDropdown({ selectedSeason, handleSeasonChange }) {
         </Box>
     )
 }
-export default LineupBuilderSeasonDropdown;

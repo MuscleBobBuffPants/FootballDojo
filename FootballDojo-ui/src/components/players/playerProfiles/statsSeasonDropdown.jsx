@@ -6,7 +6,7 @@ import {
     Select
 } from "@mui/material";
 
-function StatsSeasonDropdown({ selectedSeason, handleSeasonChange }) {
+export default function StatsSeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
         <Box sx={{ mb: .25, mt: .25 }}>
             <FormControl sx={{ minWidth: 103 }} size="small">
@@ -44,4 +44,3 @@ function StatsSeasonDropdown({ selectedSeason, handleSeasonChange }) {
         </Box>
     )
 }
-export default StatsSeasonDropdown;

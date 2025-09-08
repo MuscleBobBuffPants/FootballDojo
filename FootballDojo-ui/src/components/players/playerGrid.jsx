@@ -47,7 +47,7 @@ const columns = [
     },
 ];
 
-function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeamStatus }) {
+export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeamStatus }) {
     const dispatch = useDispatch();
 
     const [selectedId, setSelectedId] = useState(null);
@@ -256,5 +256,3 @@ function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeam
         </div>
     );
 }
-
-export default PlayerGrid;
