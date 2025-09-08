@@ -71,6 +71,13 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                     : theme.palette.background.paper
             }}
         >
+            <Typography
+                variant="body1"
+                color="text.primary"
+                sx={{ fontWeight: "bold", textAlign: 'center' }}
+            >
+                Player Stats
+            </Typography>
             {categories.length === 0 ? (
                 <Box
                     sx={{
@@ -111,8 +118,8 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                 <Box
                     key={idx}
                     sx={{
-                        borderTop: idx === 0 ? "none" : `1px solid ${theme.palette.divider}`,
-                        pt: idx === 0 ? 0 : 1,
+                        borderTop: `1px solid ${theme.palette.divider}`,
+                        pt: 1,
                         minWidth: 0,
                         width: '100%',
                         boxSizing: 'border-box',
