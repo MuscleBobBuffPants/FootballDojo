@@ -68,7 +68,6 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                     <Box
                         key={i}
                         sx={{
-                            mb: 1.5,
                             pt: i === 0 ? 0 : 1,
                             borderTop: i === 0 ? 'none' : `1px solid ${theme.palette.divider}`, // border line except for first group
                             maxWidth: '100%'
@@ -79,13 +78,13 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                                 fontWeight: 'bold',
                                 fontSize: 15,
                                 color: theme.palette.text.secondary,
-                                mb: 2,
+                                mb: .5,
                                 textAlign: 'center'
                             }}
                         >
                             {desc}
                         </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                             {players.map((p, idx) => (
                                 <Box
                                     key={idx}
