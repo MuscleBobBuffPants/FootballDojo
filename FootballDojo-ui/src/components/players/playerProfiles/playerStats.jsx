@@ -86,6 +86,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        mb: 8
                     }}
                 >
                     <Typography
@@ -104,6 +105,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+                        mb: 5.5
                     }}
                 >
                     <Typography
