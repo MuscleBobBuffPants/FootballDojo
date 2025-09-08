@@ -8,7 +8,6 @@ import {
 export default function SeasonDropdown({ selectedSeason, handleSeasonChange }) {
     return (
         <Box display="flex" alignItems="center" gap={2}>
-
             <FormControl sx={{ minWidth: 100 }} size="small">
                 <Select
                     id="season-select"

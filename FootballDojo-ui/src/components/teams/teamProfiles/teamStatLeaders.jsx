@@ -41,7 +41,11 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
         >
             <Typography
                 variant="body1"
-                sx={{ fontWeight: 'bold', color: theme.palette.text.primary, textAlign: 'center' }}
+                sx={{
+                    fontWeight: 'bold',
+                    color: theme.palette.text.primary,
+                    textAlign: 'center'
+                }}
             >
                 Team Leaders
             </Typography>
@@ -75,7 +79,8 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                                 fontWeight: 'bold',
                                 fontSize: 15,
                                 color: theme.palette.text.secondary,
-                                mb: 2
+                                mb: 2,
+                                textAlign: 'center'
                             }}
                         >
                             {desc}
