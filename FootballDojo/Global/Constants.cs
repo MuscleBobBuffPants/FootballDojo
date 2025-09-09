@@ -17,25 +17,25 @@ namespace FootballDojo.Global
                     Minutes = null,
                     Rating = null,
                 },
-                Substitutes = new SubstituteStats
+                Goals = new GoalStats
                 {
-                    In = null,
-                    Out = null,
+                    Total = null,
+                    Assists = null
                 },
                 Shots = new ShotStats
                 {
                     Total = null,
                     On = null
                 },
-                Goals = new GoalStats
-                {
-                    Total = null,
-                    Assists = null
-                },
                 Passes = new PassStats
                 {
                     Total = null,
                     Key = null
+                },
+                Dribbles = new DribbleStats
+                {
+                    Attempts = null,
+                    Success = null
                 },
                 Tackles = new TackleStats
                 {
@@ -48,26 +48,21 @@ namespace FootballDojo.Global
                     Total = null,
                     Won = null
                 },
-                Dribbles = new DribbleStats
-                {
-                    Attempts = null,
-                    Success = null
-                },
                 Fouls = new FoulStats
                 {
                     Committed = null,
                     Drawn = null
+                },
+                Penalty = new PenaltyStats
+                {
+                    Scored = null,
+                    Missed = null
                 },
                 Cards = new CardStats
                 {
                     Yellow = null,
                     Red = null,
                     YellowRed = null
-                },
-                Penalty = new PenaltyStats
-                {
-                    Scored = null,
-                    Missed = null
                 }
             }
         };

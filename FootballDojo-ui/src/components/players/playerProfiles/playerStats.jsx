@@ -2,13 +2,11 @@ import { Box, Typography, useTheme } from "@mui/material";
 import React, { useMemo } from 'react';
 
 const STAT_LABELS = {
-    appearences: "Apps",
-    minutes: "Mins.",
+    appearences: "Appearances",
+    rating: "Match Rating",
     on: "On Target",
     lineups: "Starts",
-    interceptions: "Steals",
-    in: "Came On",
-    out: "Left"
+    interceptions: "Steals"
 };
 
 const formatLabel = (propName) =>
