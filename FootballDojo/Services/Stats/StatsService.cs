@@ -32,7 +32,7 @@ namespace FootballDojo.Services
                         return 0;
                     }
                 ),
-                ("Mins. Played", p => p.Statistics[0].Games.Minutes ?? 0),
+                ("Minutes Played", p => p.Statistics[0].Games.Minutes ?? 0),
                 ("Shots", p => p.Statistics[0].Shots.Total ?? 0),
                 ("Shots On Target", p => p.Statistics[0].Shots.On ?? 0),
                 ("Passes", p => p.Statistics[0].Passes.Total ?? 0),

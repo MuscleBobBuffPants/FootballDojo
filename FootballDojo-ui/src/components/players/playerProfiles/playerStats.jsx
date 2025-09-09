@@ -5,8 +5,7 @@ const STAT_LABELS = {
     appearences: "Appearances",
     rating: "Match Rating",
     on: "On Target",
-    lineups: "Starts",
-    interceptions: "Steals"
+    lineups: "Starts"
 };
 
 const formatLabel = (propName) =>
