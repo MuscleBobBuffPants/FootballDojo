@@ -58,7 +58,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                 gap: 1,
                 p: 2,
                 maxHeight: 323,
-                minWidth: 175,
+                minWidth: 223,
                 boxSizing: 'border-box',
                 overflowY: "auto",
                 border: `2px solid ${theme.palette.divider}`,
@@ -166,8 +166,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                         ))}
                     </Box>
                 </Box>
-            ))
-            }
+            ))}
         </Box>
     );
 }

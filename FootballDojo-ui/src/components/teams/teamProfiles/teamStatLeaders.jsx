@@ -13,6 +13,7 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
     const theme = useTheme();
 
     const playerStatLeaders = useSelector((state) => state.statLeadersByTeam.list);
+    const playerStatLeadersStatus = useSelector((state) => state.statLeadersByTeam.status);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeamStats) && selectedSeason === 2025) {
@@ -64,7 +65,26 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                         : theme.palette.background.paper
                 })}
             >
-                {Object.entries(groupedTopStats).map(([desc, players], i) => (
+                {playerStatLeaders.length === 0 && playerStatLeadersStatus != "loading" ? (
+                    <Box
+                        sx={{
+                            width: '100%',
+                            height: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            mb: 5.5
+                        }}
+                    >
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ textAlign: 'center' }}
+                        >
+                            Currently Only <br /> Available for 2025...
+                        </Typography>
+                    </Box>
+                ) : Object.entries(groupedTopStats).map(([desc, players], i) => (
                     <Box
                         key={i}
                         sx={{
