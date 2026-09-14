@@ -7,11 +7,31 @@ import {
 } from "../../../global/constants";
 import { fetchVenueByVenueId } from "../../../redux/venues/fetchVenueByVenueId";
 import AnimatedModal from "../../common/AnimatedModal";
+import ErrorState from "../../common/ErrorState";
 import FixtureHeadToHeadGrid from "../fixtureProfiles/fixtureHeadToHeadGrid";
 import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
-function VenueImageBox({ venue, alt }) {
+function VenueImageBox({ venue, status, error, onRetry, alt }) {
     const isLoaded = venue && venue.image;
+
+    if (status === "failed") {
+        return (
+            <Box sx={{ width: "100%", maxWidth: 225, mt: 1, mb: 5 }}>
+                <Box
+                    sx={(theme) => ({
+                        width: "100%",
+                        height: 169,
+                        borderRadius: 2,
+                        border: `1px solid ${theme.palette.divider}`,
+                        backgroundColor: theme.palette.background.secondary,
+                        display: "flex",
+                    })}
+                >
+                    <ErrorState message={error} onRetry={onRetry} />
+                </Box>
+            </Box>
+        );
+    }
 
     return (
         <Box
@@ -72,10 +92,14 @@ function VenueImageBox({ venue, alt }) {
 export default function FixtureProfile({ modalOpen, handleClose, selectedLeague, selectedSeason, selectedFixture }) {
     const dispatch = useDispatch();
     const selectedVenue = useSelector((state) => state.venueByVenueId.list);
+    const venueStatus = useSelector((state) => state.venueByVenueId.status);
+    const venueError = useSelector((state) => state.venueByVenueId.error);
+
+    const fetchVenue = () => dispatch(fetchVenueByVenueId({ venueId: selectedFixture.venueId }));
 
     useEffect(() => {
         if (isNonEmptyObject(selectedFixture)) {
-            dispatch(fetchVenueByVenueId({ venueId: selectedFixture.venueId }));
+            fetchVenue();
         }
     }, [dispatch, selectedFixture]);
 
@@ -107,7 +131,13 @@ export default function FixtureProfile({ modalOpen, handleClose, selectedLeague,
                             <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
                                 {selectedFixture.venue}
                             </Typography>
-                            <VenueImageBox venue={selectedVenue} alt={selectedFixture.venue} />
+                            <VenueImageBox
+                                venue={selectedVenue}
+                                status={venueStatus}
+                                error={venueError}
+                                onRetry={fetchVenue}
+                                alt={selectedFixture.venue}
+                            />
                         </Box>
                         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, width: "100%" }}>
                             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>

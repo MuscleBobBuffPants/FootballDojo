@@ -21,19 +21,21 @@ export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, 
     const [selectedSeason, setSelectedSeason] = useState(2025);
 
     const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
-    //const status = useSelector((state) => state.playerStatsBySeason.status);
-    //const error = useSelector((state) => state.playerStatsBySeason.error);
+    const playerStatsStatus = useSelector((state) => state.playerStatsBySeason.status);
+    const playerStatsError = useSelector((state) => state.playerStatsBySeason.error);
 
     useEffect(() => {
         setSelectedSeason(2025);
     }, [modalOpen]);
 
+    const fetchStats = () => dispatch(fetchPlayerStatsBySeason({
+        playerId: selectedPlayer.id,
+        leagueId: selectedLeague.id,
+        season: selectedSeason
+    }));
+
     useEffect(() => {
-        dispatch(fetchPlayerStatsBySeason({
-            playerId: selectedPlayer.id,
-            leagueId: selectedLeague.id,
-            season: selectedSeason
-        }));
+        fetchStats();
     }, [dispatch, selectedLeague, selectedPlayer, selectedSeason]);
 
     const handleSeasonChange = (event) => {
@@ -76,8 +78,8 @@ export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, 
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 1,
-                        minWidth: 220,
-                        flexShrink: 0,
+                        minWidth: { xs: 0, md: 220 },
+                        flexShrink: { xs: 1, md: 0 },
                     }}>
                         {[
                             { label: 'Full Name', value: `${selectedPlayer.firstName} ${selectedPlayer.lastName}`, fullWidth: true },
@@ -159,6 +161,9 @@ export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, 
                                 selectedPlayer={selectedPlayer}
                                 selectedSeason={selectedSeason}
                                 playerStatsBySeason={playerStatsBySeason}
+                                status={playerStatsStatus}
+                                error={playerStatsError}
+                                onRetry={fetchStats}
                             />
                         </Box>
                     </Box>

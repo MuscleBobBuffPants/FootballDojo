@@ -1,5 +1,6 @@
 import {
     Box,
+    CircularProgress,
     Typography,
     useTheme
 } from '@mui/material';
@@ -7,6 +8,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isNonEmptyObject } from "../../../global/constants";
 import { clearStatLeaderData, fetchStatLeadersByTeam } from '../../../redux/stats/fetchStatLeadersByTeam';
+import ErrorState from '../../common/ErrorState';
 
 export default function TeamStatLeaders({ selectedLeague, selectedSeason, selectedTeamStats }) {
     const dispatch = useDispatch();
@@ -14,6 +16,13 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
 
     const playerStatLeaders = useSelector((state) => state.statLeadersByTeam.list);
     const playerStatLeadersStatus = useSelector((state) => state.statLeadersByTeam.status);
+    const playerStatLeadersError = useSelector((state) => state.statLeadersByTeam.error);
+
+    const retryFetch = () => dispatch(fetchStatLeadersByTeam({
+        leagueId: selectedLeague.id,
+        teamId: selectedTeamStats.team.id,
+        season: selectedSeason
+    }));
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeamStats) && selectedSeason === 2025) {
@@ -65,7 +74,13 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                         : theme.palette.background.paper
                 })}
             >
-                {playerStatLeaders.length === 0 && playerStatLeadersStatus != "loading" ? (
+                {playerStatLeadersStatus === "loading" ? (
+                    <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 5.5 }}>
+                        <CircularProgress size={24} />
+                    </Box>
+                ) : playerStatLeadersStatus === "failed" ? (
+                    <ErrorState message={playerStatLeadersError} onRetry={retryFetch} />
+                ) : playerStatLeaders.length === 0 ? (
                     <Box
                         sx={{
                             width: '100%',
@@ -114,13 +129,13 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                                         variant="body2"
                                         sx={{ color: theme.palette.text.primary, flex: 1 }}
                                     >
-                                        {p.name || '—'}
+                                        {p.name || 'ï¿½'}
                                     </Typography>
                                     <Typography
                                         variant="body2"
                                         sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}
                                     >
-                                        {p.stat ?? '—'}
+                                        {p.stat ?? 'ï¿½'}
                                     </Typography>
                                     {p.photo && (
                                         <img

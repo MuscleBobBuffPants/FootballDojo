@@ -46,6 +46,7 @@ export default function LineupBuilder({
     const [formation, setFormation] = useState("4-3-3");
     const [lineup, setLineup] = useState({});
     const [resetTrigger, setResetTrigger] = useState(0);
+    const [pendingStatFetches, setPendingStatFetches] = useState(0);
 
     // Auto-map lineup from API
     useEffect(() => {
@@ -78,18 +79,19 @@ export default function LineupBuilder({
             const player = playersByTeam.find(p => p.id === playerId);
             if (!player) return;
 
+            setPendingStatFetches(n => n + 1);
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
                 season: selectedSeason
             })).then(action => {
-                if (action.payload && action.payload.length > 0) {
+                if (Array.isArray(action.payload) && action.payload.length > 0) {
                     dispatch(setPlayerStatsForLineup({
                         slotId: slotId.toString(),
                         player: { id: player.id, ...action.payload[0] }
                     }));
                 }
-            });
+            }).finally(() => setPendingStatFetches(n => n - 1));
         });
     }, [selectedSeason, lineup]);
 
@@ -98,16 +100,19 @@ export default function LineupBuilder({
 
         // Fetch stats for assigned player
         if (player) {
+            setPendingStatFetches(n => n + 1);
             dispatch(fetchPlayerStatsBySeason({
                 playerId: player.id,
                 leagueId: selectedLeague.id,
                 season: selectedSeason
             })).then(action => {
-                dispatch(setPlayerStatsForLineup({
-                    slotId: slotId.toString(),
-                    player: { id: player.id, ...action.payload[0] }
-                }));
-            });
+                if (Array.isArray(action.payload) && action.payload.length > 0) {
+                    dispatch(setPlayerStatsForLineup({
+                        slotId: slotId.toString(),
+                        player: { id: player.id, ...action.payload[0] }
+                    }));
+                }
+            }).finally(() => setPendingStatFetches(n => n - 1));
         }
 
         // Update lineup locally
@@ -185,7 +190,8 @@ export default function LineupBuilder({
                         <PerformancePredictor
                             selectedSeason={selectedSeason}
                             handleSeasonChange={setSelectedSeason}
-                            resetTrigger={resetTrigger} />
+                            resetTrigger={resetTrigger}
+                            loading={pendingStatFetches > 0} />
                     </Box>
                 </Box>
             </Box>

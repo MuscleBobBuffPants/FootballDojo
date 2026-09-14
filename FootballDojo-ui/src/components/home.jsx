@@ -14,7 +14,7 @@ import { fetchLastCompletedFixtureId } from "../redux/fixtures/fetchLastComplete
 import { clearPlayers, fetchPlayersByTeam } from '../redux/players/fetchPlayersByTeam';
 import { clearPerformancePredictionData } from '../redux/statTracking/selectedPlayers';
 import { fetchTeamByName } from '../redux/teams/fetchTeamByName';
-import { fetchTeamsByLeagueId } from '../redux/teams/fetchTeamsByLeagueId';
+import { clearTeams, fetchTeamsByLeagueId } from '../redux/teams/fetchTeamsByLeagueId';
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -25,6 +25,7 @@ export default function Home() {
     const [selectedLineupSeason, setSelectedLineupSeason] = useState(2025);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
+    const teamsByLeagueIdStatus = useSelector((state) => state.teamsByLeagueId.status);
     const lineupByFixtureIdAndTeamId = useSelector((state) => state.lineupByFixtureIdAndTeamId.list);
     const playersByTeam = useSelector((state) => state.playersByTeam.list);
     const playersByTeamStatus = useSelector((state) => state.playersByTeam.status);
@@ -57,6 +58,7 @@ export default function Home() {
     const handleLeagueChange = (event) => {
         setSelectedLeague(event.target.value);
         setSelectedTeam(null);
+        dispatch(clearTeams());
         dispatch(clearPlayers());
         dispatch(clearPerformancePredictionData());
     };
@@ -91,7 +93,8 @@ export default function Home() {
                 <TeamSelectDropdown
                     teamsByLeagueId={teamsByLeagueId}
                     selectedTeam={selectedTeam}
-                    handleTeamChange={handleTeamChange} />
+                    handleTeamChange={handleTeamChange}
+                    loading={teamsByLeagueIdStatus === "loading"} />
             </Box>
 
             <Box

@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Stack, Tooltip, useTheme } from "@mui/material";
+import { Refresh } from "@mui/icons-material";
+import { Box, CircularProgress, IconButton, Stack, Tooltip, useTheme } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getResultColor } from "../../../global/constants";
@@ -42,7 +43,7 @@ export default function RecentFormBubbles({ selectedLeague, selectedSeason, sele
         useSelector((state) => state.recentFormByTeamId.status[selectedTeamId]) ||
         "idle";
 
-    useEffect(() => {
+    const fetchForm = useCallback(() => {
         if (selectedTeamId) {
             dispatch(
                 fetchRecentFormByTeamId({
@@ -52,6 +53,10 @@ export default function RecentFormBubbles({ selectedLeague, selectedSeason, sele
                 })
             );
         }
+    }, [dispatch, selectedLeague, selectedSeason, selectedTeamId]);
+
+    useEffect(() => {
+        fetchForm();
     }, [dispatch, selectedLeague, selectedTeamId]);
 
     const recentFormByTeamId = getRecentFormForTeam(
@@ -126,6 +131,24 @@ export default function RecentFormBubbles({ selectedLeague, selectedSeason, sele
                     }}
                 >
                     <CircularProgress size={20} />
+                </Box>
+            )}
+            {status === "failed" && (
+                <Box
+                    sx={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: theme.palette.background.secondary,
+                    }}
+                >
+                    <Tooltip title="Failed to load recent form — retry" arrow>
+                        <IconButton size="small" onClick={fetchForm}>
+                            <Refresh fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                 </Box>
             )}
         </Box>

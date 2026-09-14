@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    playerStats: {}, // [{ playerId, stats }]
+    playerStats: [], // [{ playerId, stats }]
 };
 
 const selectedPlayers = createSlice({

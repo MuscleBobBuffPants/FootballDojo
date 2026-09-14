@@ -81,6 +81,7 @@ export default function FixtureHeadToHeadGrid({ selectedFixture }) {
 
     const headToHeadFixtures = useSelector((state) => state.headToHeadFixtures.list);
     const status = useSelector((state) => state.headToHeadFixtures.status);
+    const error = useSelector((state) => state.headToHeadFixtures.error);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedFixture)) {
@@ -109,6 +110,8 @@ export default function FixtureHeadToHeadGrid({ selectedFixture }) {
         <PanelCard
             title={`Previous Matchups (${filteredFixtures.length})`}
             loading={status === "loading"}
+            error={status === "failed" ? error : null}
+            onRetry={() => dispatch(fetchHeadToHeadFixtures({ homeTeamId: selectedFixture.homeTeam.id, awayTeamId: selectedFixture.awayTeam.id }))}
             isEmpty={filteredFixtures.length === 0}
             emptyMessage="No previous matchups"
             maxHeight={320}

@@ -1,6 +1,7 @@
 import { Box, Skeleton, Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
+import ErrorState from "./ErrorState";
 import { listVariants } from "./motionVariants";
 
 function DefaultSkeletonRow({ index }) {
@@ -23,6 +24,8 @@ export default function PanelCard({
     title,
     control,
     loading = false,
+    error = null,
+    onRetry,
     isEmpty = false,
     emptyMessage,
     skeletonRows = 5,
@@ -68,6 +71,8 @@ export default function PanelCard({
                             <DefaultSkeletonRow key={i} index={i} />
                         ))}
                     </Stack>
+                ) : error ? (
+                    <ErrorState message={error} onRetry={onRetry} />
                 ) : isEmpty ? (
                     <Box sx={{ p: 3, textAlign: "center" }}>
                         <Typography variant="body2" color="text.secondary">

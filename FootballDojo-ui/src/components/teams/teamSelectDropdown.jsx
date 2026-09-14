@@ -7,18 +7,18 @@ import {
 } from "@mui/material";
 import { isNonEmptyObject } from "../../global/constants";
 
-export default function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange }) {
+export default function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, handleTeamChange, loading = false }) {
     return (
         <Box>
-            <FormControl sx={{ minWidth: 200 }} size="small">
+            <FormControl sx={{ minWidth: 200 }} size="small" disabled={loading}>
                 <InputLabel id="team-select-label">
-                    Team
+                    {loading ? "Loading teams…" : "Team"}
                 </InputLabel>
                 <Select
                     labelId="team-select-label"
                     id="team-select"
                     value={isNonEmptyObject(selectedTeam) ? selectedTeam : ""}
-                    label="Team"
+                    label={loading ? "Loading teams…" : "Team"}
                     onChange={handleTeamChange}
                     MenuProps={{
                         PaperProps: {

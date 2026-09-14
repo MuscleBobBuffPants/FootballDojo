@@ -8,6 +8,7 @@ import {
     clearPlayer,
     fetchPlayerProfileByPlayerId,
 } from "../../redux/players/fetchPlayerProfileByPlayerId";
+import { fetchPlayersByTeam } from "../../redux/players/fetchPlayersByTeam";
 import PanelCard from "../common/PanelCard";
 import { rowVariants } from "../common/motionVariants";
 
@@ -78,6 +79,7 @@ export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam
 
     const selectedPlayer = useSelector((state) => state.playerProfileByPlayerId.list);
     const playerProfileStatus = useSelector((state) => state.playerProfileByPlayerId.status);
+    const playersByTeamError = useSelector((state) => state.playersByTeam.error);
 
     useEffect(() => {
         if (selectedId) {
@@ -115,6 +117,8 @@ export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam
             <PanelCard
                 title={selectedTeam ? "Roster" : " "}
                 loading={playersByTeamStatus === "loading" || playerProfileStatus === "loading"}
+                error={playersByTeamStatus === "failed" ? playersByTeamError : null}
+                onRetry={() => dispatch(fetchPlayersByTeam({ teamId: selectedTeam.id }))}
                 isEmpty={filteredPlayers.length === 0}
                 emptyMessage="Please select a team..."
             >

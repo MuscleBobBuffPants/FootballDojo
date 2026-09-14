@@ -81,8 +81,8 @@ export default function TeamProfile({ modalOpen, handleClose, selectedLeague, se
                                 display: 'flex',
                                 flexDirection: 'column',
                                 gap: 1,
-                                minWidth: 300,
-                                flexShrink: 0,
+                                minWidth: { xs: 0, md: 300 },
+                                flexShrink: { xs: 1, md: 0 },
                                 flex: 1
                             }}
                         >

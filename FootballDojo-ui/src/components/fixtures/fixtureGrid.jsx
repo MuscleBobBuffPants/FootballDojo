@@ -84,6 +84,7 @@ export default function FixturesGrid({ selectedLeague, selectedTeam }) {
 
     const fixturesByLeagueId = useSelector((state) => state.fixturesByLeagueId.list);
     const status = useSelector((state) => state.fixturesByLeagueId.status);
+    const error = useSelector((state) => state.fixturesByLeagueId.error);
 
     useEffect(() => {
         setSelectedSeason(2025);
@@ -156,6 +157,8 @@ export default function FixturesGrid({ selectedLeague, selectedTeam }) {
                     )
                 }
                 loading={status === "loading"}
+                error={status === "failed" ? error : null}
+                onRetry={() => dispatch(fetchFixturesByLeagueId({ leagueId: selectedLeague.id, season: selectedSeason, teamId: selectedTeam.id }))}
                 isEmpty={filteredFixtures.length === 0}
                 emptyMessage={
                     !selectedTeam

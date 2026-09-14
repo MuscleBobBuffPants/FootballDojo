@@ -1,5 +1,6 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, CircularProgress, Typography, useTheme } from "@mui/material";
 import React, { useMemo } from 'react';
+import ErrorState from "../../common/ErrorState";
 
 const STAT_LABELS = {
     appearences: "Appearances",
@@ -11,7 +12,7 @@ const STAT_LABELS = {
 const formatLabel = (propName) =>
     STAT_LABELS[propName] || propName.charAt(0).toUpperCase() + propName.slice(1);
 
-export default function StatsList({ selectedLeague, selectedPlayer, selectedSeason, playerStatsBySeason }) {
+export default function StatsList({ selectedLeague, selectedPlayer, selectedSeason, playerStatsBySeason, status, error, onRetry }) {
     const theme = useTheme();
 
     const categories = useMemo(
@@ -58,7 +59,7 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
                 gap: 1,
                 p: 2,
                 maxHeight: 323,
-                minWidth: 223,
+                minWidth: { xs: 0, md: 223 },
                 boxSizing: 'border-box',
                 overflowY: "auto",
                 border: `2px solid ${theme.palette.divider}`,
@@ -75,25 +76,12 @@ export default function StatsList({ selectedLeague, selectedPlayer, selectedSeas
             >
                 Player Stats
             </Typography>
-            {categories.length === 0 ? (
-                <Box
-                    sx={{
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        mb: 8
-                    }}
-                >
-                    <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ textAlign: 'center' }}
-                    >
-                        Loading stats...
-                    </Typography>
+            {status === "loading" ? (
+                <Box sx={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 8 }}>
+                    <CircularProgress size={24} />
                 </Box>
+            ) : status === "failed" ? (
+                <ErrorState message={error} onRetry={onRetry} />
             ) : transformedStats.length === 0 ? (
                 <Box
                     sx={{

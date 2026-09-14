@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, CircularProgress, Grid, Typography, useTheme } from "@mui/material";
 import { keyframes } from "@mui/system";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const flashRed = (theme) => keyframes`
   100% { color: ${theme.palette.text.primary}; }
 `;
 
-export default function PerformancePredictor({ selectedSeason, handleSeasonChange, resetTrigger }) {
+export default function PerformancePredictor({ selectedSeason, handleSeasonChange, resetTrigger, loading = false }) {
     const playerStats = useSelector(state => state.selectedPlayers.playerStats);
     const prevValuesRef = useRef({});
     const firstUpdateRef = useRef(true); // skip first animation after mount, reset, or season change
@@ -107,7 +107,8 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
                         Potential Lineup Performance
                         (<Box component="span" sx={{ fontStyle: "italic", fontSize: 20 }}>per 90 mins</Box>)
                     </Typography>
-                    <Box sx={{ position: 'absolute', left: "80%", top: 5 }}>
+                    <Box sx={{ position: 'absolute', left: "80%", top: 5, display: "flex", alignItems: "center", gap: 1 }}>
+                        {loading && <CircularProgress size={18} />}
                         <LineupBuilderSeasonDropdown
                             selectedSeason={selectedSeason}
                             handleSeasonChange={handleSeasonChange}

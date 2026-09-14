@@ -94,6 +94,7 @@ export default function StandingsGrid({ selectedLeague, selectedTeam }) {
 
     const standingsByLeagueId = useSelector((state) => state.standingsByLeagueId.list);
     const status = useSelector((state) => state.standingsByLeagueId.status);
+    const error = useSelector((state) => state.standingsByLeagueId.error);
 
     const selectedTeamStats = useSelector((state) => state.teamStatsByTeam.stats);
 
@@ -156,6 +157,8 @@ export default function StandingsGrid({ selectedLeague, selectedTeam }) {
                     )
                 }
                 loading={status === "loading"}
+                error={status === "failed" ? error : null}
+                onRetry={() => dispatch(fetchStandingsByLeagueId({ leagueId: selectedLeague.id, season: selectedSeason }))}
                 isEmpty={standings.length === 0}
                 emptyMessage={!selectedLeague ? "Please select a league..." : "No standings available"}
             >
