@@ -26,11 +26,8 @@ export default function Home() {
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
     const lineupByFixtureIdAndTeamId = useSelector((state) => state.lineupByFixtureIdAndTeamId.list);
-    //const status = useSelector((state) => state.teamsByLeagueId.status);
-    //const error = useSelector((state) => state.teamsByLeagueId.error);
     const playersByTeam = useSelector((state) => state.playersByTeam.list);
     const playersByTeamStatus = useSelector((state) => state.playersByTeam.status);
-    //const error = useSelector((state) => state.playersByTeam.error);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague)) {
@@ -74,43 +71,47 @@ export default function Home() {
     ) : [];
 
     return (
-        <div>
-            <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, mb: 2 }} >
-                <LeagueLogoIcon
-                    selectedLeague={selectedLeague} />
-
-                <LeagueSelectDropdown
-                    selectedLeague={selectedLeague}
-                    handleLeagueChange={handleLeagueChange} />
-
-                <TeamLogoIcon
-                    selectedTeam={selectedTeam}
-                    teamLogo={teamLogo} />
-
+        <Box sx={{ maxWidth: 1600, mx: "auto" }}>
+            <Box
+                sx={(theme) => ({
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "flex-end",
+                    gap: 2,
+                    mb: 4,
+                    p: 2,
+                    borderRadius: 3,
+                    border: `1px solid ${theme.palette.divider}`,
+                    bgcolor: theme.palette.background.paper,
+                })}
+            >
+                <LeagueLogoIcon selectedLeague={selectedLeague} />
+                <LeagueSelectDropdown selectedLeague={selectedLeague} handleLeagueChange={handleLeagueChange} />
+                <TeamLogoIcon selectedTeam={selectedTeam} teamLogo={teamLogo} />
                 <TeamSelectDropdown
                     teamsByLeagueId={teamsByLeagueId}
                     selectedTeam={selectedTeam}
                     handleTeamChange={handleTeamChange} />
             </Box>
-            <div style={{ display: "flex", gap: "20px" }}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                    <StandingsGrid
+
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr", lg: "minmax(320px, 460px) 1fr" },
+                    gap: 3,
+                    alignItems: "start",
+                }}
+            >
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
+                    <StandingsGrid selectedLeague={selectedLeague} selectedTeam={selectedTeam} />
+                    <PlayerGrid
                         selectedLeague={selectedLeague}
-                        selectedTeam={selectedTeam} />
-                    <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                        <PlayerGrid
-                            selectedLeague={selectedLeague}
-                            selectedTeam={selectedTeam}
-                            playersByTeam={sortedPlayers}
-                            playersByTeamStatus={playersByTeamStatus} />
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                            <FixturesGrid
-                                selectedLeague={selectedLeague}
-                                selectedTeam={selectedTeam} />
-                        </Box>
-                    </Box>
+                        selectedTeam={selectedTeam}
+                        playersByTeam={sortedPlayers}
+                        playersByTeamStatus={playersByTeamStatus} />
+                    <FixturesGrid selectedLeague={selectedLeague} selectedTeam={selectedTeam} />
                 </Box>
-                <Box>
+                <Box sx={{ minWidth: 0 }}>
                     <LineupBuilder
                         selectedTeam={selectedTeam ? selectedTeam.name : ""}
                         playersByTeam={sortedPlayers}
@@ -120,7 +121,7 @@ export default function Home() {
                         lineupByFixtureIdAndTeamId={lineupByFixtureIdAndTeamId}
                     />
                 </Box>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 }

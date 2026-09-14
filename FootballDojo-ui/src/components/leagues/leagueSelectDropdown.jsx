@@ -29,7 +29,6 @@ export default function LeagueSelectDropdown({ selectedLeague, handleLeagueChang
                     }}
                     sx={(theme) => ({
                         backgroundColor: theme.palette.background.paper,
-                        borderRadius: 1,
                     })}
                 >
                     {[...TOP5LEAGUES]

@@ -20,22 +20,25 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
         <Box
             sx={(theme) => ({
                 position: "relative",
-                width: 1120,
-                height: 747,
-                bgcolor: theme.palette.mode === "dark" ? "#003300" : "#42763c",
-                border: "2px solid #eaeaea",
-                borderRadius: 1,
+                width: "100%",
+                maxWidth: 1120,
+                aspectRatio: "1120 / 747",
+                mx: "auto",
+                bgcolor: theme.palette.mode === "dark" ? "#0B2E17" : "#3E7A3C",
+                border: `2px solid ${theme.palette.divider}`,
+                borderRadius: 3,
                 overflow: "hidden",
             })}
         >
-            {/* Center circle at the halfway line */}
+            {/* Center circle at the halfway line — % of each axis relative to the
+                original 1120x747 design so it stays circular at any size */}
             <Box
                 sx={{
                     position: "absolute",
                     top: 0,
                     left: "50%",
-                    width: 100,
-                    height: 100,
+                    width: "8.93%",
+                    height: "13.39%",
                     border: "2px solid #eaeaea",
                     borderRadius: "50%",
                     transform: "translate(-50%, -50%)",
@@ -47,8 +50,8 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
                     position: "absolute",
                     bottom: 0,
                     left: "50%",
-                    width: 700,
-                    height: 150,
+                    width: "62.5%",
+                    height: "20.08%",
                     borderLeft: "2px solid #eaeaea",
                     borderRight: "2px solid #eaeaea",
                     borderTop: "2px solid #eaeaea",
@@ -62,8 +65,8 @@ const SoccerField = ({ positions, lineup, players, onAssign }) => {
                     position: "absolute",
                     bottom: 0,
                     left: "50%",
-                    width: 250,
-                    height: 60,
+                    width: "22.32%",
+                    height: "8.03%",
                     borderLeft: "2px solid #eaeaea",
                     borderRight: "2px solid #eaeaea",
                     borderTop: "2px solid #eaeaea",

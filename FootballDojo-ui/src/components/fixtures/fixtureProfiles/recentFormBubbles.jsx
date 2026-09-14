@@ -1,15 +1,10 @@
-﻿import { Box, CircularProgress, Stack, Tooltip, useTheme } from "@mui/material";
+import { Box, CircularProgress, Stack, Tooltip, useTheme } from "@mui/material";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    DARKMODE_GREEN,
-    DARKMODE_RED,
-    DARKMODE_TEXT,
-    LIGHTMODE_GREEN,
-    LIGHTMODE_RED,
-    LIGHTMODE_TEXT
-} from "../../../global/constants";
+import { getResultColor } from "../../../global/constants";
 import { fetchRecentFormByTeamId } from "../../../redux/fixtures/fetchRecentFormByTeamId";
+
+const RESULT_LABELS = { W: "Win", D: "Draw", L: "Loss" };
 
 function getRecentFormForTeam(fixtures, selectedTeamId) {
     if (!fixtures) return [];
@@ -65,29 +60,7 @@ export default function RecentFormBubbles({ selectedLeague, selectedSeason, sele
     );
 
     const paletteFor = useCallback(
-        (r) => {
-            switch (r) {
-                case "W":
-                    return {
-                        bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN,
-                        fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT,
-                        label: "Win"
-                    };
-                case "D":
-                    return {
-                        bg: theme.palette.grey[500],
-                        fg: theme.palette.getContrastText(theme.palette.grey[500]),
-                        label: "Draw"
-                    };
-                case "L":
-                default:
-                    return {
-                        bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
-                        fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT,
-                        label: "Loss"
-                    };
-            }
-        },
+        (r) => ({ ...getResultColor(theme, r), label: RESULT_LABELS[r] ?? "" }),
         [theme]
     );
 
@@ -148,21 +121,11 @@ export default function RecentFormBubbles({ selectedLeague, selectedSeason, sele
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: theme.palette.mode === 'dark'
-                            ? theme.palette.background.secondary
-                            : theme.palette.background.secondary,
-                        color: theme.palette.mode === "dark"
-                            ? DARKMODE_TEXT
-                            : LIGHTMODE_TEXT,
+                        backgroundColor: theme.palette.background.secondary,
                         pointerEvents: "none"
                     }}
                 >
-                    <CircularProgress size={20}
-                        sx={(theme) => ({
-                            color: theme.palette.mode === "dark"
-                                ? DARKMODE_TEXT
-                                : LIGHTMODE_TEXT
-                        })} />
+                    <CircularProgress size={20} />
                 </Box>
             )}
         </Box>

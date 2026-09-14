@@ -1,51 +1,74 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box, Chip, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PlayerProfile from "../../components/players/playerProfiles/playerProfile";
-import {
-    DARKMODE_GRID_BORDER,
-    DARKMODE_TEXT,
-    LIGHTMODE_GRID_BORDER,
-    LIGHTMODE_TEXT,
-    POSITION_ORDER,
-    isNonEmptyObject
-} from "../../global/constants";
+import { isNonEmptyObject, POSITION_ORDER } from "../../global/constants";
 import {
     clearPlayer,
     fetchPlayerProfileByPlayerId,
 } from "../../redux/players/fetchPlayerProfileByPlayerId";
+import PanelCard from "../common/PanelCard";
+import { rowVariants } from "../common/motionVariants";
 
-function CustomNoRowsOverlay({ selectedTeam }) {
+const POSITION_COLORS = {
+    Goalkeeper: "#F5A623",
+    Defender: "#3E9CFF",
+    Midfielder: "#22E07A",
+    Attacker: "#F0475C",
+};
+
+function PlayerRow({ player, onClick }) {
     return (
         <Box
-            sx={{
-                p: 2,
-                textAlign: "center",
-                width: "100%",
-                color: "#777",
-            }}
+            component={motion.div}
+            variants={rowVariants}
+            onClick={onClick}
+            sx={(theme) => ({
+                display: "flex",
+                alignItems: "center",
+                gap: 1.5,
+                px: 2,
+                py: 1.1,
+                cursor: "pointer",
+                borderTop: `1px solid ${theme.palette.divider}`,
+                transition: "background-color 120ms ease",
+                "&:hover": { bgcolor: theme.palette.background.secondary },
+            })}
         >
-            <Typography variant="body1">
-                {!selectedTeam && "Please select a team..."}
+            <Box
+                sx={(theme) => ({
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    flexShrink: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    bgcolor: theme.palette.background.secondary,
+                    color: "text.secondary",
+                })}
+            >
+                {player.number}
+            </Box>
+            <Typography variant="body2" sx={{ flex: 1, minWidth: 0, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {player.name}
             </Typography>
+            <Chip
+                label={player.position}
+                size="small"
+                sx={{
+                    fontSize: 11,
+                    height: 22,
+                    color: POSITION_COLORS[player.position] ?? "text.secondary",
+                    bgcolor: `${POSITION_COLORS[player.position] ?? "#888"}22`,
+                }}
+            />
         </Box>
     );
 }
-
-const columns = [
-    { field: "number", headerName: "", width: 75, sortable: false },
-    { field: "name", headerName: "Name", width: 250, sortable: false },
-    {
-        field: "position",
-        headerName: "Position",
-        width: 155,
-        sortable: false,
-        sortComparator: (v1, v2) => {
-            return POSITION_ORDER.indexOf(v1) - POSITION_ORDER.indexOf(v2);
-        },
-    },
-];
 
 export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam, playersByTeamStatus }) {
     const dispatch = useDispatch();
@@ -53,12 +76,8 @@ export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam
     const [selectedId, setSelectedId] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
-    const selectedPlayer = useSelector(
-        (state) => state.playerProfileByPlayerId.list
-    );
-    const playerProfileStatus = useSelector(
-        (state) => state.playerProfileByPlayerId.status
-    );
+    const selectedPlayer = useSelector((state) => state.playerProfileByPlayerId.list);
+    const playerProfileStatus = useSelector((state) => state.playerProfileByPlayerId.status);
 
     useEffect(() => {
         if (selectedId) {
@@ -72,10 +91,6 @@ export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam
         }
     }, [selectedPlayer]);
 
-    const handleRowClick = (player) => {
-        setSelectedId(player.id);
-    };
-
     const handleClose = () => {
         setModalOpen(false);
         setSelectedId(null);
@@ -88,171 +103,33 @@ export default function PlayerGrid({ selectedLeague, selectedTeam, playersByTeam
             .map((player) => ({
                 id: player.id,
                 name: player.name,
-                number: `# ${player.number}`,
+                number: player.number,
                 age: player.age,
                 position: player.position,
             }))
+            .sort((a, b) => POSITION_ORDER.indexOf(a.position) - POSITION_ORDER.indexOf(b.position))
         : [];
 
     return (
-        <div style={{ textAlign: "left", position: "relative" }}>
-            <Box
-                sx={(theme) => ({
-                    display: "inline-block",
-                    marginLeft: 0,
-                    backgroundColor: DARKMODE_TEXT,
-                    border:
-                        theme.palette.mode === "dark"
-                            ? DARKMODE_GRID_BORDER
-                            : LIGHTMODE_GRID_BORDER,
-                    borderRadius: 1,
-                    position: "relative", // for overlay
-                })}
+        <>
+            <PanelCard
+                title={selectedTeam ? "Roster" : " "}
+                loading={playersByTeamStatus === "loading" || playerProfileStatus === "loading"}
+                isEmpty={filteredPlayers.length === 0}
+                emptyMessage="Please select a team..."
             >
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        p: 1,
-                        backgroundColor: (theme) =>
-                            theme.palette.mode === "light"
-                                ? "transparent"
-                                : theme.palette.background.default,
-                    }}
-                >
-                    <Typography
-                        variant="h6"
-                        sx={(theme) => ({
-                            textAlign: "center",
-                            p: 1,
-                            backgroundColor:
-                                theme.palette.mode === "light"
-                                    ? "transparent"
-                                    : theme.palette.background.default
-                        })}
-                    >
-                        {selectedTeam ? `Roster` : "\u00A0"}
-                    </Typography>
-                </Box>
-                <div style={{ position: "relative" }}>
-                    <DataGrid
-                        rows={filteredPlayers}
-                        columns={columns}
-                        sortModel={[{ field: "position", sort: "asc" }]}
-                        disableColumnResize
-                        disablePagination
-                        hideFooter
-                        hideFooterSelectedRowCount
-                        disableColumnMenu
-                        onRowClick={handleRowClick}
-                        slots={{
-                            noRowsOverlay: () => (
-                                <CustomNoRowsOverlay selectedTeam={selectedTeam} />
-                            ),
-                        }}
-                        sx={(theme) => ({
-                            width: 500,
-                            height: 52 * 5 + 56, // 5 rows visible
-                            fontSize: 15,
-                            backgroundColor:
-                                theme.palette.mode === "light" ? "transparent" : "",
-                            "& .MuiDataGrid-cell": {
-                                backgroundColor:
-                                    theme.palette.mode === "light" ? "transparent" : "",
-                            },
-                            "& .MuiDataGrid-columnHeader": {
-                                backgroundColor:
-                                    theme.palette.mode === "light" ? DARKMODE_TEXT : "",
-                            },
-                            "& .MuiDataGrid-columnHeaders": {
-                                backgroundColor:
-                                    theme.palette.mode === "light" ? DARKMODE_TEXT : "",
-                            },
-                            "& .MuiDataGrid-columnHeader:focus, & .MuiDataGrid-cell:focus": {
-                                outline: "none",
-                                userSelect: "none",
-                            },
-                            "& .MuiDataGrid-columnSeparator": {
-                                display: "none",
-                            },
-                            "& .MuiDataGrid-row:hover": {
-                                cursor: "pointer",
-                            },
-                            filter: playersByTeamStatus === "loading" ? "blur(2px)" :
-                                playerProfileStatus === "loading" ? "blur(2px)" : "none"
-                        })}
-                    />
-
-                    {playersByTeamStatus === "loading" && (
-                        <Box
-                            sx={(theme) => ({
-                                position: "absolute",
-                                inset: 0,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: theme.palette.mode === 'dark'
-                                    ? theme.palette.background.secondary
-                                    : theme.palette.background.secondary,
-                                color: theme.palette.mode === "dark"
-                                    ? DARKMODE_TEXT
-                                    : LIGHTMODE_TEXT,
-                                zIndex: 10,
-                            })}
-                        >
-                            <CircularProgress size={20}
-                                sx={(theme) => ({
-                                    color: theme.palette.mode === "dark"
-                                        ? DARKMODE_TEXT
-                                        : LIGHTMODE_TEXT, mb: 2
-                                })} />
-                            <Typography variant="body1" fontWeight="bold">
-                                Loading Players...
-                            </Typography>
-                        </Box>
-                    )}
-
-                    {playerProfileStatus === "loading" && (
-                        <Box
-                            sx={(theme) => ({
-                                position: "absolute",
-                                inset: 0,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: theme.palette.mode === 'dark'
-                                    ? theme.palette.background.secondary
-                                    : theme.palette.background.secondary,
-                                color: theme.palette.mode === "dark"
-                                    ? DARKMODE_TEXT
-                                    : LIGHTMODE_TEXT,
-                                zIndex: 10,
-                            })}
-                        >
-                            <CircularProgress size={20}
-                                sx={(theme) => ({
-                                    color: theme.palette.mode === "dark"
-                                        ? DARKMODE_TEXT
-                                        : LIGHTMODE_TEXT, mb: 2
-                                })} />
-                            <Typography variant="body1" fontWeight="bold">
-                                Loading Player Profile...
-                            </Typography>
-                        </Box>
-                    )}
-                </div>
-                {isNonEmptyObject(selectedPlayer) &&
-                    <PlayerProfile
-                        modalOpen={modalOpen}
-                        handleClose={handleClose}
-                        selectedLeague={selectedLeague}
-                        selectedPlayer={selectedPlayer}
-                    />
-                }
-            </Box>
-        </div>
+                {filteredPlayers.map((player) => (
+                    <PlayerRow key={player.id} player={player} onClick={() => setSelectedId(player.id)} />
+                ))}
+            </PanelCard>
+            {isNonEmptyObject(selectedPlayer) && (
+                <PlayerProfile
+                    modalOpen={modalOpen}
+                    handleClose={handleClose}
+                    selectedLeague={selectedLeague}
+                    selectedPlayer={selectedPlayer}
+                />
+            )}
+        </>
     );
 }

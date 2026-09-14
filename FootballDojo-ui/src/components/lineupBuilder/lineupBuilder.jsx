@@ -11,15 +11,7 @@ import html2canvas from "html2canvas";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import PerformancePredictor from '../../components/lineupBuilder/performancePredictor';
-import {
-    DARKMODE_PURPLE,
-    DARKMODE_RED,
-    DARKMODE_TEXT,
-    FORMATIONS,
-    LIGHTMODE_PURPLE,
-    LIGHTMODE_RED,
-    LIGHTMODE_TEXT
-} from "../../global/constants";
+import { FORMATIONS } from "../../global/constants";
 import { clearPerformancePredictionData, setPlayerStatsForLineup } from "../../redux/statTracking/selectedPlayers";
 import { fetchPlayerStatsBySeason } from "../../redux/stats/fetchPlayerStatsBySeason";
 import SoccerField from "../lineupBuilder/soccerField";
@@ -167,9 +159,19 @@ export default function LineupBuilder({
     };
 
     return (
-        <Box sx={{ width: 1000, display: "flex", gap: 2 }}>
-            <Box flex={1}>
-                <Typography variant="h5" align="center" sx={{ mb: 1 }}>
+        <Box
+            sx={(theme) => ({
+                borderRadius: 3,
+                border: `1px solid ${theme.palette.divider}`,
+                bgcolor: theme.palette.background.paper,
+                p: { xs: 2, sm: 3 },
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                gap: 3,
+            })}
+        >
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Typography variant="h5" align="center" sx={{ mb: 2 }}>
                     Lineup Builder
                 </Typography>
                 <Box ref={fieldRef}>
@@ -187,7 +189,16 @@ export default function LineupBuilder({
                     </Box>
                 </Box>
             </Box>
-            <Box mt={8}>
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: { xs: "row", md: "column" },
+                    flexWrap: "wrap",
+                    alignItems: { xs: "center", md: "stretch" },
+                    gap: 2,
+                    mt: { md: 8 },
+                }}
+            >
                 <FormControl sx={{ minWidth: 125 }} size="small">
                     <InputLabel id="formation-select-label">
                         Formation:
@@ -201,7 +212,6 @@ export default function LineupBuilder({
                         sx={theme => ({
                             backgroundColor: theme.palette.background.paper,
                             color: "text.primary",
-                            borderRadius: 1
                         })}
                     >
                         {Object.keys(FORMATIONS).map(f => (
@@ -210,33 +220,18 @@ export default function LineupBuilder({
                     </Select>
                 </FormControl>
 
-                <Box mt={2}>
-                    <Button
-                        onClick={handleReset}
-                        sx={theme => ({
-                            borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
-                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-                        })}
-                    >
-                        Reset Lineup
-                    </Button>
-                </Box>
+                <Button variant="outlined" color="error" onClick={handleReset}>
+                    Reset Lineup
+                </Button>
 
-                <Box mt={2}>
-                    <Button
-                        variant="contained"
-                        onClick={handleGeneratePNG}
-                        sx={theme => ({
-                            borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
-                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-                        })}
-                        disabled={!isLineupComplete()}
-                    >
-                        Download Lineup & Share
-                    </Button>
-                </Box>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleGeneratePNG}
+                    disabled={!isLineupComplete()}
+                >
+                    Download Lineup & Share
+                </Button>
             </Box>
         </Box>
     );

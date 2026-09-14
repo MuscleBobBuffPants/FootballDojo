@@ -1,4 +1,4 @@
-import { DarkMode, LightMode } from "@mui/icons-material";
+import { DarkMode, LightMode, SportsSoccer } from "@mui/icons-material";
 import { Box, CssBaseline, IconButton, Link, ThemeProvider, Typography } from "@mui/material";
 import { useState } from "react";
 import Home from '../components/home';
@@ -14,39 +14,74 @@ export default function App() {
     return (
         <ThemeProvider theme={getTheme(mode)}>
             <CssBaseline />
-            <Box width="100%" display="flex" justifyContent="flex-start" p={2}>
-                <IconButton onClick={toggleMode} color="inherit">
-                    {mode === "light" ? <LightMode /> : <DarkMode />}
-                </IconButton>
-            </Box>
-            <Box width="100%" textAlign="center">
-                <Typography variant="h4" component="h2" sx={{ pb: 3 }}>
-                    Football Dojo
-                </Typography>
-            </Box>
-            <Home />
-            <Box width="100%" textAlign="center" sx={{ pt: 12 }}>
-                <Typography component="h2" align="center" variant="body2" color="text.secondary">
-                    2025 Football Dojo | All Rights Reserved | Made & Operated by MuscleBobBuffPants
-                    | Data Provided By:{' '}
-                    <Link
-                        href="https://api-sports.io/sports/football"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Visit API-Sports website"
+            <Box sx={{ px: { xs: 2, sm: 3, md: 5 }, py: 3 }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        mb: { xs: 3, md: 5 },
+                    }}
+                >
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Box
+                            sx={(theme) => ({
+                                width: 40,
+                                height: 40,
+                                borderRadius: "50%",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                bgcolor: theme.palette.primary.main,
+                                color: theme.palette.primary.contrastText,
+                            })}
+                        >
+                            <SportsSoccer fontSize="small" />
+                        </Box>
+                        <Typography
+                            variant="h5"
+                            component="h1"
+                            sx={{ fontWeight: 800, letterSpacing: -0.5 }}
+                        >
+                            Football Dojo
+                        </Typography>
+                    </Box>
+                    <IconButton
+                        onClick={toggleMode}
+                        sx={(theme) => ({
+                            bgcolor: theme.palette.background.paper,
+                            border: `1px solid ${theme.palette.divider}`,
+                        })}
                     >
-                        API-Sports
-                    </Link> {' '}
-                    | {' '}
-                    <Link
-                        href="https://github.com/MuscleBobBuffPants/FootballDojo"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="View FootballDojo GitHub repository"
-                    >
-                        GitHub
-                    </Link>
-                </Typography>
+                        {mode === "light" ? <LightMode fontSize="small" /> : <DarkMode fontSize="small" />}
+                    </IconButton>
+                </Box>
+
+                <Home />
+
+                <Box sx={{ width: "100%", textAlign: "center", pt: 10, pb: 2 }}>
+                    <Typography variant="body2" color="text.secondary">
+                        2025 Football Dojo | All Rights Reserved | Made & Operated by MuscleBobBuffPants
+                        {' '}| Data Provided By:{' '}
+                        <Link
+                            href="https://api-sports.io/sports/football"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Visit API-Sports website"
+                        >
+                            API-Sports
+                        </Link>
+                        {' '}|{' '}
+                        <Link
+                            href="https://github.com/MuscleBobBuffPants/FootballDojo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="View FootballDojo GitHub repository"
+                        >
+                            GitHub
+                        </Link>
+                    </Typography>
+                </Box>
             </Box>
         </ThemeProvider>
     );

@@ -29,7 +29,6 @@ export default function TeamSelectDropdown({ teamsByLeagueId, selectedTeam, hand
                     }}
                     sx={(theme) => ({
                         backgroundColor: theme.palette.background.paper,
-                        borderRadius: 1,
                     })}
                 >
                     {[...teamsByLeagueId]

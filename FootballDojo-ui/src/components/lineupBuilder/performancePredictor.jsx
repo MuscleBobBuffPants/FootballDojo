@@ -2,19 +2,19 @@ import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { keyframes } from "@mui/system";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { DARKMODE_GRID_BORDER, LIGHTMODE_GRID_BORDER } from "../../global/constants";
+import AnimatedNumber from "../common/AnimatedNumber";
 import LineupBuilderSeasonDropdown from "../lineupBuilder/lineupBuilderSeasonDropdown";
 
 // Animations that end in the correct theme text color
 const flashGreen = (theme) => keyframes`
-  0% { color: green; }
-  99% { color: green; }
+  0% { color: ${theme.palette.result.win}; }
+  99% { color: ${theme.palette.result.win}; }
   100% { color: ${theme.palette.text.primary}; }
 `;
 
 const flashRed = (theme) => keyframes`
-  0% { color: red; }
-  99% { color: red; }
+  0% { color: ${theme.palette.result.loss}; }
+  99% { color: ${theme.palette.result.loss}; }
   100% { color: ${theme.palette.text.primary}; }
 `;
 
@@ -96,11 +96,10 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
     const skipAnimation = playerStats.length === 0 || firstSeasonChangeRef.current;
 
     return (
-        <Box sx={theme => ({
-            backgroundColor: theme.palette.background.default,
-            height: "100%",
-            border: theme.palette.mode === "dark" ? DARKMODE_GRID_BORDER : LIGHTMODE_GRID_BORDER,
-            borderRadius: 1,
+        <Box sx={(theme) => ({
+            backgroundColor: theme.palette.background.paper,
+            border: `1px solid ${theme.palette.divider}`,
+            borderRadius: 3,
         })}>
             <Box sx={{ maxWidth: 1000, mx: "auto", mb: 3.5 }}>
                 <Box sx={{ position: 'relative', mb: 3.5, mt: 1, width: '100%', textAlign: 'center' }}>
@@ -118,30 +117,32 @@ export default function PerformancePredictor({ selectedSeason, handleSeasonChang
                 <Grid container spacing={5} wrap="wrap">
                     {fields.map((field, i) => {
                         const prevValue = prevValuesRef.current[field.label];
-                        let sx = { fontSize: 15 };
+                        let sx = { fontSize: 15, fontFamily: "'Space Grotesk', 'Inter', sans-serif", fontWeight: 700 };
 
                         if (!skipAnimation && prevValue !== undefined) {
-                            if (field.value > prevValue) sx.animation = `${flashGreen(theme)} 5s linear`;
-                            else if (field.value < prevValue) sx.animation = `${flashRed(theme)} 5s linear`;
+                            if (field.value > prevValue) sx.animation = `${flashGreen(theme)} 1.2s linear`;
+                            else if (field.value < prevValue) sx.animation = `${flashRed(theme)} 1.2s linear`;
                         }
 
                         return (
                             <Grid key={i}>
-                                <Box sx={{
+                                <Box sx={(theme) => ({
                                     width: 220,
-                                    border: "1px solid gray",
-                                    borderRadius: 1,
+                                    border: `1px solid ${theme.palette.divider}`,
+                                    borderRadius: 2,
                                     px: 1.5,
                                     py: 1,
                                     display: "flex",
                                     justifyContent: "space-between",
                                     alignItems: "center",
-                                    bgcolor: "background.paper",
-                                }}>
+                                    bgcolor: theme.palette.background.secondary,
+                                })}>
                                     <Typography variant="body2" sx={{ fontSize: 16 }}>
                                         {field.label}:
                                     </Typography>
-                                    <Typography variant="body2" sx={sx}>{field.value}</Typography>
+                                    <Typography variant="body2" sx={sx}>
+                                        <AnimatedNumber value={field.value} />
+                                    </Typography>
                                 </Box>
                             </Grid>
                         );

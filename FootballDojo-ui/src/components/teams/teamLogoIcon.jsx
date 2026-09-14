@@ -12,18 +12,18 @@ export default function TeamLogoIcon({ selectedTeam, teamLogo }) {
     return (
         <Box>
             <Box
-                sx={{
-                    width: 69,
-                    height: 69,
+                sx={(theme) => ({
+                    width: 56,
+                    height: 56,
                     bgcolor: teamLogoBackground,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    borderRadius: 2,
+                    borderRadius: "50%",
                     overflow: "hidden",
-                    border: "1px solid ",
-                    borderColor: isNonEmptyObject(selectedTeam) ? "#ccc" : "transparent"
-                }}
+                    border: `1px solid ${isNonEmptyObject(selectedTeam) ? theme.palette.divider : "transparent"}`,
+                    boxShadow: isNonEmptyObject(selectedTeam) ? "0 4px 14px -6px rgba(0,0,0,0.4)" : "none",
+                })}
             >
                 {isNonEmptyObject(selectedTeam) &&
                     <img

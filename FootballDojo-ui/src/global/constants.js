@@ -58,34 +58,26 @@ export const convertKgToLbs = (kgString) => {
     return `${lbs.toFixed(1)} lbs`;
 };
 
-export const getGoalColor = (theme, teamGoals, otherGoals) => {
-    if (teamGoals > otherGoals)
-        return {
-            bg: theme.palette.mode === "dark" ? DARKMODE_GREEN : LIGHTMODE_GREEN,
-            fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-        };
-    if (teamGoals < otherGoals)
-        return {
-            bg: theme.palette.mode === "dark" ? DARKMODE_RED : LIGHTMODE_RED,
-            fg: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-        };
-    return {
-        bg: theme.palette.grey[500],
-        fg: theme.palette.getContrastText(theme.palette.grey[500])
-    };
+// Semantic win/loss/draw colors live on the theme (theme.palette.result.*)
+// so every component reads from one place regardless of light/dark mode.
+export const getResultColor = (theme, result) => {
+    switch (result) {
+        case "W":
+            return { bg: theme.palette.result.win, fg: theme.palette.result.winText };
+        case "L":
+            return { bg: theme.palette.result.loss, fg: theme.palette.result.lossText };
+        case "D":
+            return { bg: theme.palette.result.draw, fg: theme.palette.result.drawText };
+        default:
+            return { bg: theme.palette.background.paper, fg: theme.palette.text.disabled };
+    }
 };
 
-// Button and Bubble color combos
-export const DARKMODE_GREEN = "#006400";
-export const LIGHTMODE_GREEN = "#90ee90";
-export const DARKMODE_PURPLE = "#4b0052";
-export const LIGHTMODE_PURPLE = "#d9b3ff";
-export const DARKMODE_RED = "#8b0000";
-export const LIGHTMODE_RED = "#ff7f7f";
-export const DARKMODE_TEXT = "#ffffff";
-export const LIGHTMODE_TEXT = "#000000";
-export const DARKMODE_GRID_BORDER = "2px solid #ccc";
-export const LIGHTMODE_GRID_BORDER = "2px solid #000000";
+export const getGoalColor = (theme, teamGoals, otherGoals) => {
+    if (teamGoals > otherGoals) return getResultColor(theme, "W");
+    if (teamGoals < otherGoals) return getResultColor(theme, "L");
+    return getResultColor(theme, "D");
+};
 
 // Europe's Top 5 Leagues
 export const TOP5LEAGUES = [

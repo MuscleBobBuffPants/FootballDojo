@@ -1,15 +1,12 @@
-import { Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    DARKMODE_PURPLE,
-    DARKMODE_TEXT,
-    LIGHTMODE_PURPLE,
-    LIGHTMODE_TEXT,
     formatDateForFixtureProfile,
     isNonEmptyObject,
 } from "../../../global/constants";
 import { fetchVenueByVenueId } from "../../../redux/venues/fetchVenueByVenueId";
+import AnimatedModal from "../../common/AnimatedModal";
 import FixtureHeadToHeadGrid from "../fixtureProfiles/fixtureHeadToHeadGrid";
 import RecentFormBubbles from "../fixtureProfiles/recentFormBubbles";
 
@@ -33,17 +30,16 @@ function VenueImageBox({ venue, alt }) {
         >
             {isLoaded ? (
                 <Box
-                    component={isLoaded ? "img" : "div"}
-                    src={isLoaded ? venue.image : undefined}
+                    component="img"
+                    src={venue.image}
                     alt={alt}
-                    sx={{
+                    sx={(theme) => ({
                         width: "100%",
                         height: 169,
                         objectFit: "contain",
                         borderRadius: 2,
-                        border: "1px solid rgba(255,255,255,0.3)",
-                        zIndex: 1,
-                    }}
+                        border: `1px solid ${theme.palette.divider}`,
+                    })}
                 />
             ) : (
                 <Box
@@ -51,42 +47,21 @@ function VenueImageBox({ venue, alt }) {
                         width: "100%",
                         height: 169,
                         borderRadius: 2,
-                        border: "1px solid rgba(255,255,255,0.3)",
+                        border: `1px solid ${theme.palette.divider}`,
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: theme.palette.mode === 'dark'
-                            ? theme.palette.background.secondary
-                            : theme.palette.background.secondary,
-                        color: theme.palette.mode === "dark"
-                            ? DARKMODE_TEXT
-                            : LIGHTMODE_TEXT,
-                        fontWeight: "bold",
-                        zIndex: 10,
-                        backdropFilter: "blur(3px)",
+                        backgroundColor: theme.palette.background.secondary,
                         gap: 1,
                     })}
                 >
-                    <CircularProgress size={20}
-                        sx={(theme) => ({
-                            color: theme.palette.mode === "dark"
-                                ? DARKMODE_TEXT
-                                : LIGHTMODE_TEXT, mb: 2
-                        })} />
+                    <CircularProgress size={20} sx={{ mb: 2 }} />
                     <Typography>Loading Venue...</Typography>
                 </Box>
             )}
             {venue && venue.capacity && (
-                <Typography
-                    variant="subtitle2"
-                    fontWeight="bold"
-                    color="text.secondary"
-                    sx={{
-                        mt: 1,
-                        textAlign: "center",
-                    }}
-                >
+                <Typography variant="subtitle2" fontWeight="bold" color="text.secondary" sx={{ mt: 1, textAlign: "center" }}>
                     Capacity: {venue.capacity.toLocaleString()}
                 </Typography>
             )}
@@ -105,113 +80,94 @@ export default function FixtureProfile({ modalOpen, handleClose, selectedLeague,
     }, [dispatch, selectedFixture]);
 
     return (
-        <Modal
-            open={modalOpen}
-            onClose={handleClose}
-            BackdropProps={{
-                sx: { backgroundColor: "rgba(0,0,0,0.7)", backdropFilter: "blur(5px)" },
-            }}
-        >
+        <AnimatedModal open={modalOpen} onClose={handleClose}>
             <Box
                 sx={(theme) => ({
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
                     bgcolor: theme.palette.background.default,
-                    boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+                    boxShadow: "0 24px 60px -20px rgba(0,0,0,0.5)",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     gap: 3,
                     p: 4,
-                    borderRadius: 3,
-                    border: `3px solid ${theme.palette.divider}`,
+                    borderRadius: 4,
+                    border: `1px solid ${theme.palette.divider}`,
                     width: 'fit-content',
                     minWidth: { xs: '95vw', sm: 500 },
                     maxWidth: { xs: '95vw', md: 950 },
                     maxHeight: '80vh',
                     overflowX: 'hidden',
                     overflowY: 'auto',
-                    animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0.5 }}>
-                    <Typography variant="h6" fontWeight="bold">
-                        {formatDateForFixtureProfile(selectedFixture.date)}
-                    </Typography>
-                    <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
-                        {selectedFixture.venue}
-                    </Typography>
-                    <VenueImageBox venue={selectedVenue} alt={selectedFixture.venue} />
-                </Box>
-                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, width: "100%" }}>
-                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                        <Box
-                            component="img"
-                            src={selectedFixture.awayTeam.logo}
-                            alt={selectedFixture.awayTeam.name}
-                            sx={(theme) => ({
-                                width: 96,
-                                height: 96,
-                                objectFit: "contain",
-                                border: `2px solid ${theme.palette.divider}`,
-                                borderRadius: 1,
-                                p: 1,
-                                backgroundColor: theme.palette.background.paper,
-                            })}
-                        />
-                        <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
-                            {selectedFixture.awayTeam.name}
-                        </Typography>
-                        <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedFixture.awayTeam.id} />
-                    </Box>
+                            <Typography variant="h6" fontWeight="bold">
+                                {formatDateForFixtureProfile(selectedFixture.date)}
+                            </Typography>
+                            <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
+                                {selectedFixture.venue}
+                            </Typography>
+                            <VenueImageBox venue={selectedVenue} alt={selectedFixture.venue} />
+                        </Box>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 3, width: "100%" }}>
+                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+                                <Box
+                                    component="img"
+                                    src={selectedFixture.awayTeam.logo}
+                                    alt={selectedFixture.awayTeam.name}
+                                    sx={(theme) => ({
+                                        width: 96,
+                                        height: 96,
+                                        objectFit: "contain",
+                                        border: `1px solid ${theme.palette.divider}`,
+                                        borderRadius: 2,
+                                        p: 1,
+                                        backgroundColor: theme.palette.background.paper,
+                                    })}
+                                />
+                                <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
+                                    {selectedFixture.awayTeam.name}
+                                </Typography>
+                                <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedFixture.awayTeam.id} />
+                            </Box>
 
-                    <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
-                        @
-                    </Typography>
+                            <Typography variant="subtitle1" fontWeight="bold" color="text.secondary">
+                                @
+                            </Typography>
 
-                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                        <Box
-                            component="img"
-                            src={selectedFixture.homeTeam.logo}
-                            alt={selectedFixture.homeTeam.name}
-                            sx={(theme) => ({
-                                width: 96,
-                                height: 96,
-                                objectFit: "contain",
-                                border: `2px solid ${theme.palette.divider}`,
-                                borderRadius: 1,
-                                p: 1,
-                                backgroundColor: theme.palette.background.paper,
-                            })}
-                        />
-                        <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
-                            {selectedFixture.homeTeam.name}
-                        </Typography>
-                        <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedFixture.homeTeam.id} />
-                    </Box>
-                </Box>
+                            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
+                                <Box
+                                    component="img"
+                                    src={selectedFixture.homeTeam.logo}
+                                    alt={selectedFixture.homeTeam.name}
+                                    sx={(theme) => ({
+                                        width: 96,
+                                        height: 96,
+                                        objectFit: "contain",
+                                        border: `1px solid ${theme.palette.divider}`,
+                                        borderRadius: 2,
+                                        p: 1,
+                                        backgroundColor: theme.palette.background.paper,
+                                    })}
+                                />
+                                <Typography variant="subtitle1" fontWeight="bold" textAlign="center" mb="+2%">
+                                    {selectedFixture.homeTeam.name}
+                                </Typography>
+                                <RecentFormBubbles selectedLeague={selectedLeague} selectedSeason={selectedSeason} selectedTeamId={selectedFixture.homeTeam.id} />
+                            </Box>
+                        </Box>
 
-                {isNonEmptyObject(selectedFixture) &&
-                    <Box sx={{ width: 'fit-content', } }>
-                        <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />
-                    </Box>
-                }
+                        {isNonEmptyObject(selectedFixture) && (
+                            <Box sx={{ width: '100%' }}>
+                                <FixtureHeadToHeadGrid selectedFixture={selectedFixture} />
+                            </Box>
+                        )}
                 <Box sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}>
-                    <Button
-                        variant="contained"
-                        onClick={handleClose}
-                        sx={(theme) => ({
-                            borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
-                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT,
-                        })}
-                    >
+                    <Button variant="contained" color="secondary" onClick={handleClose}>
                         Close
                     </Button>
                 </Box>
             </Box>
-        </Modal>
+        </AnimatedModal>
     );
 }

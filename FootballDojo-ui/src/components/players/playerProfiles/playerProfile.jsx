@@ -2,21 +2,17 @@ import {
     Avatar,
     Box,
     Button,
-    Modal,
     Typography
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import StatsList from '../../../components/players/playerProfiles/playerStats';
 import {
-    DARKMODE_PURPLE,
-    DARKMODE_TEXT,
-    LIGHTMODE_PURPLE,
-    LIGHTMODE_TEXT,
     convertCmToFeetInches,
     convertKgToLbs
 } from "../../../global/constants";
 import { fetchPlayerStatsBySeason } from '../../../redux/stats/fetchPlayerStatsBySeason';
+import AnimatedModal from '../../common/AnimatedModal';
 import StatsSeasonDropdown from '../../players/playerProfiles/statsSeasonDropdown';
 
 
@@ -45,31 +41,19 @@ export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, 
     }
 
     return (
-        <Modal
-            open={modalOpen}
-            onClose={handleClose}
-            BackdropProps={{
-                sx: { backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(5px)' }
-            }}
-        >
+        <AnimatedModal open={modalOpen} onClose={handleClose}>
             <Box
                 sx={(theme) => ({
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
                     bgcolor: theme.palette.background.default,
-                    borderRadius: 3,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    border: `4px solid ${theme.palette.divider}`,
-                    fontFamily: "'Roboto', sans-serif",
+                    borderRadius: 4,
+                    boxShadow: '0 24px 60px -20px rgba(0,0,0,0.5)',
+                    border: `1px solid ${theme.palette.divider}`,
                     width: 'fit-content',
                     minWidth: { xs: '95vw', sm: 400, md: 650 },
                     maxWidth: { xs: '95vw', md: 950 },
                     maxHeight: '80vh',
                     overflowX: 'hidden',
                     overflowY: 'auto',
-                    animation: "fadeIn 0.3s ease-in-out",
                 })}
             >
                 <Box sx={{
@@ -187,20 +171,11 @@ export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, 
                         justifyContent: 'flex-end',
                     }}
                 >
-                    <Button
-                        variant="contained"
-                        onClick={handleClose}
-                        sx={(theme) =>
-                        ({
-                            borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
-                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-                        })}
-                    >
+                    <Button variant="contained" color="secondary" onClick={handleClose}>
                         Close
                     </Button>
                 </Box>
             </Box>
-        </Modal>
+        </AnimatedModal>
     );
 }

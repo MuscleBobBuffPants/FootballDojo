@@ -1,18 +1,12 @@
 import {
     Box,
     Button,
-    Modal,
     Typography,
     useTheme
 } from '@mui/material';
 import React from 'react';
-import {
-    DARKMODE_PURPLE,
-    DARKMODE_TEXT,
-    LIGHTMODE_PURPLE,
-    LIGHTMODE_TEXT,
-    isNonEmptyObject
-} from "../../../global/constants";
+import { isNonEmptyObject } from "../../../global/constants";
+import AnimatedModal from '../../common/AnimatedModal';
 import RecentFormBubbles from "../../fixtures/fixtureProfiles/recentFormBubbles";
 import TeamStatLeaders from './teamStatLeaders';
 
@@ -20,30 +14,18 @@ export default function TeamProfile({ modalOpen, handleClose, selectedLeague, se
     const theme = useTheme();
 
     return (
-        <Modal
-            open={modalOpen}
-            onClose={handleClose}
-            BackdropProps={{
-                sx: { backgroundColor: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(5px)' }
-            }}
-        >
+        <AnimatedModal open={modalOpen} onClose={handleClose}>
             <Box
                 sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
                     bgcolor: theme.palette.background.default,
-                    borderRadius: 3,
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    border: `4px solid ${theme.palette.divider}`,
-                    fontFamily: "'Roboto', sans-serif",
+                    borderRadius: 4,
+                    boxShadow: '0 24px 60px -20px rgba(0,0,0,0.5)',
+                    border: `1px solid ${theme.palette.divider}`,
                     minWidth: { xs: '95vw', sm: 400, md: 900 },
                     maxWidth: { xs: '95vw', md: 1000 },
                     maxHeight: '80vh',
                     overflowX: 'hidden',
                     overflowY: 'auto',
-                    animation: "fadeIn 0.3s ease-in-out",
                 }}
             >
                 <Box
@@ -163,19 +145,11 @@ export default function TeamProfile({ modalOpen, handleClose, selectedLeague, se
                         justifyContent: 'flex-end',
                     }}
                 >
-                    <Button
-                        variant="contained"
-                        onClick={handleClose}
-                        sx={{
-                            borderRadius: 2,
-                            backgroundColor: theme.palette.mode === "dark" ? DARKMODE_PURPLE : LIGHTMODE_PURPLE,
-                            color: theme.palette.mode === "dark" ? DARKMODE_TEXT : LIGHTMODE_TEXT
-                        }}
-                    >
+                    <Button variant="contained" color="secondary" onClick={handleClose}>
                         Close
                     </Button>
                 </Box>
             </Box>
-        </Modal>
+        </AnimatedModal>
     );
 }

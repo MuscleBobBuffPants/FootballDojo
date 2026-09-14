@@ -16,7 +16,6 @@ export default function SeasonDropdown({ selectedSeason, handleSeasonChange }) {
                     sx={(theme) => ({
                         backgroundColor: theme.palette.background.paper,
                         color: "text.primary",
-                        borderRadius: 1
                     })}
                     MenuProps={{
                         PaperProps: {

@@ -25,7 +25,6 @@ export default function LineupBuilderSeasonDropdown({ selectedSeason, handleSeas
                     sx={(theme) => ({
                         backgroundColor: theme.palette.background.paper,
                         color: "text.primary",
-                        borderRadius: 1,
                         fontSize: 13
                     })}
                     MenuProps={{
