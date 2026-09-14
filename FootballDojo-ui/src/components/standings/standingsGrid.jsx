@@ -88,7 +88,7 @@ function StandingRow({ standing, isSelected, onClick }) {
 export default function StandingsGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
 
-    const [selectedSeason, setSelectedSeason] = useState(2025);
+    const [selectedSeason, setSelectedSeason] = useState(2024);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedTeamId, setSelectedTeamId] = useState(null);
 
@@ -105,7 +105,7 @@ export default function StandingsGrid({ selectedLeague, selectedTeam }) {
     }, [dispatch, selectedLeague, selectedSeason]);
 
     useEffect(() => {
-        setSelectedSeason(2025);
+        setSelectedSeason(2024);
     }, [selectedLeague, selectedTeam]);
 
     useEffect(() => {

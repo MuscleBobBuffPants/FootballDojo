@@ -22,7 +22,7 @@ export default function Home() {
     const [selectedLeague, setSelectedLeague] = useState("");
     const [selectedTeam, setSelectedTeam] = useState("");
     const [teamLogo, setTeamLogo] = useState(null);
-    const [selectedLineupSeason, setSelectedLineupSeason] = useState(2025);
+    const [selectedLineupSeason, setSelectedLineupSeason] = useState(2024);
 
     const teamsByLeagueId = useSelector((state) => state.teamsByLeagueId.list);
     const teamsByLeagueIdStatus = useSelector((state) => state.teamsByLeagueId.status);
@@ -32,14 +32,14 @@ export default function Home() {
 
     useEffect(() => {
         if (isNonEmptyObject(selectedLeague)) {
-            dispatch(fetchTeamsByLeagueId({ leagueId: selectedLeague.id, season: 2025 }));
+            dispatch(fetchTeamsByLeagueId({ leagueId: selectedLeague.id, season: 2024 }));
         }
     }, [dispatch, selectedLeague]);
 
     useEffect(() => {
         if (isNonEmptyObject(selectedTeam)) {
             dispatch(fetchTeamByName({ country: selectedLeague.country, teamName: selectedTeam.name }));
-            dispatch(fetchLastCompletedFixtureId({ leagueId: selectedLeague.id, season: 2025, teamId: selectedTeam.id }));
+            dispatch(fetchLastCompletedFixtureId({ leagueId: selectedLeague.id, season: 2024, teamId: selectedTeam.id }));
         }
     }, [dispatch, selectedLeague, selectedTeam]);
 

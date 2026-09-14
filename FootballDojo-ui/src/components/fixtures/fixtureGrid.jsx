@@ -78,7 +78,7 @@ function FixtureRow({ fixture, onClick }) {
 export default function FixturesGrid({ selectedLeague, selectedTeam }) {
     const dispatch = useDispatch();
 
-    const [selectedSeason, setSelectedSeason] = useState(2025);
+    const [selectedSeason, setSelectedSeason] = useState(2024);
     const [selectedFixture, setSelectedFixture] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -87,7 +87,7 @@ export default function FixturesGrid({ selectedLeague, selectedTeam }) {
     const error = useSelector((state) => state.fixturesByLeagueId.error);
 
     useEffect(() => {
-        setSelectedSeason(2025);
+        setSelectedSeason(2024);
     }, [selectedLeague, selectedTeam]);
 
     useEffect(() => {

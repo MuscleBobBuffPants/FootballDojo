@@ -1,0 +1,34 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run FootballDojo backend",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-footballdojo",
+            "program": "${workspaceFolder}/FootballDojo/bin/Debug/net8.0/FootballDojo.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/FootballDojo",
+            "envFile": "${workspaceFolder}/FootballDojo/.env",
+            "env": {
+                "ASPNETCORE_URLS": "https://localhost:52510;http://localhost:52511"
+            },
+            "console": "integratedTerminal",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Launch Frontend (Vite)",
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run dev",
+            "cwd": "${workspaceFolder}/FootballDojo-ui"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack: Backend + Frontend",
+            "configurations": ["Run FootballDojo backend", "Launch Frontend (Vite)"],
+            "stopAll": true
+        }
+    ]
+}

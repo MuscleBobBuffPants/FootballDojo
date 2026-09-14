@@ -25,7 +25,7 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
     }));
 
     useEffect(() => {
-        if (isNonEmptyObject(selectedTeamStats) && selectedSeason === 2025) {
+        if (isNonEmptyObject(selectedTeamStats) && selectedSeason === 2024) {
             dispatch(fetchStatLeadersByTeam({ leagueId: selectedLeague.id, teamId: selectedTeamStats.team.id, season: selectedSeason }));
         }
         else {
@@ -96,7 +96,7 @@ export default function TeamStatLeaders({ selectedLeague, selectedSeason, select
                             color="text.secondary"
                             sx={{ textAlign: 'center' }}
                         >
-                            Currently Only <br /> Available for 2025...
+                            Currently Only <br /> Available for 2024...
                         </Typography>
                     </Box>
                 ) : Object.entries(groupedTopStats).map(([desc, players], i) => (

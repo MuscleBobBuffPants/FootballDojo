@@ -18,14 +18,14 @@ import StatsSeasonDropdown from '../../players/playerProfiles/statsSeasonDropdow
 
 export default function PlayerProfile({ modalOpen, handleClose, selectedLeague, selectedPlayer }) {
     const dispatch = useDispatch();
-    const [selectedSeason, setSelectedSeason] = useState(2025);
+    const [selectedSeason, setSelectedSeason] = useState(2024);
 
     const playerStatsBySeason = useSelector((state) => state.playerStatsBySeason.list);
     const playerStatsStatus = useSelector((state) => state.playerStatsBySeason.status);
     const playerStatsError = useSelector((state) => state.playerStatsBySeason.error);
 
     useEffect(() => {
-        setSelectedSeason(2025);
+        setSelectedSeason(2024);
     }, [modalOpen]);
 
     const fetchStats = () => dispatch(fetchPlayerStatsBySeason({
